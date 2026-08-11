@@ -1,20 +1,20 @@
 {
   "schema_version": 1,
   "files": {
-    ".agents/skills/boatstack-autoplan/SKILL.md": "430b3922a0390fd02fb7a16a4a0d1fe211d14eff784794147bf5668331c45ab0",
+    ".agents/skills/boatstack-autoplan/SKILL.md": "281ca5f215538157b4a7791cb0a6ee2108606ff3e98ce1449a345fcf0c2cb782",
     ".agents/skills/boatstack-autoplan/agents/openai.yaml": "9ac427c8aa84d4240b010144cfa48ddab13cd2643e9eab78e7bc33fa984955d5",
-    ".agents/skills/boatstack-run/SKILL.md": "4dacdd0e87619c5762f968c0cff42c6b48075dae0beb387201feeb50f14d3325",
+    ".agents/skills/boatstack-run/SKILL.md": "1da5bfde2c1b796d9bedc9293f7267e771a98a85ce47a4bcf072933462060617",
     ".agents/skills/boatstack-run/agents/openai.yaml": "f895807161bace5a55c7e8ce6e921e1f3f8bada9889fe7738b01f7cb0b5f3ada",
-    ".agents/skills/boatstack-update/SKILL.md": "5d1255afd6bb458c726f713db38aab615dd17b892b0a4288a9052e155b37cce7",
+    ".agents/skills/boatstack-update/SKILL.md": "66b7b8a994f079b30f24da8dce22fe8eda5c832da20585e24d3c6dc3861d69c7",
     ".agents/skills/boatstack-update/agents/openai.yaml": "7b5b4d0e57ea6b08abc6fa002581594793f0933c3c15acec7ae0c4619a328899",
-    ".claude/skills/boatstack-autoplan/SKILL.md": "430b3922a0390fd02fb7a16a4a0d1fe211d14eff784794147bf5668331c45ab0",
-    ".claude/skills/boatstack-run/SKILL.md": "4dacdd0e87619c5762f968c0cff42c6b48075dae0beb387201feeb50f14d3325",
-    ".claude/skills/boatstack-update/SKILL.md": "5d1255afd6bb458c726f713db38aab615dd17b892b0a4288a9052e155b37cce7",
-    ".cursor/commands/boatstack-autoplan.md": "430b3922a0390fd02fb7a16a4a0d1fe211d14eff784794147bf5668331c45ab0",
-    ".cursor/commands/boatstack-run.md": "4dacdd0e87619c5762f968c0cff42c6b48075dae0beb387201feeb50f14d3325",
-    ".cursor/commands/boatstack-update.md": "5d1255afd6bb458c726f713db38aab615dd17b892b0a4288a9052e155b37cce7",
-    ".gemini/skills/boatstack-autoplan/SKILL.md": "430b3922a0390fd02fb7a16a4a0d1fe211d14eff784794147bf5668331c45ab0",
-    ".gemini/skills/boatstack-run/SKILL.md": "4dacdd0e87619c5762f968c0cff42c6b48075dae0beb387201feeb50f14d3325",
-    ".gemini/skills/boatstack-update/SKILL.md": "5d1255afd6bb458c726f713db38aab615dd17b892b0a4288a9052e155b37cce7"
+    ".claude/skills/boatstack-autoplan/SKILL.md": "281ca5f215538157b4a7791cb0a6ee2108606ff3e98ce1449a345fcf0c2cb782",
+    ".claude/skills/boatstack-run/SKILL.md": "1da5bfde2c1b796d9bedc9293f7267e771a98a85ce47a4bcf072933462060617",
+    ".claude/skills/boatstack-update/SKILL.md": "66b7b8a994f079b30f24da8dce22fe8eda5c832da20585e24d3c6dc3861d69c7",
+    ".cursor/commands/boatstack-autoplan.md": "281ca5f215538157b4a7791cb0a6ee2108606ff3e98ce1449a345fcf0c2cb782",
+    ".cursor/commands/boatstack-run.md": "1da5bfde2c1b796d9bedc9293f7267e771a98a85ce47a4bcf072933462060617",
+    ".cursor/commands/boatstack-update.md": "66b7b8a994f079b30f24da8dce22fe8eda5c832da20585e24d3c6dc3861d69c7",
+    ".gemini/skills/boatstack-autoplan/SKILL.md": "281ca5f215538157b4a7791cb0a6ee2108606ff3e98ce1449a345fcf0c2cb782",
+    ".gemini/skills/boatstack-run/SKILL.md": "1da5bfde2c1b796d9bedc9293f7267e771a98a85ce47a4bcf072933462060617",
+    ".gemini/skills/boatstack-update/SKILL.md": "66b7b8a994f079b30f24da8dce22fe8eda5c832da20585e24d3c6dc3861d69c7"
   }
 }
