@@ -1,1 +1,16 @@
-{"schema_version":2,"project":{"name":"repository","default_branch":"main","commands":{}},"policy":{"plan_approval":"human","visual_evidence":"optional"},"hosts":["cli","cursor","codex","claude","gemini","mcp"]}
+{
+  "schema_version": 2,
+  "project": {
+    "name": "boatstack-test",
+    "default_branch": "main",
+    "commands": {
+      "build": "npm --prefix projects/basic-react run build",
+      "test": "npm --prefix projects/basic-react run check"
+    }
+  },
+  "policy": {
+    "plan_approval": "human",
+    "visual_evidence": "optional"
+  },
+  "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"]
+}
