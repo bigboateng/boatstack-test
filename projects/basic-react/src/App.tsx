@@ -15,9 +15,16 @@ function App() {
       <section aria-label="Counter example" className="counter-card">
         <p>Interaction check</p>
         <output aria-live="polite">{count} {count === 1 ? 'step' : 'steps'}</output>
-        <button type="button" onClick={() => setCount((value) => value + 1)}>
-          Add a step
-        </button>
+        <div className="counter-actions">
+          <button type="button" onClick={() => setCount((value) => value + 1)}>
+            Add a step
+          </button>
+          {count > 0 && (
+            <button className="reset-button" type="button" onClick={() => setCount(0)}>
+              Reset steps
+            </button>
+          )}
+        </div>
       </section>
     </main>
   )
