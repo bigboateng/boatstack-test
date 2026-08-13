@@ -9,8 +9,9 @@
     }
   },
   "policy": {
-    "plan_approval": "human",
-    "visual_evidence": "optional"
+    "plan_approval": "human-or-autonomy",
+    "visual_evidence": "optional",
+    "external_effect_authority": "human-or-autonomy-plus-provider"
   },
   "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"]
 }

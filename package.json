@@ -6,7 +6,7 @@
     "boatstack:flow:check": "boatstack flow check --repo ."
   },
   "devDependencies": {
-    "@operatorstack/boatstack": "file:.boatstack/pilot-packages/operatorstack-boatstack-0.0.0-development.tgz",
-    "@operatorstack/boatstack-software-delivery": "file:.boatstack/pilot-packages/operatorstack-boatstack-software-delivery-0.0.0-development.tgz"
+    "@operatorstack/boatstack": "file:.boatstack/pilot-packages/operatorstack-boatstack-cd8b36b.tgz",
+    "@operatorstack/boatstack-software-delivery": "file:.boatstack/pilot-packages/operatorstack-boatstack-software-delivery-cd8b36b.tgz"
   }
 }

@@ -1,6 +1,0 @@
-interface:
-  display_name: "Product Delivery Abandon"
-  short_description: "Explicitly abandon the selected delivery before starting different work"
-  default_prompt: "Use $product-delivery-abandon to run the repository-owned Boatstack Flow entry."
-policy:
-  allow_implicit_invocation: false

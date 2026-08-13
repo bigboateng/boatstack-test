@@ -18,11 +18,18 @@ parameters. A question suspends this run: ask the user, submit only the typed
 answer evidence, and resume the same run ID. Nothing continues in the
 background while input is missing. Never synthesize authority.
 
-If the user requests different work, never retarget this run. When no objective
-binding receipt exists, stop this unbound attempt and allow the inbox plan to be
-replaced. Once the objective is bound, require explicit use of $product-delivery-abandon for
-the same delivery and wait for its abandonment receipt before selecting a new
-plan and starting a new run.
+The first `next` returns a typed `DELEGATION_REQUIRED` response before
+managed state changes. Display its exact run ID, request fingerprint, requested
+authorities, and description. Obtain one explicit human approval for that exact
+request, then run:
+
+`boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human <actor> --host claude`
+
+After authorization, use `boatstack flow run --repo . --flow product-delivery --entry run --run-id <run-id> --host claude --format json`.
+Do not request approval again after a restart or typed suspension. Resume the
+same run and delegation unless Boatstack reports revocation, expiry, drift, or
+terminal completion. Never authorize on the user's behalf.
+
 
 
 Stop only when Boatstack reports the marked target, a typed blocker, refusal,

@@ -4,6 +4,7 @@ import {
   planInboxResolver,
   softwareDeliveryEvidence,
   softwareDeliveryFacets,
+  trustedDelegation,
   trustedOperators,
   trustedTransitions,
   type TrustedStep,
@@ -34,7 +35,6 @@ const lifecycle = [
   { id: "publication.correct", priority: 80 },
   { id: "workspace.reconcile", priority: 2 },
   { id: "publication.reconcile", priority: 1 },
-  { id: "plan.abandon", priority: 31 },
 ] satisfies TrustedStep[];
 
 export default defineFlow({
@@ -53,23 +53,14 @@ export default defineFlow({
       fact("runtime", ["verified"]),
       fact("publication", ["open"]),
     )),
-    marked("safely-abandoned", all(
-      fact("delivery", ["discarded"]),
-      fact("workspace", ["abandoned", "absent"]),
-    )),
   ],
   entries: [
-    entry(
-      "run",
-      "published-pr",
-      [inbox(".boatstack/plans/inbox")],
-      "Implement one approved repository plan and publish a pull request",
-    ),
-    entry(
-      "abandon",
-      "safely-abandoned",
-      [inbox(".boatstack/plans/inbox")],
-      "Explicitly abandon the selected delivery before starting different work",
-    ),
+    entry({
+      id: "run",
+      target: "published-pr",
+      inputs: [inbox(".boatstack/plans/inbox")],
+      delegation: trustedDelegation("autonomy"),
+      description: "Implement one approved repository plan and publish a pull request",
+    }),
   ],
 });

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "files": {
     ".agents/skills/boatstack-update/SKILL.md": "09f05e14c246b5c394922542f249c33cfafa1aee0dcc32dbd0f412ed3d209dbf",
-    ".agents/skills/boatstack-update/agents/openai.yaml": "7b5b4d0e57ea6b08abc6fa002581594793f0933c3c15acec7ae0c4619a328899",
+    ".agents/skills/boatstack-update/agents/openai.yaml": "cd6b5c0ab6af7bf1bcb84eb80b6be35831d4d883b00c714bddf0ae71e92e1eb5",
     ".claude/skills/boatstack-update/SKILL.md": "09f05e14c246b5c394922542f249c33cfafa1aee0dcc32dbd0f412ed3d209dbf",
     ".cursor/commands/boatstack-update.md": "09f05e14c246b5c394922542f249c33cfafa1aee0dcc32dbd0f412ed3d209dbf",
     ".gemini/skills/boatstack-update/SKILL.md": "09f05e14c246b5c394922542f249c33cfafa1aee0dcc32dbd0f412ed3d209dbf"
