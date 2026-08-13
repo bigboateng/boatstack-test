@@ -2,10 +2,10 @@
   "schema_version": 1,
   "compiler_version": "control-program/v1.compiler.1",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "d8165b6b0f5890d3d39fb00412a1203599af5343ca3751c62fccd03163bc35e5",
+  "source_sha256": "04cdb6a8d44a987c99728b3345e1990cb1abbae3578f1b6b2aabffa868335de7",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "6ebb5beff35bb67ff0ad5fbec3f3b320305886bb2f36527fe1bb68640f1db23f",
-  "program_fingerprint": "b4bdf6534527eebd10901e923cc5a982549e5bb5b80948fc7d64bd717e3a019a",
+  "dependency_lock_sha256": "4ec32cc29e3e879b7b6dbd547583d2784de2b972e6e2fd2a0bf9b5264e2fef60",
+  "program_fingerprint": "7823b9fe8fd8373f9c213ce16d851d0dbcfce47e73c12dd075139fa7f86b320f",
   "generated_skills": {
     ".agents/skills/product-delivery-abandon/SKILL.md": "9491f5e01cd9ccba64d34f3c1139446ea4eaebb508b7c632408ab0b5018bf3df",
     ".agents/skills/product-delivery-abandon/agents/openai.yaml": "9b8ad5febeadaeeda14c8fd1060edba823426dd4f8090374e86e72bcdbecefe4",
@@ -233,7 +233,7 @@
         "binding": {
           "reference": "software-delivery/delivery.slice.advance",
           "version": "1",
-          "fingerprint": "9ac042dbeed46bc53349998d12c7660100cf9c0df01aae61a7df44ebb91ae97c"
+          "fingerprint": "e4ec8efe1a7377706b8e5ab777a9a0d5b60f2d5edcab84455ba04fb5f72c6fe4"
         },
         "capabilities": [
           "product.mutate",
@@ -279,7 +279,7 @@
         "binding": {
           "reference": "software-delivery/evidence.visual.attach",
           "version": "1",
-          "fingerprint": "70ab48ca626b29323b8c7819fc34aea191d89fcffdc73fc7b2f41894d56a16db"
+          "fingerprint": "4d2e9f20fa38426eefad384a193d608580eec9e2fa2e66cfb860f2563264f210"
         },
         "capabilities": [
           "product.mutate",
@@ -304,7 +304,7 @@
         "binding": {
           "reference": "software-delivery/gate.build.record",
           "version": "1",
-          "fingerprint": "021b95a1277c28ac8717fb44c93c7a612d2c79d1e9912cc1b485e0bc30b53b68"
+          "fingerprint": "d7314518c37f06bc7f21d293515c92a5447045dd7e7b30cb70a9bdff023a75d6"
         },
         "capabilities": [
           "command.execute",
@@ -329,7 +329,7 @@
         "binding": {
           "reference": "software-delivery/gate.change.record",
           "version": "1",
-          "fingerprint": "7433d242966c648dd9574d1aded8d2b653c25c073cda7668fdc25e383cc03bd8"
+          "fingerprint": "ba0ffcaa16d6d031ac69060ab1145dde6a883243bda5515068aea2ed4b5686d5"
         },
         "capabilities": [
           "product.mutate",
@@ -353,7 +353,7 @@
         "binding": {
           "reference": "software-delivery/gate.journey.record",
           "version": "1",
-          "fingerprint": "834c3349980d588a72775ac5de24f7d59c9d565aa667f7d23d4735c65ed434b4"
+          "fingerprint": "2aeed790735ea34af58b2e8e5d88556e8d289f1705f408a9fa52b7b075fe5bcf"
         },
         "capabilities": [
           "product.mutate",
@@ -377,7 +377,7 @@
         "binding": {
           "reference": "software-delivery/gate.review.record",
           "version": "1",
-          "fingerprint": "395b989aca389ee6e89a1d4a5fe6fde1c83fcc90e943d915153c5dbbefca7896"
+          "fingerprint": "28311a99659eb5e5a49f29721a1cf53fa39ec4cd34019a46986a2b125735021e"
         },
         "capabilities": [
           "product.mutate",
@@ -402,7 +402,7 @@
         "binding": {
           "reference": "software-delivery/gate.test.record",
           "version": "1",
-          "fingerprint": "1cf3d1b49fc0d1e99b3b9b6d302eeb53c20300afeb9f33c2f13ab73a9587439e"
+          "fingerprint": "784c67c681e737219dc7d6e16d064933111a3411ecd221d868ee279c376dd4fe"
         },
         "capabilities": [
           "command.execute",
@@ -427,7 +427,7 @@
         "binding": {
           "reference": "software-delivery/plan.abandon",
           "version": "1",
-          "fingerprint": "e5b226bf1e31eb4e4e3be8d402832250b8b5e3e9b6e428a2e3abdfbfbbf38690"
+          "fingerprint": "84db4b294081c03726b3f946cfd80541ecdad8526fa9829b5fc792e136a7b212"
         },
         "capabilities": [
           "product.mutate",
@@ -451,7 +451,7 @@
         "binding": {
           "reference": "software-delivery/plan.activate",
           "version": "1",
-          "fingerprint": "65d26636f2c90ec30de9999c250cde46e12fc6fde5b481a65c85f3a201c8175d"
+          "fingerprint": "d52c9a1fd462fa577f2cabce43b1a58cdf36162ccee2c38c5d0187f1bedcc2f4"
         },
         "capabilities": [
           "product.mutate",
@@ -489,7 +489,7 @@
         "binding": {
           "reference": "software-delivery/plan.amend",
           "version": "1",
-          "fingerprint": "acdd6c145a8c21f689863d08c16e92ca115af9c70d4986b3b95da3ceda3dd15d"
+          "fingerprint": "7933d6ced53262568b911268472d92eca29e0443cd137f004d66e5856f3e1d9f"
         },
         "capabilities": [
           "product.mutate",
@@ -531,7 +531,7 @@
         "binding": {
           "reference": "software-delivery/plan.approve",
           "version": "1",
-          "fingerprint": "ea11efd6e7b491fd0f22421bc651ac0a6cceba20d049ed7737bb4fe619afc174"
+          "fingerprint": "d1106937489ba98ab6cbd0e523bef3717ab8c6d8e2bbd9b459819b4423f35f04"
         },
         "capabilities": [
           "product.mutate",
@@ -556,7 +556,7 @@
         "binding": {
           "reference": "software-delivery/plan.approve-amendment",
           "version": "1",
-          "fingerprint": "73fbdcb12eaa5b82e9d067e7d1c481ac1c1034d9386714e4089ca54cb04e81db"
+          "fingerprint": "86bdbf17094889ea456de51584b75787abbf53b8a23ebcd82bcf2fffcf0ea88a"
         },
         "capabilities": [
           "product.mutate",
@@ -594,7 +594,7 @@
         "binding": {
           "reference": "software-delivery/plan.create",
           "version": "1",
-          "fingerprint": "dfde3e65e4969d77a0bdc72e14b4fdb0229fe8e971ee668d34e075604e1cde6f"
+          "fingerprint": "bd0eb68833c9d59352964da6fab6ed4d63d1aaa8879de2a2148aa9e05d8ece17"
         },
         "capabilities": [
           "product.mutate",
@@ -636,7 +636,7 @@
         "binding": {
           "reference": "software-delivery/plan.invalidate",
           "version": "1",
-          "fingerprint": "52dff8e4621f874cd4030eb53325bf1cfe36d86404ede8577c1fe539e21df479"
+          "fingerprint": "c2b71ad9d145f81fd1eb6197ff8d8890bf1a24a276fe9c4fc5bf86672dc43be6"
         },
         "capabilities": [
           "product.mutate",
@@ -677,7 +677,7 @@
         "binding": {
           "reference": "software-delivery/plan.validate",
           "version": "1",
-          "fingerprint": "18dfebcfe9d655bfd01157a913e4ba656fb714741bffa01adba70683552c9d02"
+          "fingerprint": "1c7c0608efc925ea7d4ff64722bb332d666da8f8a92ae5d3bc6453a68c1fb4ff"
         },
         "capabilities": [
           "product.mutate",
@@ -714,7 +714,7 @@
         "binding": {
           "reference": "software-delivery/publication.correct",
           "version": "1",
-          "fingerprint": "ff8dde8085d0ac07a73f06eca1161e178a29f089d3393444c3212507465eccc7"
+          "fingerprint": "386947f3fd59cb0a5b8e74c486533a51d15fcdebdcffc584fe4f4adacb593a79"
         },
         "capabilities": [
           "command.execute",
@@ -759,7 +759,7 @@
         "binding": {
           "reference": "software-delivery/publication.execute",
           "version": "1",
-          "fingerprint": "48ebc301ff29a5f86c96b7bd1457068ba64f76922ba1c106e7faf672165c32b0"
+          "fingerprint": "89aa3d26815201e48a2a593cf37381b3a9189b66e9e97cdd93fcd7cceb9b13a0"
         },
         "capabilities": [
           "command.execute",
@@ -804,7 +804,7 @@
         "binding": {
           "reference": "software-delivery/publication.observe",
           "version": "1",
-          "fingerprint": "cd31baf03d88cb5bdcfa177d1b4b4ee3c973f1ca9b57406141dac8c814667d8d"
+          "fingerprint": "f9cee1099705095736ef53dc27583d983f9b7ddc697eeaf30bf8ce335cf19eb3"
         },
         "capabilities": [
           "command.execute",
@@ -829,7 +829,7 @@
         "binding": {
           "reference": "software-delivery/publication.preview",
           "version": "1",
-          "fingerprint": "21b8a8992dfbc96262b85d3f51c6513cbf917ad7f25bdf8bbefca0043ae0b92e"
+          "fingerprint": "b237006fe56f51f5209ceb4f3447d178a58e3565e7d1eb1c05c6d63fc78e3c0c"
         },
         "capabilities": [
           "product.mutate",
@@ -863,7 +863,7 @@
         "binding": {
           "reference": "software-delivery/publication.reconcile",
           "version": "1",
-          "fingerprint": "98c3bc1b45fceda99aaff02ec544cab70269c1b6ee164a74c6c5f1bd9de0015d"
+          "fingerprint": "40fc91cef407b9e0b1a1dec60f7d74be42e1b8f83e8f1c6b3f22becf4cc8f867"
         },
         "capabilities": [
           "command.execute",
@@ -889,7 +889,7 @@
         "binding": {
           "reference": "software-delivery/workspace.activate",
           "version": "1",
-          "fingerprint": "479e6a462eed9c87c3bdc0612da30091d213d602a9014b54d026fb2e38f3f791"
+          "fingerprint": "d1d4cbeaa3335e2def6ecaa09f95d20e55523ece2eecc6e6dd449f3aac72592f"
         },
         "capabilities": [
           "product.mutate",
@@ -922,7 +922,7 @@
         "binding": {
           "reference": "software-delivery/workspace.cut",
           "version": "1",
-          "fingerprint": "6a908fb77646fdc09c8c0723d556e42d4840a765c13bb3406ee2694d808e68c8"
+          "fingerprint": "d04725f1bd7a4ff84135ef95ea0034e78b9010ac7410b79d5a93422394bb5828"
         },
         "capabilities": [
           "command.execute",
@@ -993,7 +993,7 @@
         "binding": {
           "reference": "software-delivery/workspace.publish",
           "version": "1",
-          "fingerprint": "0e172ec441f731cc29cd58e9b33395c7e0007019701700f1dbbf014e45ff48b8"
+          "fingerprint": "12a7f8705dc47fd2753574063cc92af57c64a1cdf752ffa84723124e8013a71d"
         },
         "capabilities": [
           "product.mutate",
@@ -1026,7 +1026,7 @@
         "binding": {
           "reference": "software-delivery/workspace.reconcile",
           "version": "1",
-          "fingerprint": "63fc694d0429f3c89baf7f34e31f85d3d1e79c66e01d823527097bf1f86107c7"
+          "fingerprint": "7c02ff1d9878e42acea204a7a1113761f946ff5e3e47c5478322c1f7e060f13b"
         },
         "capabilities": [
           "product.mutate",
@@ -1051,7 +1051,7 @@
         "binding": {
           "reference": "software-delivery/workspace.sync",
           "version": "1",
-          "fingerprint": "804b4dad41a77832b641f03a7588b71250a694493d0c6e10d576e0defdb8796a"
+          "fingerprint": "bf23e1b053858c02c7cec00f3f2dd27f2fe67c8e7767b201d1884786ee6061be"
         },
         "capabilities": [
           "command.execute",
@@ -1409,8 +1409,7 @@
               }
             }
           ]
-        },
-        "description": "A provider-observed open or updated pull request"
+        }
       },
       {
         "id": "safely-abandoned",
@@ -1440,8 +1439,7 @@
               }
             }
           ]
-        },
-        "description": "The selected delivery is explicitly and safely abandoned"
+        }
       }
     ],
     "entries": [
