@@ -2,14 +2,17 @@
   "schema_version": 1,
   "compiler_version": "control-program/v1.compiler.1",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "dc3d8067f7fd82976ba3b32bee799a47d7d833de14db215273159f666c45165c",
+  "source_sha256": "d8165b6b0f5890d3d39fb00412a1203599af5343ca3751c62fccd03163bc35e5",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "811cdb517ab66496708859dc73b34d29939e559276ef4a4ca55125817f151b55",
-  "program_fingerprint": "b0387fd187939a10932c59149c6552af71b6febd4c2c2347be81b655e48e708f",
+  "dependency_lock_sha256": "6ebb5beff35bb67ff0ad5fbec3f3b320305886bb2f36527fe1bb68640f1db23f",
+  "program_fingerprint": "b4bdf6534527eebd10901e923cc5a982549e5bb5b80948fc7d64bd717e3a019a",
   "generated_skills": {
-    ".agents/skills/product-delivery-run/SKILL.md": "df076c74a7900d8122a081e4bcc975c07b5ec245a92d11c2373bde31197263f0",
+    ".agents/skills/product-delivery-abandon/SKILL.md": "9491f5e01cd9ccba64d34f3c1139446ea4eaebb508b7c632408ab0b5018bf3df",
+    ".agents/skills/product-delivery-abandon/agents/openai.yaml": "9b8ad5febeadaeeda14c8fd1060edba823426dd4f8090374e86e72bcdbecefe4",
+    ".agents/skills/product-delivery-run/SKILL.md": "85a0d322e84ebfa4f71da35025a6543bd73c2099645a4cd5f6d55ee73afc9f01",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "dbfa45a2388ff41501cbacd8c108ae239dc4fbb39f017283f8dfc2c10963de2f",
-    ".claude/skills/product-delivery-run/SKILL.md": "601829056cb278492bd65740fafc77319524a5d6d9dab280bd3ed0716ca0b6b8"
+    ".claude/skills/product-delivery-abandon/SKILL.md": "b9cb84c861ed58011fcf10097cad78d6cf141835c6210c31f250684b53bb8fc0",
+    ".claude/skills/product-delivery-run/SKILL.md": "e263bd72a824cd0b4260f6ba47efddbc8cecc33aa94e81b7267d40d053222a96"
   },
   "program": {
     "schema_version": "control-program/v1",
@@ -40,6 +43,7 @@
         "gate.journey.record",
         "gate.review.record",
         "gate.test.record",
+        "plan.abandon",
         "plan.activate",
         "plan.amend",
         "plan.approve",
@@ -66,6 +70,7 @@
         "verifier:fresh-observation:gate.journey.record",
         "verifier:fresh-observation:gate.review.record",
         "verifier:fresh-observation:gate.test.record",
+        "verifier:fresh-observation:plan.abandon",
         "verifier:fresh-observation:plan.activate",
         "verifier:fresh-observation:plan.amend",
         "verifier:fresh-observation:plan.approve",
@@ -415,6 +420,30 @@
         "state_effect": {
           "kind": "native",
           "native_handler": "gate-test-record"
+        }
+      },
+      {
+        "id": "plan.abandon",
+        "binding": {
+          "reference": "software-delivery/plan.abandon",
+          "version": "1",
+          "fingerprint": "e5b226bf1e31eb4e4e3be8d402832250b8b5e3e9b6e428a2e3abdfbfbbf38690"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "human"
+        ],
+        "effects": [
+          "plan.abandon"
+        ],
+        "verifier": "verifier:fresh-observation:plan.abandon",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "abandon-delivery"
         }
       },
       {
@@ -1132,6 +1161,17 @@
         "priority": 62
       },
       {
+        "id": "plan.abandon",
+        "operator": "plan.abandon",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 31
+      },
+      {
         "id": "plan.activate",
         "operator": "plan.activate",
         "guard": {
@@ -1371,9 +1411,57 @@
           ]
         },
         "description": "A provider-observed open or updated pull request"
+      },
+      {
+        "id": "safely-abandoned",
+        "predicate": {
+          "all": [
+            {
+              "fact": {
+                "facet": "delivery",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "discarded"
+                ]
+              }
+            },
+            {
+              "fact": {
+                "facet": "workspace",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "abandoned",
+                  "absent"
+                ]
+              }
+            }
+          ]
+        },
+        "description": "The selected delivery is explicitly and safely abandoned"
       }
     ],
     "entries": [
+      {
+        "id": "abandon",
+        "target": "safely-abandoned",
+        "inputs": [
+          {
+            "id": "plan",
+            "type": "markdown-file",
+            "required": true,
+            "resolver": "software-delivery.plan-inbox",
+            "config": {
+              "cardinality": "exactly-one",
+              "path": ".boatstack/plans/inbox"
+            }
+          }
+        ],
+        "description": "Explicitly abandon the selected delivery before starting different work"
+      },
       {
         "id": "run",
         "target": "published-pr",

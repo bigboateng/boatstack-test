@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "version": "v2.0.0-pilot.0",
-  "sha256": "513e530b9eac8a303a03310e9331abc474507e8a13475f56f9f87726faabd992",
-  "source_revision": "0d18779e604f332945b637e575062cfdf3a9cbb2",
-  "program_fingerprint": "f59fbb7ba7b724ab8df79f4d04d6d9a4ae10474ec12dfb7118a5b293fdbcc963",
+  "version": "v2.0.0-supersession-pilot.7",
+  "sha256": "23b9d57adce9b19ed18a9556c130d20f02e1afe7875ae2f2db942f593a051d4c",
+  "source_revision": "7315d7bbef87646f75d14300f1034d1a7cd20151",
+  "program_fingerprint": "8ae129b970cf336afa9179892ccca994df9b23028648053d0232afc4b2fbf87c",
   "state_schema_version": 3
 }
