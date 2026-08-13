@@ -2,7 +2,7 @@
   "schema_version": 1,
   "compiler_version": "control-program/v1.compiler.1",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "69d974f0724fb261e550729b9ee0316bc428c70868de1375aa46713173c82d16",
+  "source_sha256": "dc3d8067f7fd82976ba3b32bee799a47d7d833de14db215273159f666c45165c",
   "dependency_lock_path": "package-lock.json",
   "dependency_lock_sha256": "811cdb517ab66496708859dc73b34d29939e559276ef4a4ca55125817f151b55",
   "program_fingerprint": "b0387fd187939a10932c59149c6552af71b6febd4c2c2347be81b655e48e708f",
@@ -15,7 +15,8 @@
     "schema_version": "control-program/v1",
     "program": {
       "id": "product-delivery",
-      "version": "1"
+      "version": "1",
+      "description": "Basic React delivery from one repository plan to a published pull request"
     },
     "declarations": {
       "capabilities": [
@@ -1390,6 +1391,7 @@
         ],
         "description": "Implement one approved repository plan and publish a pull request"
       }
-    ]
+    ],
+    "description": "Basic React delivery from one repository plan to a published pull request"
   }
 }
