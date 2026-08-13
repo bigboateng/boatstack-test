@@ -1,0 +1,1395 @@
+{
+  "schema_version": 1,
+  "compiler_version": "control-program/v1.compiler.1",
+  "source_path": ".boatstack/flows/product-delivery.flow.ts",
+  "source_sha256": "69d974f0724fb261e550729b9ee0316bc428c70868de1375aa46713173c82d16",
+  "dependency_lock_path": "package-lock.json",
+  "dependency_lock_sha256": "811cdb517ab66496708859dc73b34d29939e559276ef4a4ca55125817f151b55",
+  "program_fingerprint": "b0387fd187939a10932c59149c6552af71b6febd4c2c2347be81b655e48e708f",
+  "generated_skills": {
+    ".agents/skills/product-delivery-run/SKILL.md": "df076c74a7900d8122a081e4bcc975c07b5ec245a92d11c2373bde31197263f0",
+    ".agents/skills/product-delivery-run/agents/openai.yaml": "dbfa45a2388ff41501cbacd8c108ae239dc4fbb39f017283f8dfc2c10963de2f",
+    ".claude/skills/product-delivery-run/SKILL.md": "601829056cb278492bd65740fafc77319524a5d6d9dab280bd3ed0716ca0b6b8"
+  },
+  "program": {
+    "schema_version": "control-program/v1",
+    "program": {
+      "id": "product-delivery",
+      "version": "1"
+    },
+    "declarations": {
+      "capabilities": [
+        "command.execute",
+        "product.mutate",
+        "publication.prepare",
+        "publication.publish",
+        "repository.write"
+      ],
+      "authorities": [
+        "autonomy",
+        "external-provider",
+        "human",
+        "repository-policy"
+      ],
+      "effects": [
+        "delivery.slice.advance",
+        "evidence.visual.attach",
+        "gate.build.record",
+        "gate.change.record",
+        "gate.journey.record",
+        "gate.review.record",
+        "gate.test.record",
+        "plan.activate",
+        "plan.amend",
+        "plan.approve",
+        "plan.approve-amendment",
+        "plan.create",
+        "plan.invalidate",
+        "plan.validate",
+        "publication.correct",
+        "publication.execute",
+        "publication.observe",
+        "publication.preview",
+        "publication.reconcile",
+        "workspace.activate",
+        "workspace.cut",
+        "workspace.publish",
+        "workspace.reconcile",
+        "workspace.sync"
+      ],
+      "verifiers": [
+        "verifier:fresh-observation:delivery.slice.advance",
+        "verifier:fresh-observation:evidence.visual.attach",
+        "verifier:fresh-observation:gate.build.record",
+        "verifier:fresh-observation:gate.change.record",
+        "verifier:fresh-observation:gate.journey.record",
+        "verifier:fresh-observation:gate.review.record",
+        "verifier:fresh-observation:gate.test.record",
+        "verifier:fresh-observation:plan.activate",
+        "verifier:fresh-observation:plan.amend",
+        "verifier:fresh-observation:plan.approve",
+        "verifier:fresh-observation:plan.approve-amendment",
+        "verifier:fresh-observation:plan.create",
+        "verifier:fresh-observation:plan.invalidate",
+        "verifier:fresh-observation:plan.validate",
+        "verifier:fresh-observation:publication.correct",
+        "verifier:fresh-observation:publication.execute",
+        "verifier:fresh-observation:publication.observe",
+        "verifier:fresh-observation:publication.preview",
+        "verifier:fresh-observation:publication.reconcile",
+        "verifier:fresh-observation:workspace.activate",
+        "verifier:fresh-observation:workspace.cut",
+        "verifier:fresh-observation:workspace.publish",
+        "verifier:fresh-observation:workspace.reconcile",
+        "verifier:fresh-observation:workspace.sync"
+      ],
+      "input_resolvers": [
+        "software-delivery.plan-inbox"
+      ]
+    },
+    "facets": [
+      {
+        "id": "configuration",
+        "kind": "string"
+      },
+      {
+        "id": "configuration-policy",
+        "kind": "string"
+      },
+      {
+        "id": "delivery",
+        "kind": "string"
+      },
+      {
+        "id": "engagement",
+        "kind": "string"
+      },
+      {
+        "id": "objective",
+        "kind": "string"
+      },
+      {
+        "id": "phase",
+        "kind": "string"
+      },
+      {
+        "id": "plan",
+        "kind": "string"
+      },
+      {
+        "id": "program",
+        "kind": "string"
+      },
+      {
+        "id": "publication",
+        "kind": "string"
+      },
+      {
+        "id": "recovery",
+        "kind": "string"
+      },
+      {
+        "id": "recovery-info",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_budget",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_cause",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_resumption",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_source_phase",
+        "kind": "string"
+      },
+      {
+        "id": "runtime",
+        "kind": "string"
+      },
+      {
+        "id": "source_revision",
+        "kind": "string"
+      },
+      {
+        "id": "terminal",
+        "kind": "string"
+      },
+      {
+        "id": "transaction",
+        "kind": "string"
+      },
+      {
+        "id": "transaction_id",
+        "kind": "string"
+      },
+      {
+        "id": "transaction_transition",
+        "kind": "string"
+      },
+      {
+        "id": "verification",
+        "kind": "string"
+      },
+      {
+        "id": "workspace",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_base_ref",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_branch",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_path",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_id",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_path",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_ref",
+        "kind": "string"
+      },
+      {
+        "id": "worktree_fingerprint",
+        "kind": "string"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "plan-evidence",
+        "subject": "plan",
+        "kind": "artifact"
+      },
+      {
+        "id": "publication-evidence",
+        "subject": "publication",
+        "kind": "provider-observation"
+      }
+    ],
+    "operators": [
+      {
+        "id": "delivery.slice.advance",
+        "binding": {
+          "reference": "software-delivery/delivery.slice.advance",
+          "version": "1",
+          "fingerprint": "9ac042dbeed46bc53349998d12c7660100cf9c0df01aae61a7df44ebb91ae97c"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "delivery.slice.advance"
+        ],
+        "verifier": "verifier:fresh-observation:delivery.slice.advance",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "active"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "source_revision",
+              "value_from": {
+                "admission": "source_revision"
+              }
+            },
+            {
+              "facet": "worktree_fingerprint",
+              "value_from": {
+                "admission": "worktree_fingerprint"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "evidence.visual.attach",
+        "binding": {
+          "reference": "software-delivery/evidence.visual.attach",
+          "version": "1",
+          "fingerprint": "70ab48ca626b29323b8c7819fc34aea191d89fcffdc73fc7b2f41894d56a16db"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "human",
+          "repository-policy"
+        ],
+        "effects": [
+          "evidence.visual.attach"
+        ],
+        "verifier": "verifier:fresh-observation:evidence.visual.attach",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "visual-evidence-attach"
+        }
+      },
+      {
+        "id": "gate.build.record",
+        "binding": {
+          "reference": "software-delivery/gate.build.record",
+          "version": "1",
+          "fingerprint": "021b95a1277c28ac8717fb44c93c7a612d2c79d1e9912cc1b485e0bc30b53b68"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "gate.build.record"
+        ],
+        "verifier": "verifier:fresh-observation:gate.build.record",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "gate-build-record"
+        }
+      },
+      {
+        "id": "gate.change.record",
+        "binding": {
+          "reference": "software-delivery/gate.change.record",
+          "version": "1",
+          "fingerprint": "7433d242966c648dd9574d1aded8d2b653c25c073cda7668fdc25e383cc03bd8"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "gate.change.record"
+        ],
+        "verifier": "verifier:fresh-observation:gate.change.record",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "gate-change-record"
+        }
+      },
+      {
+        "id": "gate.journey.record",
+        "binding": {
+          "reference": "software-delivery/gate.journey.record",
+          "version": "1",
+          "fingerprint": "834c3349980d588a72775ac5de24f7d59c9d565aa667f7d23d4735c65ed434b4"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "gate.journey.record"
+        ],
+        "verifier": "verifier:fresh-observation:gate.journey.record",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "gate-journey-record"
+        }
+      },
+      {
+        "id": "gate.review.record",
+        "binding": {
+          "reference": "software-delivery/gate.review.record",
+          "version": "1",
+          "fingerprint": "395b989aca389ee6e89a1d4a5fe6fde1c83fcc90e943d915153c5dbbefca7896"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "human",
+          "repository-policy"
+        ],
+        "effects": [
+          "gate.review.record"
+        ],
+        "verifier": "verifier:fresh-observation:gate.review.record",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "gate-review-record"
+        }
+      },
+      {
+        "id": "gate.test.record",
+        "binding": {
+          "reference": "software-delivery/gate.test.record",
+          "version": "1",
+          "fingerprint": "1cf3d1b49fc0d1e99b3b9b6d302eeb53c20300afeb9f33c2f13ab73a9587439e"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "gate.test.record"
+        ],
+        "verifier": "verifier:fresh-observation:gate.test.record",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "gate-test-record"
+        }
+      },
+      {
+        "id": "plan.activate",
+        "binding": {
+          "reference": "software-delivery/plan.activate",
+          "version": "1",
+          "fingerprint": "65d26636f2c90ec30de9999c250cde46e12fc6fde5b481a65c85f3a201c8175d"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "plan.activate"
+        ],
+        "verifier": "verifier:fresh-observation:plan.activate",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "active"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "plan",
+              "value": "locked"
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan.amend",
+        "binding": {
+          "reference": "software-delivery/plan.amend",
+          "version": "1",
+          "fingerprint": "acdd6c145a8c21f689863d08c16e92ca115af9c70d4986b3b95da3ceda3dd15d"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "plan.amend"
+        ],
+        "verifier": "verifier:fresh-observation:plan.amend",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "amendment"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "plan",
+              "value": "amendment-required"
+            },
+            {
+              "facet": "terminal",
+              "value": "nonterminal"
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan.approve",
+        "binding": {
+          "reference": "software-delivery/plan.approve",
+          "version": "1",
+          "fingerprint": "ea11efd6e7b491fd0f22421bc651ac0a6cceba20d049ed7737bb4fe619afc174"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "plan.approve"
+        ],
+        "verifier": "verifier:fresh-observation:plan.approve",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "plan-approve"
+        }
+      },
+      {
+        "id": "plan.approve-amendment",
+        "binding": {
+          "reference": "software-delivery/plan.approve-amendment",
+          "version": "1",
+          "fingerprint": "73fbdcb12eaa5b82e9d067e7d1c481ac1c1034d9386714e4089ca54cb04e81db"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "plan.approve-amendment"
+        ],
+        "verifier": "verifier:fresh-observation:plan.approve-amendment",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "approved"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "plan",
+              "value": "approved"
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan.create",
+        "binding": {
+          "reference": "software-delivery/plan.create",
+          "version": "1",
+          "fingerprint": "dfde3e65e4969d77a0bdc72e14b4fdb0229fe8e971ee668d34e075604e1cde6f"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "plan.create"
+        ],
+        "verifier": "verifier:fresh-observation:plan.create",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "planning"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "plan",
+              "value": "draft"
+            },
+            {
+              "facet": "terminal",
+              "value": "nonterminal"
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan.invalidate",
+        "binding": {
+          "reference": "software-delivery/plan.invalidate",
+          "version": "1",
+          "fingerprint": "52dff8e4621f874cd4030eb53325bf1cfe36d86404ede8577c1fe539e21df479"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "plan.invalidate"
+        ],
+        "verifier": "verifier:fresh-observation:plan.invalidate",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "invalid"
+            },
+            {
+              "facet": "phase",
+              "value": "FRONTIER"
+            },
+            {
+              "facet": "plan",
+              "value": "invalid"
+            },
+            {
+              "facet": "terminal",
+              "value": "nonterminal"
+            }
+          ]
+        }
+      },
+      {
+        "id": "plan.validate",
+        "binding": {
+          "reference": "software-delivery/plan.validate",
+          "version": "1",
+          "fingerprint": "18dfebcfe9d655bfd01157a913e4ba656fb714741bffa01adba70683552c9d02"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "plan.validate"
+        ],
+        "verifier": "verifier:fresh-observation:plan.validate",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "plan",
+              "value": "valid"
+            },
+            {
+              "facet": "terminal",
+              "value": "nonterminal"
+            }
+          ]
+        }
+      },
+      {
+        "id": "publication.correct",
+        "binding": {
+          "reference": "software-delivery/publication.correct",
+          "version": "1",
+          "fingerprint": "ff8dde8085d0ac07a73f06eca1161e178a29f089d3393444c3212507465eccc7"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "publication.publish",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "external-provider",
+          "human"
+        ],
+        "effects": [
+          "publication.correct"
+        ],
+        "verifier": "verifier:fresh-observation:publication.correct",
+        "recovery": "publication.reconcile",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "published"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "publication",
+              "value": "published-not-landed"
+            },
+            {
+              "facet": "terminal",
+              "value": "nonterminal"
+            }
+          ]
+        }
+      },
+      {
+        "id": "publication.execute",
+        "binding": {
+          "reference": "software-delivery/publication.execute",
+          "version": "1",
+          "fingerprint": "48ebc301ff29a5f86c96b7bd1457068ba64f76922ba1c106e7faf672165c32b0"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "publication.publish",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "external-provider",
+          "human"
+        ],
+        "effects": [
+          "publication.execute"
+        ],
+        "verifier": "verifier:fresh-observation:publication.execute",
+        "recovery": "publication.reconcile",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "delivery",
+              "value": "published"
+            },
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "publication",
+              "value": "published-not-landed"
+            },
+            {
+              "facet": "workspace",
+              "value": "published"
+            }
+          ]
+        }
+      },
+      {
+        "id": "publication.observe",
+        "binding": {
+          "reference": "software-delivery/publication.observe",
+          "version": "1",
+          "fingerprint": "cd31baf03d88cb5bdcfa177d1b4b4ee3c973f1ca9b57406141dac8c814667d8d"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "publication.observe"
+        ],
+        "verifier": "verifier:fresh-observation:publication.observe",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "publication-observe"
+        }
+      },
+      {
+        "id": "publication.preview",
+        "binding": {
+          "reference": "software-delivery/publication.preview",
+          "version": "1",
+          "fingerprint": "21b8a8992dfbc96262b85d3f51c6513cbf917ad7f25bdf8bbefca0043ae0b92e"
+        },
+        "capabilities": [
+          "product.mutate",
+          "publication.prepare",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "publication.preview"
+        ],
+        "verifier": "verifier:fresh-observation:publication.preview",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "publication",
+              "value": "candidate"
+            }
+          ]
+        }
+      },
+      {
+        "id": "publication.reconcile",
+        "binding": {
+          "reference": "software-delivery/publication.reconcile",
+          "version": "1",
+          "fingerprint": "98c3bc1b45fceda99aaff02ec544cab70269c1b6ee164a74c6c5f1bd9de0015d"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "external-provider",
+          "human"
+        ],
+        "effects": [
+          "publication.reconcile"
+        ],
+        "verifier": "verifier:fresh-observation:publication.reconcile",
+        "recovery": "recovery.escalate",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "publication-observe"
+        }
+      },
+      {
+        "id": "workspace.activate",
+        "binding": {
+          "reference": "software-delivery/workspace.activate",
+          "version": "1",
+          "fingerprint": "479e6a462eed9c87c3bdc0612da30091d213d602a9014b54d026fb2e38f3f791"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "workspace.activate"
+        ],
+        "verifier": "verifier:fresh-observation:workspace.activate",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "workspace",
+              "value": "active"
+            }
+          ]
+        }
+      },
+      {
+        "id": "workspace.cut",
+        "binding": {
+          "reference": "software-delivery/workspace.cut",
+          "version": "1",
+          "fingerprint": "6a908fb77646fdc09c8c0723d556e42d4840a765c13bb3406ee2694d808e68c8"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "workspace.cut"
+        ],
+        "verifier": "verifier:fresh-observation:workspace.cut",
+        "recovery": "workspace.reconcile",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "workspace",
+              "value": "cut"
+            },
+            {
+              "facet": "workspace_base_ref",
+              "value_from": {
+                "parameter": "base_ref"
+              }
+            },
+            {
+              "facet": "workspace_branch",
+              "value_from": {
+                "parameter": "branch"
+              }
+            },
+            {
+              "facet": "workspace_path",
+              "value_from": {
+                "parameter": "destination"
+              }
+            },
+            {
+              "facet": "workspace_source_id",
+              "value_from": {
+                "invocation": "worktree_id"
+              }
+            },
+            {
+              "facet": "workspace_source_path",
+              "value_from": {
+                "invocation": "invoking_path"
+              }
+            },
+            {
+              "facet": "workspace_source_ref",
+              "value_from": {
+                "invocation": "ref"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "id": "workspace.publish",
+        "binding": {
+          "reference": "software-delivery/workspace.publish",
+          "version": "1",
+          "fingerprint": "0e172ec441f731cc29cd58e9b33395c7e0007019701700f1dbbf014e45ff48b8"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "repository-policy"
+        ],
+        "effects": [
+          "workspace.publish"
+        ],
+        "verifier": "verifier:fresh-observation:workspace.publish",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "workspace",
+              "value": "published"
+            }
+          ]
+        }
+      },
+      {
+        "id": "workspace.reconcile",
+        "binding": {
+          "reference": "software-delivery/workspace.reconcile",
+          "version": "1",
+          "fingerprint": "63fc694d0429f3c89baf7f34e31f85d3d1e79c66e01d823527097bf1f86107c7"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "human",
+          "repository-policy"
+        ],
+        "effects": [
+          "workspace.reconcile"
+        ],
+        "verifier": "verifier:fresh-observation:workspace.reconcile",
+        "recovery": "recovery.escalate",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "workspace-reconcile"
+        }
+      },
+      {
+        "id": "workspace.sync",
+        "binding": {
+          "reference": "software-delivery/workspace.sync",
+          "version": "1",
+          "fingerprint": "804b4dad41a77832b641f03a7588b71250a694493d0c6e10d576e0defdb8796a"
+        },
+        "capabilities": [
+          "command.execute",
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": [
+          "autonomy",
+          "human"
+        ],
+        "effects": [
+          "workspace.sync"
+        ],
+        "verifier": "verifier:fresh-observation:workspace.sync",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "assignments",
+          "assignments": [
+            {
+              "facet": "phase",
+              "value": "ACTIVE"
+            },
+            {
+              "facet": "workspace",
+              "value": "active"
+            }
+          ]
+        }
+      }
+    ],
+    "transitions": [
+      {
+        "id": "delivery.slice.advance",
+        "operator": "delivery.slice.advance",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 68
+      },
+      {
+        "id": "evidence.visual.attach",
+        "operator": "evidence.visual.attach",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 66
+      },
+      {
+        "id": "gate.build.record",
+        "operator": "gate.build.record",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 61
+      },
+      {
+        "id": "gate.change.record",
+        "operator": "gate.change.record",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 64
+      },
+      {
+        "id": "gate.journey.record",
+        "operator": "gate.journey.record",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 64
+      },
+      {
+        "id": "gate.review.record",
+        "operator": "gate.review.record",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 63
+      },
+      {
+        "id": "gate.test.record",
+        "operator": "gate.test.record",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 62
+      },
+      {
+        "id": "plan.activate",
+        "operator": "plan.activate",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 50
+      },
+      {
+        "id": "plan.amend",
+        "operator": "plan.amend",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 42
+      },
+      {
+        "id": "plan.approve",
+        "operator": "plan.approve",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 45
+      },
+      {
+        "id": "plan.approve-amendment",
+        "operator": "plan.approve-amendment",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 46
+      },
+      {
+        "id": "plan.create",
+        "operator": "plan.create",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 35
+      },
+      {
+        "id": "plan.invalidate",
+        "operator": "plan.invalidate",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 41
+      },
+      {
+        "id": "plan.validate",
+        "operator": "plan.validate",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 40
+      },
+      {
+        "id": "publication.correct",
+        "operator": "publication.correct",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 80
+      },
+      {
+        "id": "publication.execute",
+        "operator": "publication.execute",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 76
+      },
+      {
+        "id": "publication.observe",
+        "operator": "publication.observe",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 77
+      },
+      {
+        "id": "publication.preview",
+        "operator": "publication.preview",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 72
+      },
+      {
+        "id": "publication.reconcile",
+        "operator": "publication.reconcile",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 1
+      },
+      {
+        "id": "workspace.activate",
+        "operator": "workspace.activate",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 53
+      },
+      {
+        "id": "workspace.cut",
+        "operator": "workspace.cut",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 52
+      },
+      {
+        "id": "workspace.publish",
+        "operator": "workspace.publish",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 75
+      },
+      {
+        "id": "workspace.reconcile",
+        "operator": "workspace.reconcile",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 2
+      },
+      {
+        "id": "workspace.sync",
+        "operator": "workspace.sync",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 58
+      }
+    ],
+    "targets": [
+      {
+        "id": "published-pr",
+        "predicate": {
+          "all": [
+            {
+              "fact": {
+                "facet": "configuration",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "verified"
+                ]
+              }
+            },
+            {
+              "fact": {
+                "facet": "publication",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "open"
+                ]
+              }
+            },
+            {
+              "fact": {
+                "facet": "runtime",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "verified"
+                ]
+              }
+            },
+            {
+              "fact": {
+                "facet": "verification",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "current"
+                ]
+              }
+            }
+          ]
+        },
+        "description": "A provider-observed open or updated pull request"
+      }
+    ],
+    "entries": [
+      {
+        "id": "run",
+        "target": "published-pr",
+        "inputs": [
+          {
+            "id": "plan",
+            "type": "markdown-file",
+            "required": true,
+            "resolver": "software-delivery.plan-inbox",
+            "config": {
+              "cardinality": "exactly-one",
+              "path": ".boatstack/plans/inbox"
+            }
+          }
+        ],
+        "description": "Implement one approved repository plan and publish a pull request"
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "todo-test-flow-pilot",
+  "private": true,
+  "scripts": {
+    "boatstack:flow:compile": "boatstack flow compile --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\"",
+    "boatstack:flow:check": "boatstack flow check --repo ."
+  },
+  "devDependencies": {
+    "@operatorstack/boatstack": "file:.boatstack/pilot-packages/operatorstack-boatstack-0.0.0-development.tgz",
+    "@operatorstack/boatstack-software-delivery": "file:.boatstack/pilot-packages/operatorstack-boatstack-software-delivery-0.0.0-development.tgz"
+  }
+}
