@@ -55,6 +55,12 @@ output {
   font-weight: 750;
 }
 
+.counter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
 button {
   width: fit-content;
   border: 0;
@@ -69,6 +75,16 @@ button {
 
 button:hover {
   background: #115e59;
+}
+
+.reset-button {
+  border: 1px solid #94a3b8;
+  color: #334155;
+  background: transparent;
+}
+
+.reset-button:hover {
+  background: #f1f5f9;
 }
 
 button:focus-visible {
