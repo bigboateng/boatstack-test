@@ -1,26 +1,29 @@
 {
   "schema": "control-program-artifact",
-  "schema_revision": 1,
-  "compiler_version": "control-program.compiler.1",
+  "schema_revision": 2,
+  "compiler_version": "control-program.compiler.2",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "e1f992e5713b707f3debc402739c499ee06da28a5dce1b8d816bc1c78ab53c23",
+  "source_sha256": "ac0342dec35d09dcdba3c0ba7d102670f1e1d4d8cdc85a386a03a0bf962c4bc8",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "ae634b5a9c76d99f9c7b4ea073ad79a1474da2d8fa643cf07a8b8f7ebb43826b",
-  "program_fingerprint": "2a31c573ab4d94bae5fdb7bd093f5ce914d714051513fc61cf3dfba7355bd337",
+  "dependency_lock_sha256": "020eea2b23a6eb6ed70d15443cf5bcfb3b37affb6b01004a27f16b360deff7d1",
+  "program_fingerprint": "094543c6b79fc66c254bc1af01bdb61c8100947ca43df5a459a03271e7d58015",
   "generated_skills": {
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "1eb30915327c400213bf7af569eeb6c91fac1572a0a6c01dbf07a05813a831bb",
-    ".agents/skills/product-delivery-run/agents/openai.yaml": "dbfa45a2388ff41501cbacd8c108ae239dc4fbb39f017283f8dfc2c10963de2f",
+    ".agents/skills/product-delivery-run/SKILL.md": "22750e01c59fa1952f0177608011931a44da26aa135197ac127356b24b0f788c",
+    ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "cb79d4d9ff99d533d9beb278567d069fd3bfe29c798f3978697754fac2286347"
+    ".claude/skills/product-delivery-run/SKILL.md": "30f47df2c4ac8be5ba423d3b7c85918ec356d13a5a21b5db24acb6fee1722bac"
+  },
+  "assets": {
+    ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+    ".boatstack/flows/assets/planning-package.md": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f"
   },
   "program": {
     "schema": "control-program",
-    "schema_revision": 1,
+    "schema_revision": 3,
     "program": {
       "id": "product-delivery",
-      "version": "1",
-      "description": "Basic React delivery from one repository plan to a published pull request"
+      "version": "1"
     },
     "declarations": {
       "capabilities": [
@@ -45,12 +48,9 @@
         "gate.review.record",
         "gate.test.record",
         "plan.activate",
-        "plan.amend",
-        "plan.approve",
-        "plan.approve-amendment",
-        "plan.create",
-        "plan.invalidate",
-        "plan.validate",
+        "planning.package.admit",
+        "planning.package.approve",
+        "planning.package.promote",
         "publication.correct",
         "publication.execute",
         "publication.observe",
@@ -71,12 +71,9 @@
         "verifier:fresh-observation:gate.review.record",
         "verifier:fresh-observation:gate.test.record",
         "verifier:fresh-observation:plan.activate",
-        "verifier:fresh-observation:plan.amend",
-        "verifier:fresh-observation:plan.approve",
-        "verifier:fresh-observation:plan.approve-amendment",
-        "verifier:fresh-observation:plan.create",
-        "verifier:fresh-observation:plan.invalidate",
-        "verifier:fresh-observation:plan.validate",
+        "verifier:fresh-observation:planning.package.admit",
+        "verifier:fresh-observation:planning.package.approve",
+        "verifier:fresh-observation:planning.package.promote",
         "verifier:fresh-observation:publication.correct",
         "verifier:fresh-observation:publication.execute",
         "verifier:fresh-observation:publication.observe",
@@ -224,6 +221,109 @@
         "id": "publication-evidence",
         "subject": "publication",
         "kind": "provider-observation"
+      }
+    ],
+    "work": [
+      {
+        "id": "planning-package",
+        "instructions": {
+          "path": ".boatstack/flows/assets/planning-package.md",
+          "sha256": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f",
+          "content": "# Compile a delivery planning package\n\nRead the bound repository plan and inspect only the code needed to resolve its unknowns.\nAsk the user focused questions when a consequential product or implementation choice is missing.\nAfter every required answer is available, produce the exact declared artifacts.\n\nThe package must make scope, behavior, tasks, tests, user journeys, gaps, evidence, and allowed autonomy explicit.\nDo not implement the feature during this work requirement.\n"
+        },
+        "inputs": [
+          {
+            "id": "plan",
+            "entry_input": "plan"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "autonomy",
+            "path": "autonomy.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "evidence",
+            "path": "compiled/evidence.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "feature-spec",
+            "path": "feature-spec.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          },
+          {
+            "id": "gaps",
+            "path": "gaps.md",
+            "media_type": "text/markdown",
+            "required": false,
+            "max_bytes": 131072
+          },
+          {
+            "id": "journey-oracles",
+            "path": "compiled/journey-oracles.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "plan",
+            "path": "plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          },
+          {
+            "id": "questions",
+            "path": "questions.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "tasks",
+            "path": "compiled/tasks.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "test-matrix",
+            "path": "compiled/test-matrix.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "test-plan",
+            "path": "test-plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          }
+        ]
       }
     ],
     "operators": [
@@ -484,11 +584,11 @@
         "execution_context": "preserve"
       },
       {
-        "id": "plan.amend",
+        "id": "planning.package.admit",
         "binding": {
-          "reference": "software-delivery/plan.amend",
+          "reference": "software-delivery/planning.package.admit",
           "version": "1",
-          "fingerprint": "59f988efd8a059049679b1d9bf12f3d1adcfb5bb47124ab6ef9901a0321fd1f0"
+          "fingerprint": "2af12b00ebcc10f0d149504205b0043a9f84ed0db03508e3593e90737a98eda8"
         },
         "capabilities": [
           "product.mutate",
@@ -501,67 +601,22 @@
           ]
         },
         "effects": [
-          "plan.amend"
+          "planning.package.admit"
         ],
-        "verifier": "verifier:fresh-observation:plan.amend",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "amendment"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "amendment-required"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.approve",
-        "binding": {
-          "reference": "software-delivery/plan.approve",
-          "version": "1",
-          "fingerprint": "c97aa6164bc9aa1e26ca7156b1124e7280a6a3a99795908b61b200cbd2974362"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "autonomy",
-            "human"
-          ]
-        },
-        "effects": [
-          "plan.approve"
-        ],
-        "verifier": "verifier:fresh-observation:plan.approve",
+        "verifier": "verifier:fresh-observation:planning.package.admit",
         "recovery": "recovery.resume",
         "state_effect": {
           "kind": "native",
-          "native_handler": "plan-approve"
+          "native_handler": "planning-package-admit"
         },
         "execution_context": "preserve"
       },
       {
-        "id": "plan.approve-amendment",
+        "id": "planning.package.approve",
         "binding": {
-          "reference": "software-delivery/plan.approve-amendment",
+          "reference": "software-delivery/planning.package.approve",
           "version": "1",
-          "fingerprint": "857ea2ed0dffa7acbedbee53690b0bc997cf86464cb3f921c8cd185fab3e1bbe"
+          "fingerprint": "e86dd81c64b489f60ab8d1de304aae055d4b36717b2c105a3191a8de5d48aded"
         },
         "capabilities": [
           "product.mutate",
@@ -574,35 +629,22 @@
           ]
         },
         "effects": [
-          "plan.approve-amendment"
+          "planning.package.approve"
         ],
-        "verifier": "verifier:fresh-observation:plan.approve-amendment",
+        "verifier": "verifier:fresh-observation:planning.package.approve",
         "recovery": "recovery.resume",
         "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "approved"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "approved"
-            }
-          ]
+          "kind": "native",
+          "native_handler": "planning-package-approve"
         },
         "execution_context": "preserve"
       },
       {
-        "id": "plan.create",
+        "id": "planning.package.promote",
         "binding": {
-          "reference": "software-delivery/plan.create",
+          "reference": "software-delivery/planning.package.promote",
           "version": "1",
-          "fingerprint": "05d72e63bbf8879d7865ffbb91e852da900ddc6af74671a6f6dbc52c1731f462"
+          "fingerprint": "6b8cc45726d2e8602428cec941a002988ec342f1dd5f86e03fc24a1ed4170791"
         },
         "capabilities": [
           "product.mutate",
@@ -615,114 +657,13 @@
           ]
         },
         "effects": [
-          "plan.create"
+          "planning.package.promote"
         ],
-        "verifier": "verifier:fresh-observation:plan.create",
+        "verifier": "verifier:fresh-observation:planning.package.promote",
         "recovery": "recovery.resume",
         "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "planning"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "draft"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.invalidate",
-        "binding": {
-          "reference": "software-delivery/plan.invalidate",
-          "version": "1",
-          "fingerprint": "f1e876fc331c73d7a31c631b9653cb6e32083ea2bc3d15731de997d9569d369f"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "repository-policy"
-          ]
-        },
-        "effects": [
-          "plan.invalidate"
-        ],
-        "verifier": "verifier:fresh-observation:plan.invalidate",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "invalid"
-            },
-            {
-              "facet": "phase",
-              "value": "FRONTIER"
-            },
-            {
-              "facet": "plan",
-              "value": "invalid"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.validate",
-        "binding": {
-          "reference": "software-delivery/plan.validate",
-          "version": "1",
-          "fingerprint": "a20af78012f12e932eecc11707c852de8b774d96cab18a8f578099a2a8ad8a9d"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "repository-policy"
-          ]
-        },
-        "effects": [
-          "plan.validate"
-        ],
-        "verifier": "verifier:fresh-observation:plan.validate",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "valid"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
+          "kind": "native",
+          "native_handler": "planning-package-promote"
         },
         "execution_context": "preserve"
       },
@@ -1231,20 +1172,33 @@
         "requires": {}
       },
       {
-        "id": "plan.amend",
-        "operator": "plan.amend",
+        "id": "planning.package.admit",
+        "operator": "planning.package.admit",
         "guard": {
           "true": true
         },
         "target": {
           "true": true
         },
-        "priority": 42,
+        "priority": 43,
+        "requires": {},
+        "work": "planning-package"
+      },
+      {
+        "id": "planning.package.approve",
+        "operator": "planning.package.approve",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 44,
         "requires": {}
       },
       {
-        "id": "plan.approve",
-        "operator": "plan.approve",
+        "id": "planning.package.promote",
+        "operator": "planning.package.promote",
         "guard": {
           "true": true
         },
@@ -1252,54 +1206,6 @@
           "true": true
         },
         "priority": 45,
-        "requires": {}
-      },
-      {
-        "id": "plan.approve-amendment",
-        "operator": "plan.approve-amendment",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 46,
-        "requires": {}
-      },
-      {
-        "id": "plan.create",
-        "operator": "plan.create",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 35,
-        "requires": {}
-      },
-      {
-        "id": "plan.invalidate",
-        "operator": "plan.invalidate",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 41,
-        "requires": {}
-      },
-      {
-        "id": "plan.validate",
-        "operator": "plan.validate",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 40,
         "requires": {}
       },
       {
@@ -1499,10 +1405,8 @@
           "authorities": [
             "autonomy"
           ]
-        },
-        "description": "Implement one approved repository plan and publish a pull request"
+        }
       }
-    ],
-    "description": "Basic React delivery from one repository plan to a published pull request"
+    ]
   }
 }
