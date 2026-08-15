@@ -16,14 +16,14 @@ PowerShell). If it is absent, read the exact committed
 tag-specific installer command for the current platform:
 
 POSIX:
-`BOATSTACK_MODE=hydrate BOATSTACK_VERSION=<exact-version> BOATSTACK_EXPECTED_RUNTIME_SHA256=<exact-sha256> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/operatorstack/boatstack/v2.0.0-foreground-latest-test/install.sh)"`
+`BOATSTACK_MODE=hydrate BOATSTACK_VERSION=<exact-version> BOATSTACK_EXPECTED_RUNTIME_SHA256=<exact-sha256> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/operatorstack/boatstack/<exact-version>/install.sh)"`
 
 PowerShell:
-`$env:BOATSTACK_MODE='hydrate'; $env:BOATSTACK_VERSION='<exact-version>'; $env:BOATSTACK_EXPECTED_RUNTIME_SHA256='<exact-sha256>'; Invoke-RestMethod https://raw.githubusercontent.com/operatorstack/boatstack/v2.0.0-foreground-latest-test/install.ps1 | Invoke-Expression`
+`$env:BOATSTACK_MODE='hydrate'; $env:BOATSTACK_VERSION='<exact-version>'; $env:BOATSTACK_EXPECTED_RUNTIME_SHA256='<exact-sha256>'; Invoke-RestMethod https://raw.githubusercontent.com/operatorstack/boatstack/<exact-version>/install.ps1 | Invoke-Expression`
 
 Replace `<exact-version>` and `<exact-sha256>` only with the validated
-values in the pin. The installer comes from Boatstack v2.0.0-foreground-latest-test, the runtime version
-that generated this skill, so it can hydrate older pinned runtime artifacts.
+values in the pin. The installer tag and runtime identity therefore come from
+the same committed repository pin.
 If the pin is absent or invalid, report `BOATSTACK_RUNTIME_PIN_MISSING` or
 `BOATSTACK_RUNTIME_PIN_INVALID` and stop without guessing a version or
 selecting `latest`.
@@ -76,6 +76,15 @@ An answer is evidence, never authority. If work succeeds, run
 `boatstack flow work block ... --reason <reason>`. Resume the same entry
 and run ID afterward. Never edit the work record directly or continue in the
 background while a question is open.
+
+
+If Boatstack reports `WORKSPACE_COMMIT_REQUIRED`, stay in the same
+managed worktree and run. Commit only the intended delivery changes on the
+current managed branch, excluding generated runtime and publication artifacts
+unless they are deliberately part of the delivery, then resume this entry.
+Never fabricate an external-provider receipt. Boatstack derives provider
+capability through its trusted GitHub boundary and reports a typed blocker when
+that capability is unavailable.
 
 
 Stop only when Boatstack reports the marked target, a typed blocker, refusal,

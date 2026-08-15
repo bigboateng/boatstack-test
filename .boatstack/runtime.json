@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "version": "v2.0.0-foreground-latest-test",
-  "sha256": "2130f355b31e85c403be714ae3584ba125478bc76a3138e5b06ae856df1727c8",
-  "source_revision": "17e89ed2a8cb7c8f5397b9c97b9b3c27c3d16917+fresh-flow-continuation",
-  "program_fingerprint": "d6ff5fe848654ed3654a3d5b114303840d841c71f77dc8675f675b8b2b038228",
-  "state_schema_version": 5
+  "version": "v2.0.0-control-bundle-pilot",
+  "sha256": "2942d6b2999229c7d522da1cc65fb78bd0de77702bd75e644d2fdc825625df96",
+  "source_revision": "4b6475a60fa39d0f70550debc9235b5cc3eed54d",
+  "program_fingerprint": "d660910ddcd131b80549331f0811d8149d61c305f071ee91f09d6fb2933a987f",
+  "state_schema_version": 6
 }

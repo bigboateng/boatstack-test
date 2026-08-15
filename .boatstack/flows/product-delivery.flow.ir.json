@@ -1,18 +1,18 @@
 {
   "schema": "control-program-artifact",
   "schema_revision": 2,
-  "compiler_version": "control-program.compiler.2",
+  "compiler_version": "control-program.compiler.3",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
   "source_sha256": "ac0342dec35d09dcdba3c0ba7d102670f1e1d4d8cdc85a386a03a0bf962c4bc8",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "020eea2b23a6eb6ed70d15443cf5bcfb3b37affb6b01004a27f16b360deff7d1",
+  "dependency_lock_sha256": "acfdb16647835c712a786fcdf313bea29997302ce97cf362c202310aeea06ebf",
   "program_fingerprint": "094543c6b79fc66c254bc1af01bdb61c8100947ca43df5a459a03271e7d58015",
   "generated_skills": {
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "22750e01c59fa1952f0177608011931a44da26aa135197ac127356b24b0f788c",
+    ".agents/skills/product-delivery-run/SKILL.md": "60706c4222f39c15c98a7bf460f167e2b14526e1f5f3ddc1be0bd0e80948af4c",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "30f47df2c4ac8be5ba423d3b7c85918ec356d13a5a21b5db24acb6fee1722bac"
+    ".claude/skills/product-delivery-run/SKILL.md": "297da8688fc6c95d6387560543d62eb1b690fccf7bc71c237a8dd004de0c6527"
   },
   "assets": {
     ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
