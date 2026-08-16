@@ -31,6 +31,7 @@ const initialTodos: Todo[] = [
 function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [selectedID, setSelectedID] = useState(initialTodos[0].id)
+  const [isSortedByDueDate, setIsSortedByDueDate] = useState(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
   const [titleError, setTitleError] = useState('')
@@ -40,6 +41,27 @@ function App() {
 
   const selectedTodo = todos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
+  const visibleTodos = useMemo(() => {
+    if (!isSortedByDueDate) {
+      return todos
+    }
+
+    return [...todos].sort((leftTodo, rightTodo) => {
+      if (leftTodo.dueDate.length === 0 && rightTodo.dueDate.length === 0) {
+        return 0
+      }
+
+      if (leftTodo.dueDate.length === 0) {
+        return 1
+      }
+
+      if (rightTodo.dueDate.length === 0) {
+        return -1
+      }
+
+      return leftTodo.dueDate.localeCompare(rightTodo.dueDate)
+    })
+  }, [isSortedByDueDate, todos])
 
   useEffect(() => {
     if (!isAddDialogOpen) {
@@ -175,6 +197,15 @@ function App() {
             </div>
           </div>
 
+          <label className="sort-toggle">
+            <input
+              type="checkbox"
+              checked={isSortedByDueDate}
+              onChange={(event) => setIsSortedByDueDate(event.target.checked)}
+            />
+            <span>Sort by due date</span>
+          </label>
+
           {todos.length === 0 ? (
             <div className="empty-state">
               <p>No tasks yet.</p>
@@ -182,7 +213,7 @@ function App() {
             </div>
           ) : (
             <ul className="todo-list">
-              {todos.map((todo) => (
+              {visibleTodos.map((todo) => (
                 <li key={todo.id}>
                   <button
                     className={`todo-row${todo.id === selectedID ? ' selected' : ''}`}
