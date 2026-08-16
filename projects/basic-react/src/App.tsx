@@ -216,6 +216,16 @@ function App() {
     }
   }
 
+  function reopenAll() {
+    setTodos((current) => current.map((todo) => {
+      if (!todo.completed) {
+        return todo
+      }
+
+      return { ...todo, completed: false }
+    }))
+  }
+
   function resetView() {
     setShowIncompleteOnly(false)
     setIsSortedByDueDate(false)
@@ -243,6 +253,7 @@ function App() {
             </div>
             <div className="list-actions">
               <button type="button" disabled={completedCount === 0} onClick={clearCompleted}>Clear completed</button>
+              <button type="button" disabled={completedCount === 0} onClick={reopenAll}>Reopen all</button>
               <button className="add-button" type="button" onClick={openAddDialog}>Add task</button>
             </div>
           </div>
