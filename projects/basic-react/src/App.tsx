@@ -28,9 +28,34 @@ const initialTodos: Todo[] = [
   { id: 3, title: 'Ship the starting point', notes: 'A completed example keeps the state easy to read.', dueDate: '2026-08-12', completed: true },
 ]
 
+function visibleTodoOrder(todos: Todo[], showIncompleteOnly: boolean, isSortedByDueDate: boolean) {
+  const visibleTodos = showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos
+
+  if (!isSortedByDueDate) {
+    return visibleTodos
+  }
+
+  return [...visibleTodos].sort((leftTodo, rightTodo) => {
+    if (leftTodo.dueDate.length === 0 && rightTodo.dueDate.length === 0) {
+      return 0
+    }
+
+    if (leftTodo.dueDate.length === 0) {
+      return 1
+    }
+
+    if (rightTodo.dueDate.length === 0) {
+      return -1
+    }
+
+    return leftTodo.dueDate.localeCompare(rightTodo.dueDate)
+  })
+}
+
 function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [selectedID, setSelectedID] = useState(initialTodos[0].id)
+  const [isSortedByDueDate, setIsSortedByDueDate] = useState(false)
   const [showIncompleteOnly, setShowIncompleteOnly] = useState(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
@@ -41,8 +66,8 @@ function App() {
   const pendingFocusIDRef = useRef<number | null>(null)
 
   const visibleTodos = useMemo(
-    () => showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos,
-    [showIncompleteOnly, todos],
+    () => visibleTodoOrder(todos, showIncompleteOnly, isSortedByDueDate),
+    [isSortedByDueDate, showIncompleteOnly, todos],
   )
   const selectedTodo = visibleTodos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
@@ -117,7 +142,11 @@ function App() {
     }
 
     if (changes.completed === true && showIncompleteOnly) {
-      const remainingVisible = todos.filter((todo) => todo.id !== selectedTodo.id && !todo.completed)
+      const remainingVisible = visibleTodoOrder(
+        todos.filter((todo) => todo.id !== selectedTodo.id),
+        showIncompleteOnly,
+        isSortedByDueDate,
+      )
       const nextSelectedID = remainingVisible[0]?.id ?? 0
       pendingFocusIDRef.current = nextSelectedID
       setSelectedID(nextSelectedID)
@@ -171,7 +200,7 @@ function App() {
     }
 
     const remaining = todos.filter((todo) => todo.id !== selectedTodo.id)
-    const remainingVisible = showIncompleteOnly ? remaining.filter((todo) => !todo.completed) : remaining
+    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
     setTodos(remaining)
     setSelectedID(remainingVisible[0]?.id ?? 0)
   }
@@ -179,10 +208,11 @@ function App() {
   function clearCompleted() {
     const remaining = todos.filter((todo) => !todo.completed)
     const selectedTodoRemains = remaining.some((todo) => todo.id === selectedID)
+    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
 
     setTodos(remaining)
     if (!selectedTodoRemains) {
-      setSelectedID(remaining[0]?.id ?? 0)
+      setSelectedID(remainingVisible[0]?.id ?? 0)
     }
   }
 
@@ -209,15 +239,25 @@ function App() {
             </div>
           </div>
 
-          <label className="list-filter">
-            <input
-              id="show-incomplete-only"
-              type="checkbox"
-              checked={showIncompleteOnly}
-              onChange={(event) => setShowIncompleteOnly(event.target.checked)}
-            />
-            <span>Show incomplete only</span>
-          </label>
+          <div className="list-controls">
+            <label className="list-filter">
+              <input
+                id="show-incomplete-only"
+                type="checkbox"
+                checked={showIncompleteOnly}
+                onChange={(event) => setShowIncompleteOnly(event.target.checked)}
+              />
+              <span>Show incomplete only</span>
+            </label>
+            <label className="sort-toggle">
+              <input
+                type="checkbox"
+                checked={isSortedByDueDate}
+                onChange={(event) => setIsSortedByDueDate(event.target.checked)}
+              />
+              <span>Sort by due date</span>
+            </label>
+          </div>
 
           {visibleTodos.length === 0 ? (
             <div className="empty-state">

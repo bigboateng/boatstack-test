@@ -16,8 +16,9 @@ button:disabled, button:disabled:hover { color: #64748b; background: #e2e8f0; cu
 button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #5eead4; outline-offset: 2px; }
 .list-actions { display: flex; align-items: stretch; gap: .5rem; }
 .add-button { white-space: nowrap; }
-.list-filter { display: flex; align-items: center; gap: .6rem; margin: -1rem 0 1.25rem; }
-.list-filter input { width: 1.1rem; height: 1.1rem; accent-color: #0f766e; }
+.list-controls { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin: -.5rem 0 1.25rem; }
+.sort-toggle, .list-filter { display: flex; align-items: center; width: fit-content; gap: .6rem; }
+.sort-toggle input, .list-filter input { width: 1.1rem; height: 1.1rem; accent-color: #0f766e; }
 .todo-list { display: grid; gap: .5rem; margin: 0; padding: 0; list-style: none; }
 .todo-row { display: flex; width: 100%; gap: .8rem; padding: .85rem; color: #334155; background: transparent; text-align: left; }
 .todo-row:hover, .todo-row.selected { color: #172554; background: #e0f2fe; }

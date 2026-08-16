@@ -7,6 +7,28 @@ afterEach(() => {
   cleanup()
 })
 
+function getVisibleTodoTitles() {
+  return within(screen.getByRole('list'))
+    .getAllByRole('button')
+    .map((button) => button.querySelector('strong')?.textContent)
+}
+
+async function createTodo(
+  user: ReturnType<typeof userEvent.setup>,
+  title: string,
+  dueDate = '',
+) {
+  await user.click(screen.getByRole('button', { name: 'Add task' }))
+  const dialog = screen.getByRole('dialog', { name: /add a task/i })
+  await user.type(within(dialog).getByRole('textbox', { name: 'Title' }), title)
+
+  if (dueDate.length > 0) {
+    await user.type(within(dialog).getByLabelText('Due date'), dueDate)
+  }
+
+  await user.click(within(dialog).getByRole('button', { name: 'Create' }))
+}
+
 describe('App', () => {
   it('supports adding, editing, completing, selecting, and deleting todos', async () => {
     const user = userEvent.setup()
@@ -32,6 +54,94 @@ describe('App', () => {
 
     await user.click(screen.getByRole('button', { name: 'Delete' }))
     expect(screen.queryByRole('button', { name: /review the details panel/i })).not.toBeInTheDocument()
+  })
+
+  it('sorts dated todos from earliest to latest', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Ship the starting point',
+      'Sketch the todo flow',
+      'Review the details panel',
+    ])
+  })
+
+  it('places undated todos after dated todos', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await createTodo(user, 'Undated follow-up')
+
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Ship the starting point',
+      'Sketch the todo flow',
+      'Review the details panel',
+      'Undated follow-up',
+    ])
+  })
+
+  it('preserves the stored order of equal-date and undated ties', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await createTodo(user, 'First equal-date task', '2026-08-14')
+    await createTodo(user, 'Second equal-date task', '2026-08-14')
+    await createTodo(user, 'First undated task')
+    await createTodo(user, 'Second undated task')
+
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Ship the starting point',
+      'Second equal-date task',
+      'First equal-date task',
+      'Sketch the todo flow',
+      'Review the details panel',
+      'Second undated task',
+      'First undated task',
+    ])
+  })
+
+  it('keeps the selected todo selected when sorting changes its position', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const selectedTodo = screen.getByRole('button', { name: /review the details panel/i })
+    await user.click(selectedTodo)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(selectedTodo).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Review the details panel')
+  })
+
+  it('restores the stored todo order when sorting is disabled', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await createTodo(user, 'Undated newest task')
+    const storedOrder = getVisibleTodoTitles()
+    const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
+
+    await user.click(sortToggle)
+    await user.click(sortToggle)
+
+    expect(getVisibleTodoTitles()).toEqual(storedOrder)
+  })
+
+  it('sorts the filtered list without restoring completed todos', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Sketch the todo flow',
+      'Review the details panel',
+    ])
+    expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
   })
 
   it('disables clearing when no todos are completed', async () => {
