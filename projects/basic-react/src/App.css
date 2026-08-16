@@ -46,4 +46,5 @@ textarea { resize: vertical; line-height: 1.5; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: .75rem; padding-top: .25rem; }
 .secondary-button { color: #0f766e; background: #ccfbf1; }
 .secondary-button:hover { background: #99f6e4; }
-@media (max-width: 720px) { .app-header, .detail-footer { align-items: start; flex-direction: column; } .todo-workspace { grid-template-columns: 1fr; } .todo-list-panel { min-height: auto; border-right: 0; border-bottom: 1px solid #e2e8f0; } .list-actions { align-items: stretch; flex-direction: column-reverse; } .details-panel { min-height: 28rem; } .dialog-backdrop { align-items: end; padding: .75rem; } .add-task-dialog { border-radius: 1rem; } .dialog-actions { align-items: stretch; flex-direction: column-reverse; } }
+@media (max-width: 900px) { .list-actions { align-items: stretch; flex-direction: column-reverse; } }
+@media (max-width: 720px) { .app-header, .detail-footer { align-items: start; flex-direction: column; } .todo-workspace { grid-template-columns: 1fr; } .todo-list-panel { min-height: auto; border-right: 0; border-bottom: 1px solid #e2e8f0; } .details-panel { min-height: 28rem; } .dialog-backdrop { align-items: end; padding: .75rem; } .add-task-dialog { border-radius: 1rem; } .dialog-actions { align-items: stretch; flex-direction: column-reverse; } }
