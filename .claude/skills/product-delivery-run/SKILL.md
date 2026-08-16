@@ -44,6 +44,29 @@ parameters. A question suspends this run: ask the user, submit only the typed
 answer evidence, and resume the same run ID. Nothing continues in the
 background while input is missing. Never synthesize authority.
 
+Whenever Boatstack presents a human authority boundary, inspect its exact
+`human_identity` object before asking for approval or recording an actor.
+The `provider_fingerprint` identifies the repository-selected identity
+descriptor; it is provenance only and grants no authority.
+
+For a `literal` descriptor, use its validated `value` as the proposed
+actor. For a `command` descriptor, execute the exact `command` and
+`args` directly through the host command tool. Do not join them into a shell
+string, interpolate values, rewrite arguments, or use a shell evaluator. Require a
+zero exit status and stdout of at most 1024 bytes. Remove at most one trailing LF or
+CRLF, then require exactly one non-empty line with no NUL and an actor matching
+`^[A-Za-z0-9][A-Za-z0-9._-]*$`. Stderr is diagnostic only.
+
+Visibly display the proposed actor, exact request or transition, requested
+authority, and relevant fingerprint, then ask the human for explicit approval.
+Identity resolution never counts as approval. If command resolution fails, ask the
+user which actor to record; never infer one from the operating system, Git, host,
+or external-provider session. Use the resulting actor only after explicit approval
+at that exact boundary. Re-resolve if Boatstack reports identity or configuration
+drift. Human identity never satisfies external-provider authority, and provider
+authentication never satisfies human authority.
+
+
 Before product delegation, Boatstack may select `installation.initialize`
 for an installed repository whose controller state is fresh. Display that exact
 installation-authority question and obtain explicit human approval. Resume the
@@ -62,7 +85,7 @@ After internal preconditions are committed, Boatstack returns a typed
 Display its exact run ID, request fingerprint, requested authorities, and
 description. Obtain one explicit human approval for that exact request, then run:
 
-`boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human <actor> --host claude`
+`boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human-identity-provider-fingerprint <provider-fingerprint> --human <actor> --host claude`
 
 After authorization, use `boatstack flow run --repo . --flow product-delivery --entry run --run-id <run-id> --repository-authority --host claude --format json`.
 Do not request approval again after a restart or typed suspension. Resume the
