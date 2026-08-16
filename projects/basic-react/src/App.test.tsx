@@ -130,6 +130,20 @@ describe('App', () => {
     expect(getVisibleTodoTitles()).toEqual(storedOrder)
   })
 
+  it('sorts the filtered list without restoring completed todos', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Sketch the todo flow',
+      'Review the details panel',
+    ])
+    expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
+  })
+
   it('disables clearing when no todos are completed', async () => {
     const user = userEvent.setup()
     render(<App />)
@@ -195,6 +209,72 @@ describe('App', () => {
     expect(screen.getByText('0 of 0 complete')).toBeInTheDocument()
     expect(screen.getByText('No tasks yet.')).toBeInTheDocument()
     expect(screen.getByText('Select a task to edit it.')).toBeInTheDocument()
+  })
+
+  it('shows only incomplete todos when filtering is enabled', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /review the details panel/i })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
+    expect(screen.getByText('1 of 3 complete')).toBeInTheDocument()
+  })
+
+  it('selects the first visible todo when filtering hides the selection', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /ship the starting point/i }))
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Sketch the todo flow')
+  })
+
+  it('uses the empty selection state when no incomplete todos remain', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(screen.getByText('No incomplete tasks.')).toBeInTheDocument()
+    expect(screen.getByText('Select a task to edit it.')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
+  })
+
+  it('moves focus when completing the selected filtered todo', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    const filter = screen.getByRole('checkbox', { name: 'Show incomplete only' })
+    await user.click(filter)
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(screen.getByRole('button', { name: /review the details panel/i })).toHaveFocus()
+
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(filter).toHaveFocus()
+  })
+
+  it('restores the full list without losing edits', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /ship the starting point/i }))
+    const title = screen.getByRole('textbox', { name: 'Title' })
+    await user.clear(title)
+    await user.type(title, 'Ship the polished starting point')
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+
+    await user.click(screen.getByRole('button', { name: /ship the polished starting point/i }))
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Ship the polished starting point')
   })
 
   it('opens the dialog without changing tasks or selection', async () => {

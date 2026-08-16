@@ -28,40 +28,69 @@ const initialTodos: Todo[] = [
   { id: 3, title: 'Ship the starting point', notes: 'A completed example keeps the state easy to read.', dueDate: '2026-08-12', completed: true },
 ]
 
+function visibleTodoOrder(todos: Todo[], showIncompleteOnly: boolean, isSortedByDueDate: boolean) {
+  const visibleTodos = showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos
+
+  if (!isSortedByDueDate) {
+    return visibleTodos
+  }
+
+  return [...visibleTodos].sort((leftTodo, rightTodo) => {
+    if (leftTodo.dueDate.length === 0 && rightTodo.dueDate.length === 0) {
+      return 0
+    }
+
+    if (leftTodo.dueDate.length === 0) {
+      return 1
+    }
+
+    if (rightTodo.dueDate.length === 0) {
+      return -1
+    }
+
+    return leftTodo.dueDate.localeCompare(rightTodo.dueDate)
+  })
+}
+
 function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [selectedID, setSelectedID] = useState(initialTodos[0].id)
   const [isSortedByDueDate, setIsSortedByDueDate] = useState(false)
+  const [showIncompleteOnly, setShowIncompleteOnly] = useState(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
   const [titleError, setTitleError] = useState('')
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
   const dialogRef = useRef<HTMLElement | null>(null)
   const titleInputRef = useRef<HTMLInputElement | null>(null)
+  const pendingFocusIDRef = useRef<number | null>(null)
 
-  const selectedTodo = todos.find((todo) => todo.id === selectedID) ?? null
+  const visibleTodos = useMemo(
+    () => visibleTodoOrder(todos, showIncompleteOnly, isSortedByDueDate),
+    [isSortedByDueDate, showIncompleteOnly, todos],
+  )
+  const selectedTodo = visibleTodos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
-  const visibleTodos = useMemo(() => {
-    if (!isSortedByDueDate) {
-      return todos
+
+  useEffect(() => {
+    if (selectedTodo) {
+      return
     }
 
-    return [...todos].sort((leftTodo, rightTodo) => {
-      if (leftTodo.dueDate.length === 0 && rightTodo.dueDate.length === 0) {
-        return 0
-      }
+    setSelectedID(visibleTodos[0]?.id ?? 0)
+  }, [selectedTodo, visibleTodos])
 
-      if (leftTodo.dueDate.length === 0) {
-        return 1
-      }
+  useEffect(() => {
+    const pendingFocusID = pendingFocusIDRef.current
 
-      if (rightTodo.dueDate.length === 0) {
-        return -1
-      }
+    if (pendingFocusID === null) {
+      return
+    }
 
-      return leftTodo.dueDate.localeCompare(rightTodo.dueDate)
-    })
-  }, [isSortedByDueDate, todos])
+    pendingFocusIDRef.current = null
+    const focusTargetID = pendingFocusID === 0 ? 'show-incomplete-only' : `todo-row-${pendingFocusID}`
+    document.getElementById(focusTargetID)?.focus()
+  }, [selectedID, visibleTodos])
 
   useEffect(() => {
     if (!isAddDialogOpen) {
@@ -112,6 +141,17 @@ function App() {
       return
     }
 
+    if (changes.completed === true && showIncompleteOnly) {
+      const remainingVisible = visibleTodoOrder(
+        todos.filter((todo) => todo.id !== selectedTodo.id),
+        showIncompleteOnly,
+        isSortedByDueDate,
+      )
+      const nextSelectedID = remainingVisible[0]?.id ?? 0
+      pendingFocusIDRef.current = nextSelectedID
+      setSelectedID(nextSelectedID)
+    }
+
     setTodos((current) => current.map((todo) => todo.id === selectedTodo.id ? { ...todo, ...changes } : todo))
   }
 
@@ -160,17 +200,19 @@ function App() {
     }
 
     const remaining = todos.filter((todo) => todo.id !== selectedTodo.id)
+    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
     setTodos(remaining)
-    setSelectedID(remaining[0]?.id ?? 0)
+    setSelectedID(remainingVisible[0]?.id ?? 0)
   }
 
   function clearCompleted() {
     const remaining = todos.filter((todo) => !todo.completed)
     const selectedTodoRemains = remaining.some((todo) => todo.id === selectedID)
+    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
 
     setTodos(remaining)
     if (!selectedTodoRemains) {
-      setSelectedID(remaining[0]?.id ?? 0)
+      setSelectedID(remainingVisible[0]?.id ?? 0)
     }
   }
 
@@ -197,25 +239,37 @@ function App() {
             </div>
           </div>
 
-          <label className="sort-toggle">
-            <input
-              type="checkbox"
-              checked={isSortedByDueDate}
-              onChange={(event) => setIsSortedByDueDate(event.target.checked)}
-            />
-            <span>Sort by due date</span>
-          </label>
+          <div className="list-controls">
+            <label className="list-filter">
+              <input
+                id="show-incomplete-only"
+                type="checkbox"
+                checked={showIncompleteOnly}
+                onChange={(event) => setShowIncompleteOnly(event.target.checked)}
+              />
+              <span>Show incomplete only</span>
+            </label>
+            <label className="sort-toggle">
+              <input
+                type="checkbox"
+                checked={isSortedByDueDate}
+                onChange={(event) => setIsSortedByDueDate(event.target.checked)}
+              />
+              <span>Sort by due date</span>
+            </label>
+          </div>
 
-          {todos.length === 0 ? (
+          {visibleTodos.length === 0 ? (
             <div className="empty-state">
-              <p>No tasks yet.</p>
-              <button type="button" onClick={openAddDialog}>Create your first task</button>
+              <p>{todos.length === 0 ? 'No tasks yet.' : 'No incomplete tasks.'}</p>
+              {todos.length === 0 ? <button type="button" onClick={openAddDialog}>Create your first task</button> : null}
             </div>
           ) : (
             <ul className="todo-list">
               {visibleTodos.map((todo) => (
                 <li key={todo.id}>
                   <button
+                    id={`todo-row-${todo.id}`}
                     className={`todo-row${todo.id === selectedID ? ' selected' : ''}`}
                     type="button"
                     aria-pressed={todo.id === selectedID}
