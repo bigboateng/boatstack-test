@@ -144,6 +144,48 @@ describe('App', () => {
     expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
   })
 
+  it('disables resetting when the default view is active', () => {
+    render(<App />)
+
+    expect(screen.getByRole('button', { name: 'Reset view' })).toBeDisabled()
+  })
+
+  it('resets filtering and sorting together', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const incompleteOnlyToggle = screen.getByRole('checkbox', { name: 'Show incomplete only' })
+    const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
+    const resetViewButton = screen.getByRole('button', { name: 'Reset view' })
+
+    await user.click(incompleteOnlyToggle)
+    await user.click(sortToggle)
+
+    expect(resetViewButton).toBeEnabled()
+    await user.click(resetViewButton)
+
+    expect(incompleteOnlyToggle).not.toBeChecked()
+    expect(sortToggle).not.toBeChecked()
+    expect(resetViewButton).toBeDisabled()
+    expect(getVisibleTodoTitles()).toEqual([
+      'Sketch the todo flow',
+      'Review the details panel',
+      'Ship the starting point',
+    ])
+  })
+
+  it('preserves the selected todo when resetting the view', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const selectedTodo = screen.getByRole('button', { name: /review the details panel/i })
+    await user.click(selectedTodo)
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    await user.click(screen.getByRole('button', { name: 'Reset view' }))
+
+    expect(selectedTodo).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Review the details panel')
+  })
+
   it('disables clearing when no todos are completed', async () => {
     const user = userEvent.setup()
     render(<App />)

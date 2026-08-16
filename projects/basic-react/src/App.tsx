@@ -216,6 +216,11 @@ function App() {
     }
   }
 
+  function resetView() {
+    setShowIncompleteOnly(false)
+    setIsSortedByDueDate(false)
+  }
+
   return (
     <main className="todo-app">
       <header className="app-header">
@@ -257,6 +262,14 @@ function App() {
               />
               <span>Sort by due date</span>
             </label>
+            <button
+              className="reset-view-button"
+              type="button"
+              disabled={!showIncompleteOnly && !isSortedByDueDate}
+              onClick={resetView}
+            >
+              Reset view
+            </button>
           </div>
 
           {visibleTodos.length === 0 ? (
