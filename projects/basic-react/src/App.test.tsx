@@ -150,6 +150,21 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: 'Reset view' })).toBeDisabled()
   })
 
+  it('enables resetting when either view control is active', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const incompleteOnlyToggle = screen.getByRole('checkbox', { name: 'Show incomplete only' })
+    const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
+    const resetViewButton = screen.getByRole('button', { name: 'Reset view' })
+
+    await user.click(incompleteOnlyToggle)
+    expect(resetViewButton).toBeEnabled()
+
+    await user.click(incompleteOnlyToggle)
+    await user.click(sortToggle)
+    expect(resetViewButton).toBeEnabled()
+  })
+
   it('resets filtering and sorting together', async () => {
     const user = userEvent.setup()
     render(<App />)
@@ -178,6 +193,7 @@ describe('App', () => {
     render(<App />)
     const selectedTodo = screen.getByRole('button', { name: /review the details panel/i })
     await user.click(selectedTodo)
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
     await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
 
     await user.click(screen.getByRole('button', { name: 'Reset view' }))
