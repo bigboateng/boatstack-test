@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { FormEvent, MouseEvent } from 'react'
 import './App.css'
 
 type Todo = {
@@ -9,6 +10,18 @@ type Todo = {
   completed: boolean
 }
 
+type TodoDraft = {
+  title: string
+  notes: string
+  dueDate: string
+}
+
+const emptyTodoDraft: TodoDraft = {
+  title: '',
+  notes: '',
+  dueDate: '',
+}
+
 const initialTodos: Todo[] = [
   { id: 1, title: 'Sketch the todo flow', notes: 'Keep the first pass deliberately small and useful.', dueDate: '2026-08-14', completed: false },
   { id: 2, title: 'Review the details panel', notes: 'Check editing, focus, and the mobile layout.', dueDate: '2026-08-16', completed: false },
@@ -17,28 +30,116 @@ const initialTodos: Todo[] = [
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
-  const [selectedId, setSelectedId] = useState(initialTodos[0].id)
+  const [selectedID, setSelectedID] = useState(initialTodos[0].id)
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
+  const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
+  const [titleError, setTitleError] = useState('')
+  const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
+  const dialogRef = useRef<HTMLElement | null>(null)
+  const titleInputRef = useRef<HTMLInputElement | null>(null)
 
-  const selectedTodo = todos.find((todo) => todo.id === selectedId) ?? null
+  const selectedTodo = todos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
 
+  useEffect(() => {
+    if (!isAddDialogOpen) {
+      return
+    }
+
+    titleInputRef.current?.focus()
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        event.preventDefault()
+        closeAddDialog()
+      }
+
+      if (event.key === 'Tab') {
+        const focusableElements = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLElement>('button, input, textarea, select, [tabindex]:not([tabindex="-1"])') ?? [],
+        )
+        const firstFocusableElement = focusableElements[0]
+        const lastFocusableElement = focusableElements[focusableElements.length - 1]
+
+        if (!firstFocusableElement || !lastFocusableElement) {
+          event.preventDefault()
+          return
+        }
+
+        if (event.shiftKey && document.activeElement === firstFocusableElement) {
+          event.preventDefault()
+          lastFocusableElement.focus()
+          return
+        }
+
+        if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+          event.preventDefault()
+          firstFocusableElement.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isAddDialogOpen])
+
   function updateSelected(changes: Partial<Todo>) {
-    if (!selectedTodo) return
+    if (!selectedTodo) {
+      return
+    }
+
     setTodos((current) => current.map((todo) => todo.id === selectedTodo.id ? { ...todo, ...changes } : todo))
   }
 
-  function addTodo() {
+  function openAddDialog(event: MouseEvent<HTMLButtonElement>) {
+    dialogTriggerRef.current = event.currentTarget
+    setTodoDraft(emptyTodoDraft)
+    setTitleError('')
+    setIsAddDialogOpen(true)
+  }
+
+  function closeAddDialog() {
+    const dialogTrigger = dialogTriggerRef.current
+    setIsAddDialogOpen(false)
+    setTodoDraft(emptyTodoDraft)
+    setTitleError('')
+    dialogTrigger?.focus()
+  }
+
+  function createTodo(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const title = todoDraft.title.trim()
+
+    if (title.length === 0) {
+      setTitleError('Enter a title containing at least one non-whitespace character.')
+      titleInputRef.current?.focus()
+      return
+    }
+
     const id = Math.max(0, ...todos.map((todo) => todo.id)) + 1
-    const todo = { id, title: 'Untitled task', notes: '', dueDate: '', completed: false }
+    const todo: Todo = {
+      id,
+      title,
+      notes: todoDraft.notes,
+      dueDate: todoDraft.dueDate,
+      completed: false,
+    }
+
     setTodos((current) => [todo, ...current])
-    setSelectedId(id)
+    setSelectedID(id)
+    closeAddDialog()
   }
 
   function deleteSelected() {
-    if (!selectedTodo) return
+    if (!selectedTodo) {
+      return
+    }
+
     const remaining = todos.filter((todo) => todo.id !== selectedTodo.id)
     setTodos(remaining)
-    setSelectedId(remaining[0]?.id ?? 0)
+    setSelectedID(remaining[0]?.id ?? 0)
   }
 
   return (
@@ -58,23 +159,23 @@ function App() {
               <p className="panel-kicker">My list</p>
               <h2>Tasks</h2>
             </div>
-            <button className="add-button" type="button" onClick={addTodo}>Add task</button>
+            <button className="add-button" type="button" onClick={openAddDialog}>Add task</button>
           </div>
 
           {todos.length === 0 ? (
             <div className="empty-state">
               <p>No tasks yet.</p>
-              <button type="button" onClick={addTodo}>Create your first task</button>
+              <button type="button" onClick={openAddDialog}>Create your first task</button>
             </div>
           ) : (
             <ul className="todo-list">
               {todos.map((todo) => (
                 <li key={todo.id}>
                   <button
-                    className={`todo-row${todo.id === selectedId ? ' selected' : ''}`}
+                    className={`todo-row${todo.id === selectedID ? ' selected' : ''}`}
                     type="button"
-                    aria-pressed={todo.id === selectedId}
-                    onClick={() => setSelectedId(todo.id)}
+                    aria-pressed={todo.id === selectedID}
+                    onClick={() => setSelectedID(todo.id)}
                   >
                     <span className={`completion-dot${todo.completed ? ' done' : ''}`} aria-hidden="true">{todo.completed ? '✓' : ''}</span>
                     <span className="todo-row-copy">
@@ -121,11 +222,66 @@ function App() {
           ) : (
             <div className="empty-state details-empty">
               <p>Select a task to edit it.</p>
-              <button type="button" onClick={addTodo}>Add task</button>
+              <button type="button" onClick={openAddDialog}>Add task</button>
             </div>
           )}
         </section>
       </section>
+
+      {isAddDialogOpen ? (
+        <div className="dialog-backdrop">
+          <section
+            ref={dialogRef}
+            className="add-task-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-task-dialog-title"
+          >
+            <div className="dialog-heading">
+              <p className="panel-kicker">New task</p>
+              <h2 id="add-task-dialog-title">Add a task</h2>
+            </div>
+
+            <form className="add-task-form" onSubmit={createTodo}>
+              <label>
+                <span>Title</span>
+                <input
+                  ref={titleInputRef}
+                  aria-describedby={titleError ? 'add-task-title-error' : undefined}
+                  aria-invalid={titleError ? 'true' : undefined}
+                  value={todoDraft.title}
+                  onChange={(event) => {
+                    setTodoDraft((current) => ({ ...current, title: event.target.value }))
+                    setTitleError('')
+                  }}
+                />
+              </label>
+              {titleError ? <p className="field-error" id="add-task-title-error">{titleError}</p> : null}
+              <label>
+                <span>Notes</span>
+                <textarea
+                  rows={5}
+                  value={todoDraft.notes}
+                  onChange={(event) => setTodoDraft((current) => ({ ...current, notes: event.target.value }))}
+                  placeholder="Add a little context…"
+                />
+              </label>
+              <label>
+                <span>Due date</span>
+                <input
+                  type="date"
+                  value={todoDraft.dueDate}
+                  onChange={(event) => setTodoDraft((current) => ({ ...current, dueDate: event.target.value }))}
+                />
+              </label>
+              <div className="dialog-actions">
+                <button className="secondary-button" type="button" onClick={closeAddDialog}>Cancel</button>
+                <button type="submit">Create</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      ) : null}
     </main>
   )
 }

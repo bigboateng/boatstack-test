@@ -1,6 +1,6 @@
 interface:
   display_name: "Product Delivery Run"
-  short_description: "Implement one approved repository plan and publish a pull request"
+  short_description: ""
   default_prompt: "Use $product-delivery-run to run the repository-owned Boatstack Flow entry."
 policy:
   allow_implicit_invocation: false

@@ -1,22 +1,51 @@
-import { all, defineFlow, entry, fact, marked } from "@operatorstack/boatstack";
+import {
+  all,
+  defineFlow,
+  entry,
+  entryInput,
+  fact,
+  foregroundWork,
+  instructionAsset,
+  marked,
+  schemaAsset,
+  workArtifact,
+} from "@operatorstack/boatstack";
 import {
   inbox,
   planInboxResolver,
+  planningPackageAdmit,
+  planningPackageApprove,
+  planningPackagePromote,
   softwareDeliveryEvidence,
   softwareDeliveryFacets,
   trustedDelegation,
   trustedOperators,
-  trustedTransitions,
-  type TrustedStep,
+  trustedSoftwareDeliveryTransitions,
 } from "@operatorstack/boatstack-software-delivery";
 
+const planning = foregroundWork({
+  id: "planning-package",
+  instructions: instructionAsset(".boatstack/flows/assets/planning-package.md"),
+  inputs: [entryInput("plan")],
+  outputs: [
+    workArtifact({ id: "plan", path: "plan.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
+    workArtifact({ id: "feature-spec", path: "feature-spec.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
+    workArtifact({ id: "questions", path: "questions.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
+    workArtifact({ id: "test-plan", path: "test-plan.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
+    workArtifact({ id: "gaps", path: "gaps.md", media_type: "text/markdown", required: false, max_bytes: 131072 }),
+    workArtifact({ id: "autonomy", path: "autonomy.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
+    workArtifact({ id: "tasks", path: "compiled/tasks.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
+    workArtifact({ id: "test-matrix", path: "compiled/test-matrix.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
+    workArtifact({ id: "journey-oracles", path: "compiled/journey-oracles.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
+    workArtifact({ id: "evidence", path: "compiled/evidence.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
+  ],
+});
+
 const lifecycle = [
-  { id: "plan.create", priority: 35 },
-  { id: "plan.validate", priority: 40 },
-  { id: "plan.invalidate", priority: 41 },
-  { id: "plan.amend", priority: 42 },
-  { id: "plan.approve", priority: 45 },
-  { id: "plan.approve-amendment", priority: 46 },
+  planningPackageAdmit,
+  planningPackageApprove,
+  planningPackagePromote,
+  { id: "plan.abandon", priority: 31 },
   { id: "plan.activate", priority: 50 },
   { id: "workspace.cut", priority: 52 },
   { id: "workspace.activate", priority: 53 },
@@ -35,23 +64,27 @@ const lifecycle = [
   { id: "publication.correct", priority: 80 },
   { id: "workspace.reconcile", priority: 2 },
   { id: "publication.reconcile", priority: 1 },
-] satisfies TrustedStep[];
+];
 
 export default defineFlow({
   id: "product-delivery",
   version: "1",
-  description: "Basic React delivery from one repository plan to a published pull request",
   declarations: { input_resolvers: [planInboxResolver] },
   facets: softwareDeliveryFacets,
   evidence: softwareDeliveryEvidence,
+  work: [planning],
   operators: trustedOperators(lifecycle),
-  transitions: trustedTransitions(lifecycle),
+  transitions: trustedSoftwareDeliveryTransitions(lifecycle, { planningPackageWork: planning }),
   targets: [
     marked("published-pr", all(
       fact("verification", ["current"]),
       fact("configuration", ["verified"]),
       fact("runtime", ["verified"]),
       fact("publication", ["open"]),
+    )),
+    marked("safely-abandoned", all(
+      fact("delivery", ["discarded"]),
+      fact("workspace", ["abandoned", "absent"]),
     )),
   ],
   entries: [
@@ -60,7 +93,11 @@ export default defineFlow({
       target: "published-pr",
       inputs: [inbox(".boatstack/plans/inbox")],
       delegation: trustedDelegation("autonomy"),
-      description: "Implement one approved repository plan and publish a pull request",
+    }),
+    entry({
+      id: "abandon",
+      target: "safely-abandoned",
+      inputs: [inbox(".boatstack/plans/inbox")],
     }),
   ],
 });

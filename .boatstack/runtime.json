@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "version": "v2.0.0-dev",
-  "sha256": "4d3ba8812c9ec53f7f029ab92ce4c55507a4be764ef47d356545682247c3338e",
-  "source_revision": "v2.0.0-dev",
-  "program_fingerprint": "6efc2841abacc0ea8dddb157c2f90cd6b26d9d9d2862f870dae1522ca80337c5",
-  "state_schema_version": 4
+  "version": "v2.0.0-control-bundle-pilot",
+  "sha256": "323c530348abe8dfadced0d142e0ef8f7da1194528896900ba772aa027ce03c9",
+  "source_revision": "9eb5f8762d0d1cfe150c53f277792feb0f3fe958-wt-159bf07c6703",
+  "program_fingerprint": "9a0e7c3c58a60ed01db2fb4f84a2f452b324ef989022d66d2f027ad5b524eb8e",
+  "state_schema_version": 6
 }

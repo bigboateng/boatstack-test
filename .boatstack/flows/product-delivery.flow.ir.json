@@ -1,26 +1,34 @@
 {
   "schema": "control-program-artifact",
-  "schema_revision": 1,
-  "compiler_version": "control-program.compiler.1",
+  "schema_revision": 3,
+  "compiler_version": "control-program.compiler.4",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "e1f992e5713b707f3debc402739c499ee06da28a5dce1b8d816bc1c78ab53c23",
+  "source_sha256": "541bbbf5f62863b86f8d5adad3f27e20dad25507bf240e3a63280e9595e7465d",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "ae634b5a9c76d99f9c7b4ea073ad79a1474da2d8fa643cf07a8b8f7ebb43826b",
-  "program_fingerprint": "2a31c573ab4d94bae5fdb7bd093f5ce914d714051513fc61cf3dfba7355bd337",
+  "dependency_lock_sha256": "e04ed6401cb91d22e4837418f77ca58f715d2c6a556c4727df91bb2e332a9360",
+  "program_fingerprint": "87d40e1c949e557d9499e9519576d43c609e140d0ed9b42ef3040da926f23bda",
   "generated_skills": {
+    ".agents/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".agents/skills/product-delivery-abandon/SKILL.md": "674cf399bb63da1e2626299ec483b7aca2fb533be76d4626a75ee24bb6024737",
+    ".agents/skills/product-delivery-abandon/agents/openai.yaml": "f5ad9bd932609197fd33e65749ad5cecd4fbf9082e8c077b32c753aac8f57090",
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "1eb30915327c400213bf7af569eeb6c91fac1572a0a6c01dbf07a05813a831bb",
-    ".agents/skills/product-delivery-run/agents/openai.yaml": "dbfa45a2388ff41501cbacd8c108ae239dc4fbb39f017283f8dfc2c10963de2f",
+    ".agents/skills/product-delivery-run/SKILL.md": "b0b44cc84ef02242c82e8b1bfb45d3e77603e9830090cde82bf748467bfd5ecd",
+    ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
+    ".claude/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".claude/skills/product-delivery-abandon/SKILL.md": "f55ed619f7fffbb37a14f910d3fbe01cfed7323dc6eb44c895361afebe142ed4",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "cb79d4d9ff99d533d9beb278567d069fd3bfe29c798f3978697754fac2286347"
+    ".claude/skills/product-delivery-run/SKILL.md": "e5316c6fdfd666a86b960084ac8e45257ab50216aa70c9f4f1d18b759cf7780b"
+  },
+  "assets": {
+    ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+    ".boatstack/flows/assets/planning-package.md": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f"
   },
   "program": {
     "schema": "control-program",
-    "schema_revision": 1,
+    "schema_revision": 4,
     "program": {
       "id": "product-delivery",
-      "version": "1",
-      "description": "Basic React delivery from one repository plan to a published pull request"
+      "version": "1"
     },
     "declarations": {
       "capabilities": [
@@ -44,13 +52,11 @@
         "gate.journey.record",
         "gate.review.record",
         "gate.test.record",
+        "plan.abandon",
         "plan.activate",
-        "plan.amend",
-        "plan.approve",
-        "plan.approve-amendment",
-        "plan.create",
-        "plan.invalidate",
-        "plan.validate",
+        "planning.package.admit",
+        "planning.package.approve",
+        "planning.package.promote",
         "publication.correct",
         "publication.execute",
         "publication.observe",
@@ -70,13 +76,11 @@
         "verifier:fresh-observation:gate.journey.record",
         "verifier:fresh-observation:gate.review.record",
         "verifier:fresh-observation:gate.test.record",
+        "verifier:fresh-observation:plan.abandon",
         "verifier:fresh-observation:plan.activate",
-        "verifier:fresh-observation:plan.amend",
-        "verifier:fresh-observation:plan.approve",
-        "verifier:fresh-observation:plan.approve-amendment",
-        "verifier:fresh-observation:plan.create",
-        "verifier:fresh-observation:plan.invalidate",
-        "verifier:fresh-observation:plan.validate",
+        "verifier:fresh-observation:planning.package.admit",
+        "verifier:fresh-observation:planning.package.approve",
+        "verifier:fresh-observation:planning.package.promote",
         "verifier:fresh-observation:publication.correct",
         "verifier:fresh-observation:publication.execute",
         "verifier:fresh-observation:publication.observe",
@@ -122,11 +126,19 @@
         "kind": "string"
       },
       {
+        "id": "preview_fingerprint",
+        "kind": "string"
+      },
+      {
         "id": "program",
         "kind": "string"
       },
       {
         "id": "publication",
+        "kind": "string"
+      },
+      {
+        "id": "publication_id",
         "kind": "string"
       },
       {
@@ -226,13 +238,116 @@
         "kind": "provider-observation"
       }
     ],
+    "work": [
+      {
+        "id": "planning-package",
+        "instructions": {
+          "path": ".boatstack/flows/assets/planning-package.md",
+          "sha256": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f",
+          "content": "# Compile a delivery planning package\n\nRead the bound repository plan and inspect only the code needed to resolve its unknowns.\nAsk the user focused questions when a consequential product or implementation choice is missing.\nAfter every required answer is available, produce the exact declared artifacts.\n\nThe package must make scope, behavior, tasks, tests, user journeys, gaps, evidence, and allowed autonomy explicit.\nDo not implement the feature during this work requirement.\n"
+        },
+        "inputs": [
+          {
+            "id": "plan",
+            "entry_input": "plan"
+          }
+        ],
+        "outputs": [
+          {
+            "id": "autonomy",
+            "path": "autonomy.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "evidence",
+            "path": "compiled/evidence.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "feature-spec",
+            "path": "feature-spec.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          },
+          {
+            "id": "gaps",
+            "path": "gaps.md",
+            "media_type": "text/markdown",
+            "required": false,
+            "max_bytes": 131072
+          },
+          {
+            "id": "journey-oracles",
+            "path": "compiled/journey-oracles.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "plan",
+            "path": "plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          },
+          {
+            "id": "questions",
+            "path": "questions.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "tasks",
+            "path": "compiled/tasks.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "test-matrix",
+            "path": "compiled/test-matrix.json",
+            "media_type": "application/json",
+            "required": true,
+            "max_bytes": 262144,
+            "schema": {
+              "path": ".boatstack/flows/assets/planning-list.schema.json",
+              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
+              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+            }
+          },
+          {
+            "id": "test-plan",
+            "path": "test-plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144
+          }
+        ]
+      }
+    ],
     "operators": [
       {
         "id": "delivery.slice.advance",
         "binding": {
           "reference": "software-delivery/delivery.slice.advance",
           "version": "1",
-          "fingerprint": "d14bdaff36ec2baacfe8e6511d08c34016ed8597f2203d3304b5c91e09b59fe7"
+          "fingerprint": "7ea20822533c3fddc7be41c6337f9e83f22d2c3bfe6f4ea255b9ef52691b0851"
         },
         "capabilities": [
           "product.mutate",
@@ -274,14 +389,40 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "slice_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "host-input"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "evidence.visual.attach",
         "binding": {
           "reference": "software-delivery/evidence.visual.attach",
           "version": "1",
-          "fingerprint": "02929fd958266c00227f06d5a209fb84b43325b5a1bd3cb4d626e52a9b55b405"
+          "fingerprint": "75f12855b7a034cf8810a9ca361f611de5708cdee711732dbb1f35f599e86cbf"
         },
         "capabilities": [
           "product.mutate",
@@ -302,14 +443,52 @@
           "kind": "native",
           "native_handler": "visual-evidence-attach"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "manifest_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "privacy_receipt",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "gate.build.record",
         "binding": {
           "reference": "software-delivery/gate.build.record",
           "version": "1",
-          "fingerprint": "afde501a36d9bca0d2a8155d702bf5b077dd4bd8102469f9f39e410ba879394e"
+          "fingerprint": "9619c8b0f1eefad5752645ecbe65057359b47397ef00ba8d694909f31e2f9a5c"
         },
         "capabilities": [
           "command.execute",
@@ -330,14 +509,52 @@
           "kind": "native",
           "native_handler": "gate-build-record"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "evidence_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "evidence_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "gate.change.record",
         "binding": {
           "reference": "software-delivery/gate.change.record",
           "version": "1",
-          "fingerprint": "a75bdd4c293eba21318c952d779566aa0111656cb567e7ab2968c5c6f3d90c1a"
+          "fingerprint": "cbef2e398b2284ac47574c4e890c16a772da654d74b13c1615cd58baf11f43e5"
         },
         "capabilities": [
           "product.mutate",
@@ -357,14 +574,52 @@
           "kind": "native",
           "native_handler": "gate-change-record"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "evidence_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "evidence_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "gate.journey.record",
         "binding": {
           "reference": "software-delivery/gate.journey.record",
           "version": "1",
-          "fingerprint": "356af9b821b4e5a828835592fd3a7b619e09d5006674aec9f86786e5bc46991a"
+          "fingerprint": "4483bfcef4c63beedd3efc88a457b81b3a999484db19dc529eb63b2d9acb9b9a"
         },
         "capabilities": [
           "product.mutate",
@@ -384,14 +639,52 @@
           "kind": "native",
           "native_handler": "gate-journey-record"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "evidence_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "evidence_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "gate.review.record",
         "binding": {
           "reference": "software-delivery/gate.review.record",
           "version": "1",
-          "fingerprint": "d2cad505b7033d7fbfb632177ec5d99e91e724335b2461b11553c3b174045c97"
+          "fingerprint": "d5a0a4598705fc818e0e5d16662cfbf5a98ce474adde02e123659dd98ead0d07"
         },
         "capabilities": [
           "product.mutate",
@@ -412,14 +705,52 @@
           "kind": "native",
           "native_handler": "gate-review-record"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "evidence_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "evidence_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "gate.test.record",
         "binding": {
           "reference": "software-delivery/gate.test.record",
           "version": "1",
-          "fingerprint": "12f7e3de9233e2751229958073bc0c9f3c1117a3d4bd888fa6248be181839bbd"
+          "fingerprint": "485ec11c8a0f7d236581cc6379f1fe68d630b2377187e2e8b894735f4ed10973"
         },
         "capabilities": [
           "command.execute",
@@ -440,6 +771,71 @@
           "kind": "native",
           "native_handler": "gate-test-record"
         },
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "evidence_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "evidence_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "source_revision",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
+      },
+      {
+        "id": "plan.abandon",
+        "binding": {
+          "reference": "software-delivery/plan.abandon",
+          "version": "1",
+          "fingerprint": "54cfdfa7dbb445591eb9a358474f0308eadcd56fda40f0b4d4088a28a830d9a2"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": {
+          "any_of": [
+            "human"
+          ]
+        },
+        "effects": [
+          "plan.abandon"
+        ],
+        "verifier": "verifier:fresh-observation:plan.abandon",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "abandon-delivery"
+        },
         "execution_context": "preserve"
       },
       {
@@ -447,7 +843,7 @@
         "binding": {
           "reference": "software-delivery/plan.activate",
           "version": "1",
-          "fingerprint": "27efd75bfd7bf982121b0678820c622cc351fa3685bd94308beb0de9529b3d48"
+          "fingerprint": "b2beb4d05ab32b780e616c2a35d249bbe2b785de814298519ec7cd1fdd782dd5"
         },
         "capabilities": [
           "product.mutate",
@@ -484,11 +880,11 @@
         "execution_context": "preserve"
       },
       {
-        "id": "plan.amend",
+        "id": "planning.package.admit",
         "binding": {
-          "reference": "software-delivery/plan.amend",
+          "reference": "software-delivery/planning.package.admit",
           "version": "1",
-          "fingerprint": "59f988efd8a059049679b1d9bf12f3d1adcfb5bb47124ab6ef9901a0321fd1f0"
+          "fingerprint": "d21be50f8aac6528412831b792e305a2fe3c3c0b244a978953f79475ba11c27c"
         },
         "capabilities": [
           "product.mutate",
@@ -501,67 +897,22 @@
           ]
         },
         "effects": [
-          "plan.amend"
+          "planning.package.admit"
         ],
-        "verifier": "verifier:fresh-observation:plan.amend",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "amendment"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "amendment-required"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.approve",
-        "binding": {
-          "reference": "software-delivery/plan.approve",
-          "version": "1",
-          "fingerprint": "c97aa6164bc9aa1e26ca7156b1124e7280a6a3a99795908b61b200cbd2974362"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "autonomy",
-            "human"
-          ]
-        },
-        "effects": [
-          "plan.approve"
-        ],
-        "verifier": "verifier:fresh-observation:plan.approve",
+        "verifier": "verifier:fresh-observation:planning.package.admit",
         "recovery": "recovery.resume",
         "state_effect": {
           "kind": "native",
-          "native_handler": "plan-approve"
+          "native_handler": "planning-package-admit"
         },
         "execution_context": "preserve"
       },
       {
-        "id": "plan.approve-amendment",
+        "id": "planning.package.approve",
         "binding": {
-          "reference": "software-delivery/plan.approve-amendment",
+          "reference": "software-delivery/planning.package.approve",
           "version": "1",
-          "fingerprint": "857ea2ed0dffa7acbedbee53690b0bc997cf86464cb3f921c8cd185fab3e1bbe"
+          "fingerprint": "834389c4a12be64f3e014bcf58b028b6fbcbbb2dab0d8c99b18c871297340f7d"
         },
         "capabilities": [
           "product.mutate",
@@ -574,35 +925,36 @@
           ]
         },
         "effects": [
-          "plan.approve-amendment"
+          "planning.package.approve"
         ],
-        "verifier": "verifier:fresh-observation:plan.approve-amendment",
+        "verifier": "verifier:fresh-observation:planning.package.approve",
         "recovery": "recovery.resume",
         "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "approved"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "approved"
-            }
-          ]
+          "kind": "native",
+          "native_handler": "planning-package-approve"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "package_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
-        "id": "plan.create",
+        "id": "planning.package.promote",
         "binding": {
-          "reference": "software-delivery/plan.create",
+          "reference": "software-delivery/planning.package.promote",
           "version": "1",
-          "fingerprint": "05d72e63bbf8879d7865ffbb91e852da900ddc6af74671a6f6dbc52c1731f462"
+          "fingerprint": "e420edb3694847a76c33c5d48777af07f793f98a22d98043acae1bb89ec801a0"
         },
         "capabilities": [
           "product.mutate",
@@ -615,114 +967,13 @@
           ]
         },
         "effects": [
-          "plan.create"
+          "planning.package.promote"
         ],
-        "verifier": "verifier:fresh-observation:plan.create",
+        "verifier": "verifier:fresh-observation:planning.package.promote",
         "recovery": "recovery.resume",
         "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "planning"
-            },
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "draft"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.invalidate",
-        "binding": {
-          "reference": "software-delivery/plan.invalidate",
-          "version": "1",
-          "fingerprint": "f1e876fc331c73d7a31c631b9653cb6e32083ea2bc3d15731de997d9569d369f"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "repository-policy"
-          ]
-        },
-        "effects": [
-          "plan.invalidate"
-        ],
-        "verifier": "verifier:fresh-observation:plan.invalidate",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "delivery",
-              "value": "invalid"
-            },
-            {
-              "facet": "phase",
-              "value": "FRONTIER"
-            },
-            {
-              "facet": "plan",
-              "value": "invalid"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
-        },
-        "execution_context": "preserve"
-      },
-      {
-        "id": "plan.validate",
-        "binding": {
-          "reference": "software-delivery/plan.validate",
-          "version": "1",
-          "fingerprint": "a20af78012f12e932eecc11707c852de8b774d96cab18a8f578099a2a8ad8a9d"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "repository-policy"
-          ]
-        },
-        "effects": [
-          "plan.validate"
-        ],
-        "verifier": "verifier:fresh-observation:plan.validate",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "assignments",
-          "assignments": [
-            {
-              "facet": "phase",
-              "value": "ACTIVE"
-            },
-            {
-              "facet": "plan",
-              "value": "valid"
-            },
-            {
-              "facet": "terminal",
-              "value": "nonterminal"
-            }
-          ]
+          "kind": "native",
+          "native_handler": "planning-package-promote"
         },
         "execution_context": "preserve"
       },
@@ -731,7 +982,7 @@
         "binding": {
           "reference": "software-delivery/publication.correct",
           "version": "1",
-          "fingerprint": "746379e242ff3ab6baca28033e02d7da88527fe29880794e420c5e8a2625779e"
+          "fingerprint": "122752788c8597fdcd5b3afc9c752a4cd2533517f7ea77381453d607616b4ed1"
         },
         "capabilities": [
           "command.execute",
@@ -774,14 +1025,66 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "body_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "body_sha256",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "publication_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "publication_id",
+            "facet": "publication_id",
+            "available_when": {
+              "fact": {
+                "facet": "publication_id",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.execute",
         "binding": {
           "reference": "software-delivery/publication.execute",
           "version": "1",
-          "fingerprint": "2191b2448c9adc5491a1cc4a058c52e6640032fe02f2f63a3403f33a940ca4ee"
+          "fingerprint": "d58b3c80179dec6402cda15f8dcd8fbdd0b6ec83bed1d6e00b0adf3b267ab6c1"
         },
         "capabilities": [
           "command.execute",
@@ -824,14 +1127,50 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "preview_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "outputs": [
+          {
+            "id": "publication_id",
+            "type": {
+              "kind": "string"
+            }
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "preview_fingerprint",
+            "facet": "preview_fingerprint",
+            "available_when": {
+              "fact": {
+                "facet": "preview_fingerprint",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.observe",
         "binding": {
           "reference": "software-delivery/publication.observe",
           "version": "1",
-          "fingerprint": "1e4692f1122b127166d3021db64e2c50fef51206a3efb573a7d1a13a9a3386af"
+          "fingerprint": "fd1132c4a5cfbbc53a3ab3695cbd57e09970ca656e3b152eb2a63e16240f9823"
         },
         "capabilities": [
           "command.execute",
@@ -852,14 +1191,43 @@
           "kind": "native",
           "native_handler": "publication-observe"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "publication_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "receipt",
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "publication_id",
+            "facet": "publication_id",
+            "available_when": {
+              "fact": {
+                "facet": "publication_id",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.preview",
         "binding": {
           "reference": "software-delivery/publication.preview",
           "version": "1",
-          "fingerprint": "21f1744d8dc3fc91a6573b49a0923a595acf12b84f9f2217efa5662ca2543835"
+          "fingerprint": "f4d94299ca8dbd69a00e0836bb8b6ca9104696ad08e1bdfd713314f93fc91bf1"
         },
         "capabilities": [
           "product.mutate",
@@ -889,14 +1257,66 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "base_ref",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "body_path",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "head_ref",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "head_ref",
+            "facet": "workspace_branch",
+            "available_when": {
+              "fact": {
+                "facet": "workspace_branch",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.reconcile",
         "binding": {
           "reference": "software-delivery/publication.reconcile",
           "version": "1",
-          "fingerprint": "d5154c37b51acab27610ed1b03ffdb6fede49990f7f89bb6ac040479a725bcb1"
+          "fingerprint": "ab880b00be4b9d2b8ea7c642f56c78ebd0f5c9392fbb919f571d655ca925f110"
         },
         "capabilities": [
           "command.execute",
@@ -918,14 +1338,66 @@
           "kind": "native",
           "native_handler": "publication-observe"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "publication_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "transaction_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "publication_id",
+            "facet": "publication_id",
+            "available_when": {
+              "fact": {
+                "facet": "publication_id",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          },
+          {
+            "parameter": "transaction_id",
+            "facet": "transaction_id",
+            "available_when": {
+              "fact": {
+                "facet": "transaction_id",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.activate",
         "binding": {
           "reference": "software-delivery/workspace.activate",
           "version": "1",
-          "fingerprint": "b24ead4cd030f11cc22b2c37e5ec65be10d141ee18e0097d0ac5efc99577f659"
+          "fingerprint": "6df87eece0fff9af32971a58475902b7d2c6411a2899a335dc1cbd9e74850a43"
         },
         "capabilities": [
           "product.mutate",
@@ -954,14 +1426,42 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "branch",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "branch",
+            "facet": "workspace_branch",
+            "available_when": {
+              "fact": {
+                "facet": "workspace_branch",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.cut",
         "binding": {
           "reference": "software-delivery/workspace.cut",
           "version": "1",
-          "fingerprint": "f52dda5314eeeabf17b75df0c5d32d7520807822c755cd241d59e65bf461d782"
+          "fingerprint": "9b7a3dc5eddad55082427768ccbaa948cc83f0ac38d2b9c8f76be0d9bcd5f24c"
         },
         "capabilities": [
           "command.execute",
@@ -1028,14 +1528,52 @@
             }
           ]
         },
-        "execution_context": "advance"
+        "execution_context": "advance",
+        "parameters": [
+          {
+            "id": "base_ref",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "branch",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          },
+          {
+            "id": "destination",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "workspace.publish",
         "binding": {
           "reference": "software-delivery/workspace.publish",
           "version": "1",
-          "fingerprint": "5cac4e1bc531b5aea20a832d43ef35768db82789126759630d5504d20b625fe1"
+          "fingerprint": "a44c51b9a06e7ec6837b6b5609dc5ced1ca5fc7c1e94002df51f50f362a649c3"
         },
         "capabilities": [
           "product.mutate",
@@ -1064,14 +1602,42 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "branch",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "branch",
+            "facet": "workspace_branch",
+            "available_when": {
+              "fact": {
+                "facet": "workspace_branch",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.reconcile",
         "binding": {
           "reference": "software-delivery/workspace.reconcile",
           "version": "1",
-          "fingerprint": "70241d27548999868616788779a0788cfc12a9c672d43a109330ac99fbfdea7f"
+          "fingerprint": "bea8f52a569aa3923b17c9dbf25379138869b5e9a417f1fcab40c5040496e4fb"
         },
         "capabilities": [
           "product.mutate",
@@ -1092,14 +1658,42 @@
           "kind": "native",
           "native_handler": "workspace-reconcile"
         },
-        "execution_context": "advance"
+        "execution_context": "advance",
+        "parameters": [
+          {
+            "id": "transaction_id",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "transaction_id",
+            "facet": "transaction_id",
+            "available_when": {
+              "fact": {
+                "facet": "transaction_id",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.sync",
         "binding": {
           "reference": "software-delivery/workspace.sync",
           "version": "1",
-          "fingerprint": "4f1f3392ecf927b4e49ff0b079421b56a0db682279a259cac7ef199f60b3cbda"
+          "fingerprint": "9f25b230c6d933d2aeaced9de2026289d4c9825b879db8cbedbe042da524d611"
         },
         "capabilities": [
           "command.execute",
@@ -1130,7 +1724,35 @@
             }
           ]
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "branch",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "state"
+            ],
+            "authority": {}
+          }
+        ],
+        "state_inputs": [
+          {
+            "parameter": "branch",
+            "facet": "workspace_branch",
+            "available_when": {
+              "fact": {
+                "facet": "workspace_branch",
+                "statuses": [
+                  "known"
+                ]
+              }
+            }
+          }
+        ]
       }
     ],
     "transitions": [
@@ -1144,7 +1766,35 @@
           "true": true
         },
         "priority": 68,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "slice_id",
+            "producer": {
+              "kind": "host-input",
+              "request": {
+                "id": "delivery-slice",
+                "description": "Select the next bounded delivery slice.",
+                "authorities": [
+                  "autonomy",
+                  "human"
+                ],
+                "scope": "transition"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "evidence.visual.attach",
@@ -1156,7 +1806,42 @@
           "true": true
         },
         "priority": 66,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "manifest_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/visual-evidence-manifest-path",
+                "version": "1",
+                "fingerprint": "10be537608e919b034f2afcb4c6b62d0a556c06de8fee18b9ed1b9506461d77f"
+              }
+            }
+          },
+          {
+            "parameter": "privacy_receipt",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/visual-evidence-privacy-receipt",
+                "version": "1",
+                "fingerprint": "7fe0b16b4b0218fecf9db4cc51ea23b9635338db6ce96a1564eac4ed1265a364"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "gate.build.record",
@@ -1168,7 +1853,42 @@
           "true": true
         },
         "priority": 61,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "evidence_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-fingerprint/build",
+                "version": "1",
+                "fingerprint": "bd18864cfe7ccb2d0a2dd5a13bb98af8f481965e580b94efcfb06bf663253d8e"
+              }
+            }
+          },
+          {
+            "parameter": "evidence_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-path/build",
+                "version": "1",
+                "fingerprint": "e07a4e797af830788a4c11ec00ffd903fb631713eb7e63245ec6f901de924438"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "gate.change.record",
@@ -1180,7 +1900,42 @@
           "true": true
         },
         "priority": 64,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "evidence_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-fingerprint/change",
+                "version": "1",
+                "fingerprint": "47250e2fe9bb4760888c0b6fbdcf12998dee31aa24ba87f135f40fb5a6246415"
+              }
+            }
+          },
+          {
+            "parameter": "evidence_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-path/change",
+                "version": "1",
+                "fingerprint": "e938ab2cf8da0bb2110ea3c44b5c7fc2aedb5db62e2820161512420b9588fb1a"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "gate.journey.record",
@@ -1192,7 +1947,42 @@
           "true": true
         },
         "priority": 64,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "evidence_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-fingerprint/journey",
+                "version": "1",
+                "fingerprint": "f5be56163cf08a31993b1d4c6aa27366fc596eba0ca5b145e4783b7b782c961b"
+              }
+            }
+          },
+          {
+            "parameter": "evidence_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-path/journey",
+                "version": "1",
+                "fingerprint": "27f3496cdebdfb23f7aadf027bd564478f6ffea7c7d81ce96afaf755dd09df7c"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "gate.review.record",
@@ -1204,7 +1994,42 @@
           "true": true
         },
         "priority": 63,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "evidence_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-fingerprint/review",
+                "version": "1",
+                "fingerprint": "b3bf81a97ed6e24d2ecb6d7b3e207255b053b588a23d4c1b9d07df3ed377169e"
+              }
+            }
+          },
+          {
+            "parameter": "evidence_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-path/review",
+                "version": "1",
+                "fingerprint": "739bd94894b6ef8b0c34f6b326fc527b5cbcf223eb22c525378dd4ab922e0e20"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "gate.test.record",
@@ -1216,6 +2041,53 @@
           "true": true
         },
         "priority": 62,
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "evidence_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-fingerprint/test",
+                "version": "1",
+                "fingerprint": "7cc5c54d5368f450f8055f00a1d94f2ab52b6df364b2e693d04b0a6db15e6bdd"
+              }
+            }
+          },
+          {
+            "parameter": "evidence_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/gate-evidence-path/test",
+                "version": "1",
+                "fingerprint": "bbc907485b9680e25ee003f0c92cc9e22f6f5d0b7e4a500d4a404eeeff45a025"
+              }
+            }
+          },
+          {
+            "parameter": "source_revision",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/current-source-revision",
+                "version": "1",
+                "fingerprint": "5b6e7e66c3ed52fffcd205e518aaaeb03274f3f44a635f3edac64a6c429e3cd8"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "plan.abandon",
+        "operator": "plan.abandon",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 31,
         "requires": {}
       },
       {
@@ -1231,20 +2103,46 @@
         "requires": {}
       },
       {
-        "id": "plan.amend",
-        "operator": "plan.amend",
+        "id": "planning.package.admit",
+        "operator": "planning.package.admit",
         "guard": {
           "true": true
         },
         "target": {
           "true": true
         },
-        "priority": 42,
-        "requires": {}
+        "priority": 43,
+        "requires": {},
+        "work": "planning-package"
       },
       {
-        "id": "plan.approve",
-        "operator": "plan.approve",
+        "id": "planning.package.approve",
+        "operator": "planning.package.approve",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 44,
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "package_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/admitted-planning-package-fingerprint",
+                "version": "1",
+                "fingerprint": "101ce45e44453b97da162b6fec87b3cd38eaf93ece67da640ff7ec96b4cd9b3d"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "planning.package.promote",
+        "operator": "planning.package.promote",
         "guard": {
           "true": true
         },
@@ -1252,54 +2150,6 @@
           "true": true
         },
         "priority": 45,
-        "requires": {}
-      },
-      {
-        "id": "plan.approve-amendment",
-        "operator": "plan.approve-amendment",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 46,
-        "requires": {}
-      },
-      {
-        "id": "plan.create",
-        "operator": "plan.create",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 35,
-        "requires": {}
-      },
-      {
-        "id": "plan.invalidate",
-        "operator": "plan.invalidate",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 41,
-        "requires": {}
-      },
-      {
-        "id": "plan.validate",
-        "operator": "plan.validate",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 40,
         "requires": {}
       },
       {
@@ -1312,7 +2162,46 @@
           "true": true
         },
         "priority": 80,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "body_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/publication-body-path",
+                "version": "1",
+                "fingerprint": "907b3d0e150a08c79703af21f90c4c8f4575e57b892ef435f936c48cdce8085d"
+              }
+            }
+          },
+          {
+            "parameter": "body_sha256",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/publication-body-sha256",
+                "version": "1",
+                "fingerprint": "64071698e5d98e79d68aa15bb983cd4ffbc793eb3d664bfc32aa9d7ab2a2402f"
+              }
+            }
+          },
+          {
+            "parameter": "publication_id",
+            "producer": {
+              "kind": "state",
+              "facet": "publication_id",
+              "available_when": {
+                "fact": {
+                  "facet": "publication_id",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.execute",
@@ -1324,7 +2213,24 @@
           "true": true
         },
         "priority": 76,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "preview_fingerprint",
+            "producer": {
+              "kind": "state",
+              "facet": "preview_fingerprint",
+              "available_when": {
+                "fact": {
+                  "facet": "preview_fingerprint",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.observe",
@@ -1336,7 +2242,17 @@
           "true": true
         },
         "priority": 77,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "publication_id",
+            "producer": {
+              "kind": "receipt",
+              "transition": "publication.execute",
+              "field": "publication_id"
+            }
+          }
+        ]
       },
       {
         "id": "publication.preview",
@@ -1348,7 +2264,46 @@
           "true": true
         },
         "priority": 72,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "base_ref",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/repository-default-branch",
+                "version": "1",
+                "fingerprint": "516582ba443de5b1ace2daae194f4ac3626527bc2a12537ad978ab6f895a8f2e"
+              }
+            }
+          },
+          {
+            "parameter": "body_path",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/publication-body-path",
+                "version": "1",
+                "fingerprint": "907b3d0e150a08c79703af21f90c4c8f4575e57b892ef435f936c48cdce8085d"
+              }
+            }
+          },
+          {
+            "parameter": "head_ref",
+            "producer": {
+              "kind": "state",
+              "facet": "workspace_branch",
+              "available_when": {
+                "fact": {
+                  "facet": "workspace_branch",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "publication.reconcile",
@@ -1360,7 +2315,39 @@
           "true": true
         },
         "priority": 1,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "publication_id",
+            "producer": {
+              "kind": "state",
+              "facet": "publication_id",
+              "available_when": {
+                "fact": {
+                  "facet": "publication_id",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "parameter": "transaction_id",
+            "producer": {
+              "kind": "state",
+              "facet": "transaction_id",
+              "available_when": {
+                "fact": {
+                  "facet": "transaction_id",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.activate",
@@ -1372,7 +2359,24 @@
           "true": true
         },
         "priority": 53,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "branch",
+            "producer": {
+              "kind": "state",
+              "facet": "workspace_branch",
+              "available_when": {
+                "fact": {
+                  "facet": "workspace_branch",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.cut",
@@ -1384,7 +2388,42 @@
           "true": true
         },
         "priority": 52,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "base_ref",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/repository-default-branch",
+                "version": "1",
+                "fingerprint": "516582ba443de5b1ace2daae194f4ac3626527bc2a12537ad978ab6f895a8f2e"
+              }
+            }
+          },
+          {
+            "parameter": "branch",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/delivery-branch",
+                "version": "1",
+                "fingerprint": "19cdf2c0432b4424a4683154e86e2e0964ddef2d959389e8c06621136322bd09"
+              }
+            }
+          },
+          {
+            "parameter": "destination",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/managed-worktree-destination",
+                "version": "1",
+                "fingerprint": "8835e506b2b6b63851d4464e17ce925b0b4b8b5da8983fa19e456404069e4344"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.publish",
@@ -1396,7 +2435,24 @@
           "true": true
         },
         "priority": 75,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "branch",
+            "producer": {
+              "kind": "state",
+              "facet": "workspace_branch",
+              "available_when": {
+                "fact": {
+                  "facet": "workspace_branch",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.reconcile",
@@ -1408,7 +2464,24 @@
           "true": true
         },
         "priority": 2,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "transaction_id",
+            "producer": {
+              "kind": "state",
+              "facet": "transaction_id",
+              "available_when": {
+                "fact": {
+                  "facet": "transaction_id",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       },
       {
         "id": "workspace.sync",
@@ -1420,7 +2493,24 @@
           "true": true
         },
         "priority": 58,
-        "requires": {}
+        "requires": {},
+        "parameters": [
+          {
+            "parameter": "branch",
+            "producer": {
+              "kind": "state",
+              "facet": "workspace_branch",
+              "available_when": {
+                "fact": {
+                  "facet": "workspace_branch",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              }
+            }
+          }
+        ]
       }
     ],
     "targets": [
@@ -1474,9 +2564,55 @@
             }
           ]
         }
+      },
+      {
+        "id": "safely-abandoned",
+        "predicate": {
+          "all": [
+            {
+              "fact": {
+                "facet": "delivery",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "discarded"
+                ]
+              }
+            },
+            {
+              "fact": {
+                "facet": "workspace",
+                "statuses": [
+                  "known"
+                ],
+                "values": [
+                  "abandoned",
+                  "absent"
+                ]
+              }
+            }
+          ]
+        }
       }
     ],
     "entries": [
+      {
+        "id": "abandon",
+        "target": "safely-abandoned",
+        "inputs": [
+          {
+            "id": "plan",
+            "type": "markdown-file",
+            "required": true,
+            "resolver": "software-delivery.plan-inbox",
+            "config": {
+              "cardinality": "exactly-one",
+              "path": ".boatstack/plans/inbox"
+            }
+          }
+        ]
+      },
       {
         "id": "run",
         "target": "published-pr",
@@ -1499,10 +2635,8 @@
           "authorities": [
             "autonomy"
           ]
-        },
-        "description": "Implement one approved repository plan and publish a pull request"
+        }
       }
-    ],
-    "description": "Basic React delivery from one repository plan to a published pull request"
+    ]
   }
 }
