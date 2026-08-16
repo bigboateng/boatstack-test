@@ -9,15 +9,15 @@
   "program_fingerprint": "57b7bd7b6e0f3c048ea989dc36a411246c9d4aea2bd277ebbf4254a8d3980d15",
   "generated_skills": {
     ".agents/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-abandon/SKILL.md": "674cf399bb63da1e2626299ec483b7aca2fb533be76d4626a75ee24bb6024737",
+    ".agents/skills/product-delivery-abandon/SKILL.md": "52b3c3c13b96ebcbf5f1e16d74d92eafc7ab5906c4f6f24be0152019ca8665df",
     ".agents/skills/product-delivery-abandon/agents/openai.yaml": "f5ad9bd932609197fd33e65749ad5cecd4fbf9082e8c077b32c753aac8f57090",
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "78004e83ab866558558539702bc47ad7c5fa970e72a8c67f24246355cba8ade5",
+    ".agents/skills/product-delivery-run/SKILL.md": "649dde5ba5ef5166a8e269e3661721b768758dced7b2fc72ecf1f4cf91564403",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-abandon/SKILL.md": "f55ed619f7fffbb37a14f910d3fbe01cfed7323dc6eb44c895361afebe142ed4",
+    ".claude/skills/product-delivery-abandon/SKILL.md": "64384926263a94b6337b1e70220180d5223defa35a17449526fa446944fc1bbb",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "b35aff1dd0a6665f5bf302fc063bbcea3e3e2c2b771179984ac5c4f688d2951b"
+    ".claude/skills/product-delivery-run/SKILL.md": "e016be496e0f6758397bd52913feee79cb0d5a1576db6d944abb4025848e4f89"
   },
   "assets": {
     ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",

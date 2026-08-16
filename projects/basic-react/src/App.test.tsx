@@ -30,6 +30,27 @@ async function createTodo(
 }
 
 describe('App', () => {
+  it('shows the initial total beside the list heading', () => {
+    render(<App />)
+
+    expect(screen.getByRole('heading', { name: 'Tasks', level: 2 })).toBeInTheDocument()
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+  })
+
+  it('updates the total when todos are added or deleted', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await createTodo(user, 'Count this task')
+    expect(screen.getByText('4 total')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    expect(screen.getByText('4 total')).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Delete' }))
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+  })
+
   it('supports adding, editing, completing, selecting, and deleting todos', async () => {
     const user = userEvent.setup()
     render(<App />)

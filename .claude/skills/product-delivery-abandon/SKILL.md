@@ -44,6 +44,29 @@ parameters. A question suspends this run: ask the user, submit only the typed
 answer evidence, and resume the same run ID. Nothing continues in the
 background while input is missing. Never synthesize authority.
 
+Whenever Boatstack presents a human authority boundary, inspect its exact
+`human_identity` object before asking for approval or recording an actor.
+The `provider_fingerprint` identifies the repository-selected identity
+descriptor; it is provenance only and grants no authority.
+
+For a `literal` descriptor, use its validated `value` as the proposed
+actor. For a `command` descriptor, execute the exact `command` and
+`args` directly through the host command tool. Do not join them into a shell
+string, interpolate values, rewrite arguments, or use a shell evaluator. Require a
+zero exit status and stdout of at most 1024 bytes. Remove at most one trailing LF or
+CRLF, then require exactly one non-empty line with no NUL and an actor matching
+`^[A-Za-z0-9][A-Za-z0-9._-]*$`. Stderr is diagnostic only.
+
+Visibly display the proposed actor, exact request or transition, requested
+authority, and relevant fingerprint, then ask the human for explicit approval.
+Identity resolution never counts as approval. If command resolution fails, ask the
+user which actor to record; never infer one from the operating system, Git, host,
+or external-provider session. Use the resulting actor only after explicit approval
+at that exact boundary. Re-resolve if Boatstack reports identity or configuration
+drift. Human identity never satisfies external-provider authority, and provider
+authentication never satisfies human authority.
+
+
 
 
 
@@ -100,6 +123,10 @@ program-delta fingerprint, required transition, and acceptance flag. Ask for
 explicit human acceptance of that exact delta separately from delegation
 approval. Never infer acceptance from repository authority, autonomy,
 installation, or a previous program change.
+
+Resolve the proposed actor from the exact `program_change.human_identity`
+object using the human-identity protocol above. Do not ask the user to invent
+an actor unless that descriptor's command resolution fails.
 
 Continue only when the response names `installation.reconcile-update` and
 `--accept-program-change`, and the user accepts the displayed exact delta.

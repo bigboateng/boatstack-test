@@ -236,7 +236,10 @@ function App() {
           <div className="panel-heading">
             <div>
               <p className="panel-kicker">My list</p>
-              <h2>Tasks</h2>
+              <div className="panel-title">
+                <h2>Tasks</h2>
+                <span className="todo-count">{todos.length} total</span>
+              </div>
             </div>
             <div className="list-actions">
               <button type="button" disabled={completedCount === 0} onClick={clearCompleted}>Clear completed</button>
