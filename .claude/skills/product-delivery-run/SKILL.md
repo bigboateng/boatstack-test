@@ -51,6 +51,12 @@ same Flow command with `--human <actor>`; do not invoke an update operation
 or supply installation values with `--param`. Boatstack derives those values
 from the committed project configuration and the executing runtime.
 
+If Boatstack returns `CONTROL_BUNDLE_COMMIT_REQUIRED`, stay in the source
+repository and current run. Commit the exact installed Boatstack control bundle,
+including the generated runtime and host projection files named by the response,
+then resume the same Flow command. This is an installation boundary, not managed
+product-workspace work; do not switch worktrees or exclude generated bundle files.
+
 After internal preconditions are committed, Boatstack returns a typed
 `DELEGATION_REQUIRED` response bound to the resulting control bundle.
 Display its exact run ID, request fingerprint, requested authorities, and
