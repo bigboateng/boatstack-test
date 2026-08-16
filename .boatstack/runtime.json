@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "version": "v2.0.0-control-bundle-pilot",
-  "sha256": "24491c72591cb14d27e0646d797001a0c362952a057068a3673d2d5ac288c68e",
-  "source_revision": "9eb5f8762d0d1cfe150c53f277792feb0f3fe958-wt-fdc895aa1c1c",
+  "sha256": "323c530348abe8dfadced0d142e0ef8f7da1194528896900ba772aa027ce03c9",
+  "source_revision": "9eb5f8762d0d1cfe150c53f277792feb0f3fe958-wt-159bf07c6703",
   "program_fingerprint": "9a0e7c3c58a60ed01db2fb4f84a2f452b324ef989022d66d2f027ad5b524eb8e",
   "state_schema_version": 6
 }
