@@ -223,6 +223,41 @@ describe('App', () => {
     expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Review the details panel')
   })
 
+  it('enables reopening when a todo is completed', () => {
+    render(<App />)
+
+    expect(screen.getByRole('button', { name: 'Reopen all' })).toBeEnabled()
+  })
+
+  it('disables reopening when no todos are completed', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /ship the starting point/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(screen.getByRole('button', { name: 'Reopen all' })).toBeDisabled()
+  })
+
+  it('reopens every completed todo while preserving the selection', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /review the details panel/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    const selectedTodo = screen.getByRole('button', { name: /ship the starting point/i })
+    await user.click(selectedTodo)
+    await user.click(screen.getByRole('button', { name: 'Reopen all' }))
+
+    expect(selectedTodo).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('checkbox', { name: /mark complete/i })).not.toBeChecked()
+    expect(screen.getByText('0 of 3 complete')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Reopen all' })).toBeDisabled()
+
+    await user.click(screen.getByRole('button', { name: /review the details panel/i }))
+    expect(screen.getByRole('checkbox', { name: /mark complete/i })).not.toBeChecked()
+  })
+
   it('disables clearing when no todos are completed', async () => {
     const user = userEvent.setup()
     render(<App />)
