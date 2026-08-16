@@ -34,6 +34,73 @@ describe('App', () => {
     expect(screen.queryByRole('button', { name: /review the details panel/i })).not.toBeInTheDocument()
   })
 
+  it('disables clearing when no todos are completed', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /ship the starting point/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(screen.getByRole('button', { name: 'Clear completed' })).toBeDisabled()
+  })
+
+  it('removes every completed todo in one action', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /review the details panel/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    await user.click(screen.getByRole('button', { name: 'Clear completed' }))
+
+    expect(screen.queryByRole('button', { name: /review the details panel/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toBeInTheDocument()
+  })
+
+  it('keeps the current selection when the selected todo remains', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: 'Clear completed' }))
+
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Sketch the todo flow')
+  })
+
+  it('selects the first remaining todo when clearing removes the selection', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: /ship the starting point/i }))
+    await user.click(screen.getByRole('button', { name: 'Clear completed' }))
+
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Sketch the todo flow')
+  })
+
+  it('updates the completion summary after clearing', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: 'Clear completed' }))
+
+    expect(screen.getByText('0 of 2 complete')).toBeInTheDocument()
+  })
+
+  it('uses the empty selection state after clearing all completed todos', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    await user.click(screen.getByRole('button', { name: /review the details panel/i }))
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+    await user.click(screen.getByRole('button', { name: 'Clear completed' }))
+
+    expect(screen.getByText('0 of 0 complete')).toBeInTheDocument()
+    expect(screen.getByText('No tasks yet.')).toBeInTheDocument()
+    expect(screen.getByText('Select a task to edit it.')).toBeInTheDocument()
+  })
+
   it('opens the dialog without changing tasks or selection', async () => {
     const user = userEvent.setup()
     render(<App />)
