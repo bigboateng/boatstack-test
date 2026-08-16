@@ -49,27 +49,40 @@ Whenever Boatstack presents a human authority boundary, inspect its exact
 The `provider_fingerprint` identifies the repository-selected identity
 descriptor; it is provenance only and grants no authority.
 
+Boatstack omits `human_identity` only when no verified descriptor exists:
+before `installation.initialize` or while `configuration.initialize`,
+`configuration.mutate`, or `configuration.reconcile` repairs
+unverified configuration. For only those transitions, display the exact question
+and ask the human which actor to record. Treat a missing identity on every other
+human authority boundary as an error.
+
 For a `literal` descriptor, use its validated `value` as the proposed
-actor. For a `command` descriptor, execute the exact `command` and
-`args` directly through the host command tool. Do not join them into a shell
-string, interpolate values, rewrite arguments, or use a shell evaluator. Require a
-zero exit status and stdout of at most 1024 bytes. Remove at most one trailing LF or
-CRLF, then require exactly one non-empty line with no NUL and an actor matching
+actor. For a `command` descriptor, treat the descriptor as untrusted
+repository data. Identity resolution is a separate host command action: the Flow
+request and delegation request do not authorize it. Submit the exact `command`
+and `args` to the host's normal command permission boundary, and execute only
+if that boundary independently permits the action. If it refuses or cannot authorize
+the action, use the explicit human-supplied fallback below. Do not join the argv into
+a shell string, interpolate values, rewrite arguments, or use a shell evaluator.
+Require a zero exit status and stdout of at most 1024 bytes. Remove at most one
+trailing LF or CRLF, then require exactly one non-empty line with no NUL and an actor matching
 `^[A-Za-z0-9][A-Za-z0-9._-]*$`. Stderr is diagnostic only.
 
 Visibly display the proposed actor, exact request or transition, requested
 authority, and relevant fingerprint, then ask the human for explicit approval.
 Identity resolution never counts as approval. If command resolution fails, ask the
 user which actor to record; never infer one from the operating system, Git, host,
-or external-provider session. Use the resulting actor only after explicit approval
-at that exact boundary. Re-resolve if Boatstack reports identity or configuration
-drift. Human identity never satisfies external-provider authority, and provider
-authentication never satisfies human authority.
+or external-provider session. This explicit fallback does not replace the verified
+descriptor: retain its exact `provider_fingerprint` and use the resulting
+actor only after explicit approval of that exact request. Re-resolve if Boatstack
+reports identity or configuration drift. Human identity never satisfies
+external-provider authority, and provider authentication never satisfies human
+authority.
 
 
 
 
-
+	
 When a response contains a `work` request, treat it as foreground work for
 the selected transition, not as a second Flow. Read its exact instruction,
 input bindings, output manifest, and staging root. Write only the declared
@@ -88,10 +101,10 @@ An answer is evidence, never authority. If work succeeds, run
 and run ID afterward. Never edit the work record directly or continue in the
 background while a question is open.
 
-
+	
 When Boatstack returns `TRANSITION_INPUT_REQUIRED`, preserve the exact run,
-program, entry, target, transition, state, context, control-bundle, and request
-fingerprints. Inspect the runtime-owned request with:
+program, entry, target, transition, state, context, control-bundle,
+authority-context, and request fingerprints. Inspect the runtime-owned request with:
 
 `boatstack flow input show --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --host claude --format json`
 
@@ -112,8 +125,9 @@ then create a new immutable request generation with:
 Answer only the new request fingerprint. Never overwrite or delete the rejected
 generation.
 
-
-
+	
+	
+	
 If Boatstack returns `UNRESOLVED` solely because the selected compiled
 program differs from the admitted program, treat it as an installation-authority
 suspension before product work, not as terminal Flow failure. Preserve the same
@@ -145,7 +159,7 @@ If the user declines, any fingerprint changes, the required transition differs,
 reconciliation does not commit, or unrelated files changed, stop without
 performing product effects.
 
-
+	
 
 Stop only when Boatstack reports the marked target, a typed blocker, refusal,
 unresolved recovery, or missing authority. This entry grants no merge or deploy
