@@ -34,7 +34,7 @@ Flow run ID. Preserve any Boatstack bootstrap diagnostic verbatim, including
 stderr, and resume this same requested entry only after the user has installed
 the exact runtime.
 
-Start with `boatstack next --repo . --flow product-delivery --entry run --repository-authority --host codex --format json`.
+Start with `boatstack flow run --repo . --flow product-delivery --entry run --repository-authority --host codex --format json`.
 Preserve the returned program fingerprint, entry, run ID, delivery, repository,
 worktree, host, actor, authority receipts, prescription, and receipts through
 every `next`, `apply`, recovery, question, and re-resolution.
@@ -44,10 +44,17 @@ parameters. A question suspends this run: ask the user, submit only the typed
 answer evidence, and resume the same run ID. Nothing continues in the
 background while input is missing. Never synthesize authority.
 
-The first `next` returns a typed `DELEGATION_REQUIRED` response before
-managed state changes. Display its exact run ID, request fingerprint, requested
-authorities, and description. Obtain one explicit human approval for that exact
-request, then run:
+Before product delegation, Boatstack may select `installation.initialize`
+for an installed repository whose controller state is fresh. Display that exact
+installation-authority question and obtain explicit human approval. Resume the
+same Flow command with `--human <actor>`; do not invoke an update operation
+or supply installation values with `--param`. Boatstack derives those values
+from the committed project configuration and the executing runtime.
+
+After internal preconditions are committed, Boatstack returns a typed
+`DELEGATION_REQUIRED` response bound to the resulting control bundle.
+Display its exact run ID, request fingerprint, requested authorities, and
+description. Obtain one explicit human approval for that exact request, then run:
 
 `boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human <actor> --host codex`
 

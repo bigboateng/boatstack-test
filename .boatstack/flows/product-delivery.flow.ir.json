@@ -5,19 +5,19 @@
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
   "source_sha256": "541bbbf5f62863b86f8d5adad3f27e20dad25507bf240e3a63280e9595e7465d",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "e04ed6401cb91d22e4837418f77ca58f715d2c6a556c4727df91bb2e332a9360",
-  "program_fingerprint": "87d40e1c949e557d9499e9519576d43c609e140d0ed9b42ef3040da926f23bda",
+  "dependency_lock_sha256": "4c1e8ca718ce785b5b1c62fd3476130ce2f1ad9c7c424cdd0b17a9b80afd330b",
+  "program_fingerprint": "57b7bd7b6e0f3c048ea989dc36a411246c9d4aea2bd277ebbf4254a8d3980d15",
   "generated_skills": {
     ".agents/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
     ".agents/skills/product-delivery-abandon/SKILL.md": "674cf399bb63da1e2626299ec483b7aca2fb533be76d4626a75ee24bb6024737",
     ".agents/skills/product-delivery-abandon/agents/openai.yaml": "f5ad9bd932609197fd33e65749ad5cecd4fbf9082e8c077b32c753aac8f57090",
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "b0b44cc84ef02242c82e8b1bfb45d3e77603e9830090cde82bf748467bfd5ecd",
+    ".agents/skills/product-delivery-run/SKILL.md": "b0556ec211bbbe3a5f03bcf79752ab5383095e5b5c253ac445339009319d81e0",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
     ".claude/skills/product-delivery-abandon/SKILL.md": "f55ed619f7fffbb37a14f910d3fbe01cfed7323dc6eb44c895361afebe142ed4",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "e5316c6fdfd666a86b960084ac8e45257ab50216aa70c9f4f1d18b759cf7780b"
+    ".claude/skills/product-delivery-run/SKILL.md": "04a2e1e8db96374aacb8e4c11b1fd6ef0d98a45bea02e4b57c0e811f28a31cbe"
   },
   "assets": {
     ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
@@ -163,6 +163,10 @@
       },
       {
         "id": "recovery_source_phase",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_transaction_id",
         "kind": "string"
       },
       {
@@ -488,7 +492,7 @@
         "binding": {
           "reference": "software-delivery/gate.build.record",
           "version": "1",
-          "fingerprint": "9619c8b0f1eefad5752645ecbe65057359b47397ef00ba8d694909f31e2f9a5c"
+          "fingerprint": "42a83c3115ed2164c47d1b6cfe92afd913d2fc808e1a2306138a8923e326a7ef"
         },
         "capabilities": [
           "command.execute",
@@ -684,7 +688,7 @@
         "binding": {
           "reference": "software-delivery/gate.review.record",
           "version": "1",
-          "fingerprint": "d5a0a4598705fc818e0e5d16662cfbf5a98ce474adde02e123659dd98ead0d07"
+          "fingerprint": "5948fd90c9cbe40c70e534d7de8c444875f7e4e29f371fd698a41bd70aee9209"
         },
         "capabilities": [
           "product.mutate",
@@ -750,7 +754,7 @@
         "binding": {
           "reference": "software-delivery/gate.test.record",
           "version": "1",
-          "fingerprint": "485ec11c8a0f7d236581cc6379f1fe68d630b2377187e2e8b894735f4ed10973"
+          "fingerprint": "c99217fe668ba6ed3a12c9a1dcd692c498dc521fb5d70c392bc0f9e44cc2da6b"
         },
         "capabilities": [
           "command.execute",
@@ -1170,7 +1174,7 @@
         "binding": {
           "reference": "software-delivery/publication.observe",
           "version": "1",
-          "fingerprint": "fd1132c4a5cfbbc53a3ab3695cbd57e09970ca656e3b152eb2a63e16240f9823"
+          "fingerprint": "9b74f2da0c647fcae619ee0fc2054fa68a2b321c87b1df9689e316145e36ab04"
         },
         "capabilities": [
           "command.execute",
@@ -1201,8 +1205,8 @@
             "required": true,
             "secret": false,
             "allowed_sources": [
-              "receipt",
-              "state"
+              "state",
+              "state-or-receipt"
             ],
             "authority": {}
           }
@@ -1219,6 +1223,13 @@
                 ]
               }
             }
+          }
+        ],
+        "receipt_inputs": [
+          {
+            "parameter": "publication_id",
+            "transition": "publication.execute",
+            "field": "publication_id"
           }
         ]
       },
@@ -1316,7 +1327,7 @@
         "binding": {
           "reference": "software-delivery/publication.reconcile",
           "version": "1",
-          "fingerprint": "ab880b00be4b9d2b8ea7c642f56c78ebd0f5c9392fbb919f571d655ca925f110"
+          "fingerprint": "e60a5ee648d096ac6513dbd2fa57e6aa3ecdede737bb9b10e4d334666b348254"
         },
         "capabilities": [
           "command.execute",
@@ -1341,18 +1352,6 @@
         "execution_context": "preserve",
         "parameters": [
           {
-            "id": "publication_id",
-            "type": {
-              "kind": "string"
-            },
-            "required": true,
-            "secret": false,
-            "allowed_sources": [
-              "state"
-            ],
-            "authority": {}
-          },
-          {
             "id": "transaction_id",
             "type": {
               "kind": "string"
@@ -1367,23 +1366,11 @@
         ],
         "state_inputs": [
           {
-            "parameter": "publication_id",
-            "facet": "publication_id",
-            "available_when": {
-              "fact": {
-                "facet": "publication_id",
-                "statuses": [
-                  "known"
-                ]
-              }
-            }
-          },
-          {
             "parameter": "transaction_id",
-            "facet": "transaction_id",
+            "facet": "recovery_transaction_id",
             "available_when": {
               "fact": {
-                "facet": "transaction_id",
+                "facet": "recovery_transaction_id",
                 "statuses": [
                   "known"
                 ]
@@ -1637,7 +1624,7 @@
         "binding": {
           "reference": "software-delivery/workspace.reconcile",
           "version": "1",
-          "fingerprint": "bea8f52a569aa3923b17c9dbf25379138869b5e9a417f1fcab40c5040496e4fb"
+          "fingerprint": "2e3d55e990343f83434e68b11bdd5a9884aa383dcbc8f42ad5452a28b26dabac"
         },
         "capabilities": [
           "product.mutate",
@@ -1676,10 +1663,10 @@
         "state_inputs": [
           {
             "parameter": "transaction_id",
-            "facet": "transaction_id",
+            "facet": "recovery_transaction_id",
             "available_when": {
               "fact": {
-                "facet": "transaction_id",
+                "facet": "recovery_transaction_id",
                 "statuses": [
                   "known"
                 ]
@@ -2247,7 +2234,16 @@
           {
             "parameter": "publication_id",
             "producer": {
-              "kind": "receipt",
+              "kind": "state-or-receipt",
+              "facet": "publication_id",
+              "available_when": {
+                "fact": {
+                  "facet": "publication_id",
+                  "statuses": [
+                    "known"
+                  ]
+                }
+              },
               "transition": "publication.execute",
               "field": "publication_id"
             }
@@ -2318,28 +2314,13 @@
         "requires": {},
         "parameters": [
           {
-            "parameter": "publication_id",
-            "producer": {
-              "kind": "state",
-              "facet": "publication_id",
-              "available_when": {
-                "fact": {
-                  "facet": "publication_id",
-                  "statuses": [
-                    "known"
-                  ]
-                }
-              }
-            }
-          },
-          {
             "parameter": "transaction_id",
             "producer": {
               "kind": "state",
-              "facet": "transaction_id",
+              "facet": "recovery_transaction_id",
               "available_when": {
                 "fact": {
-                  "facet": "transaction_id",
+                  "facet": "recovery_transaction_id",
                   "statuses": [
                     "known"
                   ]
@@ -2470,10 +2451,10 @@
             "parameter": "transaction_id",
             "producer": {
               "kind": "state",
-              "facet": "transaction_id",
+              "facet": "recovery_transaction_id",
               "available_when": {
                 "fact": {
-                  "facet": "transaction_id",
+                  "facet": "recovery_transaction_id",
                   "statuses": [
                     "known"
                   ]
