@@ -116,6 +116,22 @@ describe('App', () => {
     expect(trigger).toHaveFocus()
   })
 
+  it('keeps keyboard focus inside the dialog', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: 'Add task' }))
+    const dialog = screen.getByRole('dialog')
+    const title = within(dialog).getByRole('textbox', { name: 'Title' })
+    const createButton = within(dialog).getByRole('button', { name: 'Create' })
+
+    expect(title).toHaveFocus()
+    await user.tab({ shift: true })
+    expect(createButton).toHaveFocus()
+    await user.tab()
+    expect(title).toHaveFocus()
+  })
+
   it('reopens with clean draft values', async () => {
     const user = userEvent.setup()
     render(<App />)

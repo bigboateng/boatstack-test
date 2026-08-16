@@ -35,6 +35,7 @@ function App() {
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
   const [titleError, setTitleError] = useState('')
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
+  const dialogRef = useRef<HTMLElement | null>(null)
   const titleInputRef = useRef<HTMLInputElement | null>(null)
 
   const selectedTodo = todos.find((todo) => todo.id === selectedID) ?? null
@@ -51,6 +52,30 @@ function App() {
       if (event.key === 'Escape') {
         event.preventDefault()
         closeAddDialog()
+      }
+
+      if (event.key === 'Tab') {
+        const focusableElements = Array.from(
+          dialogRef.current?.querySelectorAll<HTMLElement>('button, input, textarea, select, [tabindex]:not([tabindex="-1"])') ?? [],
+        )
+        const firstFocusableElement = focusableElements[0]
+        const lastFocusableElement = focusableElements[focusableElements.length - 1]
+
+        if (!firstFocusableElement || !lastFocusableElement) {
+          event.preventDefault()
+          return
+        }
+
+        if (event.shiftKey && document.activeElement === firstFocusableElement) {
+          event.preventDefault()
+          lastFocusableElement.focus()
+          return
+        }
+
+        if (!event.shiftKey && document.activeElement === lastFocusableElement) {
+          event.preventDefault()
+          firstFocusableElement.focus()
+        }
       }
     }
 
@@ -206,6 +231,7 @@ function App() {
       {isAddDialogOpen ? (
         <div className="dialog-backdrop">
           <section
+            ref={dialogRef}
             className="add-task-dialog"
             role="dialog"
             aria-modal="true"
