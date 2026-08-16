@@ -10,6 +10,8 @@ h2 { margin-bottom: 0; color: #172554; font-size: 1.35rem; }
 .todo-list-panel, .details-panel { min-height: 34rem; padding: clamp(1.25rem, 3vw, 2rem); }
 .todo-list-panel { border-right: 1px solid #e2e8f0; background: #f8fafc; }
 .panel-heading, .details-heading { align-items: start; margin-bottom: 1.5rem; }
+.panel-title { display: flex; align-items: baseline; gap: .5rem; }
+.todo-count { color: #64748b; font-size: .8rem; font-weight: 700; white-space: nowrap; }
 button { border: 0; border-radius: .6rem; padding: .65rem .85rem; color: #fff; background: #0f766e; font: inherit; font-weight: 750; cursor: pointer; }
 button:hover { background: #115e59; }
 button:disabled, button:disabled:hover { color: #64748b; background: #e2e8f0; cursor: not-allowed; }
