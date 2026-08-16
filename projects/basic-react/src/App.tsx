@@ -31,15 +31,41 @@ const initialTodos: Todo[] = [
 function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos)
   const [selectedID, setSelectedID] = useState(initialTodos[0].id)
+  const [showIncompleteOnly, setShowIncompleteOnly] = useState(false)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
   const [titleError, setTitleError] = useState('')
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
   const dialogRef = useRef<HTMLElement | null>(null)
   const titleInputRef = useRef<HTMLInputElement | null>(null)
+  const pendingFocusIDRef = useRef<number | null>(null)
 
-  const selectedTodo = todos.find((todo) => todo.id === selectedID) ?? null
+  const visibleTodos = useMemo(
+    () => showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos,
+    [showIncompleteOnly, todos],
+  )
+  const selectedTodo = visibleTodos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
+
+  useEffect(() => {
+    if (selectedTodo) {
+      return
+    }
+
+    setSelectedID(visibleTodos[0]?.id ?? 0)
+  }, [selectedTodo, visibleTodos])
+
+  useEffect(() => {
+    const pendingFocusID = pendingFocusIDRef.current
+
+    if (pendingFocusID === null) {
+      return
+    }
+
+    pendingFocusIDRef.current = null
+    const focusTargetID = pendingFocusID === 0 ? 'show-incomplete-only' : `todo-row-${pendingFocusID}`
+    document.getElementById(focusTargetID)?.focus()
+  }, [selectedID, visibleTodos])
 
   useEffect(() => {
     if (!isAddDialogOpen) {
@@ -90,6 +116,13 @@ function App() {
       return
     }
 
+    if (changes.completed === true && showIncompleteOnly) {
+      const remainingVisible = todos.filter((todo) => todo.id !== selectedTodo.id && !todo.completed)
+      const nextSelectedID = remainingVisible[0]?.id ?? 0
+      pendingFocusIDRef.current = nextSelectedID
+      setSelectedID(nextSelectedID)
+    }
+
     setTodos((current) => current.map((todo) => todo.id === selectedTodo.id ? { ...todo, ...changes } : todo))
   }
 
@@ -138,8 +171,9 @@ function App() {
     }
 
     const remaining = todos.filter((todo) => todo.id !== selectedTodo.id)
+    const remainingVisible = showIncompleteOnly ? remaining.filter((todo) => !todo.completed) : remaining
     setTodos(remaining)
-    setSelectedID(remaining[0]?.id ?? 0)
+    setSelectedID(remainingVisible[0]?.id ?? 0)
   }
 
   function clearCompleted() {
@@ -175,16 +209,27 @@ function App() {
             </div>
           </div>
 
-          {todos.length === 0 ? (
+          <label className="list-filter">
+            <input
+              id="show-incomplete-only"
+              type="checkbox"
+              checked={showIncompleteOnly}
+              onChange={(event) => setShowIncompleteOnly(event.target.checked)}
+            />
+            <span>Show incomplete only</span>
+          </label>
+
+          {visibleTodos.length === 0 ? (
             <div className="empty-state">
-              <p>No tasks yet.</p>
-              <button type="button" onClick={openAddDialog}>Create your first task</button>
+              <p>{todos.length === 0 ? 'No tasks yet.' : 'No incomplete tasks.'}</p>
+              {todos.length === 0 ? <button type="button" onClick={openAddDialog}>Create your first task</button> : null}
             </div>
           ) : (
             <ul className="todo-list">
-              {todos.map((todo) => (
+              {visibleTodos.map((todo) => (
                 <li key={todo.id}>
                   <button
+                    id={`todo-row-${todo.id}`}
                     className={`todo-row${todo.id === selectedID ? ' selected' : ''}`}
                     type="button"
                     aria-pressed={todo.id === selectedID}
