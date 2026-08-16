@@ -142,6 +142,16 @@ function App() {
     setSelectedID(remaining[0]?.id ?? 0)
   }
 
+  function clearCompleted() {
+    const remaining = todos.filter((todo) => !todo.completed)
+    const selectedTodoRemains = remaining.some((todo) => todo.id === selectedID)
+
+    setTodos(remaining)
+    if (!selectedTodoRemains) {
+      setSelectedID(remaining[0]?.id ?? 0)
+    }
+  }
+
   return (
     <main className="todo-app">
       <header className="app-header">
@@ -159,7 +169,10 @@ function App() {
               <p className="panel-kicker">My list</p>
               <h2>Tasks</h2>
             </div>
-            <button className="add-button" type="button" onClick={openAddDialog}>Add task</button>
+            <div className="list-actions">
+              <button type="button" disabled={completedCount === 0} onClick={clearCompleted}>Clear completed</button>
+              <button className="add-button" type="button" onClick={openAddDialog}>Add task</button>
+            </div>
           </div>
 
           {todos.length === 0 ? (
