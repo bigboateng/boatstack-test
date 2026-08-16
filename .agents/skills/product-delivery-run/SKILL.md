@@ -57,6 +57,12 @@ same run and delegation unless Boatstack reports revocation, expiry, drift, or
 terminal completion. Never authorize on the user's behalf.
 
 
+If the user requests different work, never retarget this run. When no objective
+binding receipt exists, stop this unbound attempt and allow the inbox plan to be
+replaced. Once the objective is bound, require explicit use of $product-delivery-abandon for
+the same delivery and wait for its abandonment receipt before selecting a new
+plan and starting a new run.
+
 
 
 When a response contains a `work` request, treat it as foreground work for
@@ -76,6 +82,59 @@ An answer is evidence, never authority. If work succeeds, run
 `boatstack flow work block ... --reason <reason>`. Resume the same entry
 and run ID afterward. Never edit the work record directly or continue in the
 background while a question is open.
+
+
+When Boatstack returns `TRANSITION_INPUT_REQUIRED`, preserve the exact run,
+program, entry, target, transition, state, context, control-bundle, and request
+fingerprints. Inspect the runtime-owned request with:
+
+`boatstack flow input show --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --host codex --format json`
+
+Ask the user only for the bounded values in that request. Write a temporary
+JSON answer object outside repository-tracked paths and submit it only with:
+
+`boatstack flow input answer --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --answer <json-path> --human <actor> --host codex --format json`
+
+Resume the same run after the receipt is recorded. Never guess a value, pass a
+Flow `--param`, reuse `flow work answer`, or edit runtime input receipts.
+
+If transition preflight semantically rejects an already recorded free-form
+answer, preserve that request and receipt. Ask the user for the corrected value,
+then create a new immutable request generation with:
+
+`boatstack flow input supersede --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --reason <semantic-rejection> --human <actor> --host codex --format json`
+
+Answer only the new request fingerprint. Never overwrite or delete the rejected
+generation.
+
+
+
+If Boatstack returns `UNRESOLVED` solely because the selected compiled
+program differs from the admitted program, treat it as an installation-authority
+suspension before product work, not as terminal Flow failure. Preserve the same
+run ID, but do not request or reuse product delegation before reconciliation.
+Display the exact prior program fingerprint, candidate program fingerprint,
+program-delta fingerprint, required transition, and acceptance flag. Ask for
+explicit human acceptance of that exact delta separately from delegation
+approval. Never infer acceptance from repository authority, autonomy,
+installation, or a previous program change.
+
+Continue only when the response names `installation.reconcile-update` and
+`--accept-program-change`, and the user accepts the displayed exact delta.
+Then run:
+
+`boatstack reconcile-update --repo . --flow product-delivery --entry run --run-id <run-id> --accept-program-change --human <actor> --host codex --format json`
+
+Require a committed `installation.reconcile-update` receipt whose prior,
+candidate, and delta fingerprints match the accepted suspension and whose
+program-change acceptance is true. If the receipt changes tracked control-bundle
+files, verify that only its declared installation result changed, then commit
+those exact files separately before product work. Rerun the same Flow run. Ask
+for product delegation only after Boatstack returns the new exact delegation
+request bound to the accepted bundle; then resume with that one delegation.
+If the user declines, any fingerprint changes, the required transition differs,
+reconciliation does not commit, or unrelated files changed, stop without
+performing product effects.
 
 
 If Boatstack reports `WORKSPACE_COMMIT_REQUIRED`, stay in the same
