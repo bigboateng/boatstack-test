@@ -38,6 +38,7 @@ function App() {
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
   const dialogRef = useRef<HTMLElement | null>(null)
   const titleInputRef = useRef<HTMLInputElement | null>(null)
+  const pendingFocusIDRef = useRef<number | null>(null)
 
   const visibleTodos = useMemo(
     () => showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos,
@@ -53,6 +54,18 @@ function App() {
 
     setSelectedID(visibleTodos[0]?.id ?? 0)
   }, [selectedTodo, visibleTodos])
+
+  useEffect(() => {
+    const pendingFocusID = pendingFocusIDRef.current
+
+    if (pendingFocusID === null) {
+      return
+    }
+
+    pendingFocusIDRef.current = null
+    const focusTargetID = pendingFocusID === 0 ? 'show-incomplete-only' : `todo-row-${pendingFocusID}`
+    document.getElementById(focusTargetID)?.focus()
+  }, [selectedID, visibleTodos])
 
   useEffect(() => {
     if (!isAddDialogOpen) {
@@ -101,6 +114,13 @@ function App() {
   function updateSelected(changes: Partial<Todo>) {
     if (!selectedTodo) {
       return
+    }
+
+    if (changes.completed === true && showIncompleteOnly) {
+      const remainingVisible = todos.filter((todo) => todo.id !== selectedTodo.id && !todo.completed)
+      const nextSelectedID = remainingVisible[0]?.id ?? 0
+      pendingFocusIDRef.current = nextSelectedID
+      setSelectedID(nextSelectedID)
     }
 
     setTodos((current) => current.map((todo) => todo.id === selectedTodo.id ? { ...todo, ...changes } : todo))
@@ -191,6 +211,7 @@ function App() {
 
           <label className="list-filter">
             <input
+              id="show-incomplete-only"
               type="checkbox"
               checked={showIncompleteOnly}
               onChange={(event) => setShowIncompleteOnly(event.target.checked)}
@@ -208,6 +229,7 @@ function App() {
               {visibleTodos.map((todo) => (
                 <li key={todo.id}>
                   <button
+                    id={`todo-row-${todo.id}`}
                     className={`todo-row${todo.id === selectedID ? ' selected' : ''}`}
                     type="button"
                     aria-pressed={todo.id === selectedID}

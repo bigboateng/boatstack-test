@@ -137,6 +137,21 @@ describe('App', () => {
     expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
   })
 
+  it('moves focus when completing the selected filtered todo', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    const filter = screen.getByRole('checkbox', { name: 'Show incomplete only' })
+    await user.click(filter)
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(screen.getByRole('button', { name: /review the details panel/i })).toHaveFocus()
+
+    await user.click(screen.getByRole('checkbox', { name: /mark complete/i }))
+
+    expect(filter).toHaveFocus()
+  })
+
   it('restores the full list without losing edits', async () => {
     const user = userEvent.setup()
     render(<App />)
