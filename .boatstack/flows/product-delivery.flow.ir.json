@@ -1,7 +1,7 @@
 {
   "schema": "control-program-artifact",
   "schema_revision": 3,
-  "compiler_version": "control-program.compiler.4",
+  "compiler_version": "control-program.compiler.5",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
   "source_sha256": "541bbbf5f62863b86f8d5adad3f27e20dad25507bf240e3a63280e9595e7465d",
   "dependency_lock_path": "package-lock.json",
@@ -12,12 +12,12 @@
     ".agents/skills/product-delivery-abandon/SKILL.md": "674cf399bb63da1e2626299ec483b7aca2fb533be76d4626a75ee24bb6024737",
     ".agents/skills/product-delivery-abandon/agents/openai.yaml": "f5ad9bd932609197fd33e65749ad5cecd4fbf9082e8c077b32c753aac8f57090",
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "b0556ec211bbbe3a5f03bcf79752ab5383095e5b5c253ac445339009319d81e0",
+    ".agents/skills/product-delivery-run/SKILL.md": "78004e83ab866558558539702bc47ad7c5fa970e72a8c67f24246355cba8ade5",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
     ".claude/skills/product-delivery-abandon/SKILL.md": "f55ed619f7fffbb37a14f910d3fbe01cfed7323dc6eb44c895361afebe142ed4",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "04a2e1e8db96374aacb8e4c11b1fd6ef0d98a45bea02e4b57c0e811f28a31cbe"
+    ".claude/skills/product-delivery-run/SKILL.md": "b35aff1dd0a6665f5bf302fc063bbcea3e3e2c2b771179984ac5c4f688d2951b"
   },
   "assets": {
     ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
