@@ -107,6 +107,39 @@ then create a new immutable request generation with:
 Answer only the new request fingerprint. Never overwrite or delete the rejected
 generation.
 
+If Boatstack returns `TRANSITION_INPUT_BLOCKED` because a canonical
+gate-evidence input is unavailable, treat it as a bounded product-work
+suspension before gate admission, not as terminal Flow failure and not as a
+request for human text. Stay in the exact managed worktree named by the current
+snapshot. Never continue product work in the parked source worktree.
+
+For the first gate, implement only the exact approved plan under the active
+delegation. Run the repository's real check for each named gate. Commit the
+intended product change on the managed branch before preparing gate evidence,
+so `source_revision` names the exact checked commit. Do not claim a
+passed outcome from model confidence or from an unexecuted check.
+
+After a successful check, prepare the exact ignored input
+`.boatstack/evidence/<delivery-id>/<gate>.input.json` as strict JSON:
+
+```json
+{
+  "schema_version": 1,
+  "gate": "<gate>",
+  "source_revision": "<exact committed HEAD>",
+  "outcome": "passed",
+  "producer": "<actual check or reviewer>",
+  "completed_at": "<UTC RFC3339 timestamp>"
+}
+```
+
+Resume this same entry and run. Boatstack binds the canonical path and bytes,
+reruns configured build or test commands at the admitted transition, and
+records its own evidence receipt. Never pass these values with `--param`,
+write a passed input after a failed check, edit controller state, or substitute
+one gate's evidence for another. If the check cannot pass within the approved
+plan, preserve the failure and report the blocker.
+
 
 
 If Boatstack returns `UNRESOLVED` solely because the selected compiled
