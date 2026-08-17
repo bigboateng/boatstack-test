@@ -1,0 +1,26 @@
+{
+  "items": [
+    {
+      "id": "visible-count",
+      "description": "Render the visible task count beside the unchanged total using the existing visible task collection.",
+      "files": [
+        "projects/basic-react/src/App.tsx"
+      ]
+    },
+    {
+      "id": "count-tests",
+      "description": "Cover default, filtered, searched, reset, zero-result, sorting, and accessibility behavior.",
+      "files": [
+        "projects/basic-react/src/App.test.tsx"
+      ]
+    },
+    {
+      "id": "final-evidence",
+      "description": "Create one final feature commit, rerun required checks, and bind committed verification evidence to that revision."
+    },
+    {
+      "id": "publish",
+      "description": "Publish a real open pull request without merging it."
+    }
+  ]
+}

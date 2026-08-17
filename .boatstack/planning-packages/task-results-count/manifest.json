@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "delivery_id": "task-results-count",
+  "work_request_fingerprint": "94414414c16d9a8dd8a1f11af7fba41beff9870a7f84f19611cf5f831e7ad629",
+  "work_result_fingerprint": "bf8f517b647fde97bf2a60047ddf85360ecb4d8b902ee60f51b4c819f97a4eb0",
+  "plan_fingerprint": "95643ed7a3a4a24c2b63647ee67e49cb41797fd1808770a830c66e7496a65383",
+  "outputs": [
+    {
+      "id": "autonomy",
+      "path": "autonomy.md",
+      "media_type": "text/markdown",
+      "sha256": "71b508c947ede33885914289da082084efdf25b0a7a1d06a651471a005903418",
+      "size": 1040
+    },
+    {
+      "id": "evidence",
+      "path": "compiled/evidence.md",
+      "media_type": "text/markdown",
+      "sha256": "8c99df4a24762735f3e7d24e8d5fe94e0cd3af694a236e8f95cebd697b3dc3c6",
+      "size": 984
+    },
+    {
+      "id": "feature-spec",
+      "path": "feature-spec.md",
+      "media_type": "text/markdown",
+      "sha256": "536e842f43071930c512414230d03d409ddf4d54369c05fc803638dfc7a9d6af",
+      "size": 1376
+    },
+    {
+      "id": "journey-oracles",
+      "path": "compiled/journey-oracles.json",
+      "media_type": "application/json",
+      "sha256": "8ff556c1a149042f52dbcb3114eb61f7e49a06edc44df71de741c78b1e8b48ed",
+      "size": 891
+    },
+    {
+      "id": "plan",
+      "path": "plan.md",
+      "media_type": "text/markdown",
+      "sha256": "95643ed7a3a4a24c2b63647ee67e49cb41797fd1808770a830c66e7496a65383",
+      "size": 999
+    },
+    {
+      "id": "questions",
+      "path": "questions.md",
+      "media_type": "text/markdown",
+      "sha256": "ed2ef94f2b47c2d3a60264a2db1d0898c9a8fd56df41f0c9cbdb108536928ac6",
+      "size": 260
+    },
+    {
+      "id": "tasks",
+      "path": "compiled/tasks.json",
+      "media_type": "application/json",
+      "sha256": "cfde0b661f061f20f69c86b01376eda8ffb635e622d840341d9d784d6a76fd0a",
+      "size": 777
+    },
+    {
+      "id": "test-matrix",
+      "path": "compiled/test-matrix.json",
+      "media_type": "application/json",
+      "sha256": "c5a0f7acbeaecf3ecd174e335a3cdc641eb1e4fbf7b8f654b0b58574d8019f6b",
+      "size": 1117
+    },
+    {
+      "id": "test-plan",
+      "path": "test-plan.md",
+      "media_type": "text/markdown",
+      "sha256": "fc60473bbfddf9498e9204e6282c32bc545f73dcc78ec24e61d84492b73de6bf",
+      "size": 737
+    }
+  ],
+  "fingerprint": "d063fa3b997d66d267bc74cd383ab92813f4d236873b81ed8868ad3d72fe9a8a"
+}

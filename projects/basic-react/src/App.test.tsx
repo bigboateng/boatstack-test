@@ -30,11 +30,13 @@ async function createTodo(
 }
 
 describe('App', () => {
-  it('shows the initial total beside the list heading', () => {
+  it('shows the initial total and visible count beside the list heading', () => {
     render(<App />)
 
     expect(screen.getByRole('heading', { name: 'Tasks', level: 2 })).toBeInTheDocument()
     expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('3 shown')
+    expect(screen.getByRole('status')).toHaveAttribute('aria-live', 'polite')
   })
 
   it('updates the total when todos are added or deleted', async () => {
@@ -156,6 +158,9 @@ describe('App', () => {
     render(<App />)
 
     await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('2 shown')
+
     await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
 
     expect(getVisibleTodoTitles()).toEqual([
@@ -163,6 +168,8 @@ describe('App', () => {
       'Review the details panel',
     ])
     expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('2 shown')
   })
 
   it('matches a trimmed query against task titles case-insensitively', async () => {
@@ -172,6 +179,8 @@ describe('App', () => {
     await user.type(screen.getByRole('searchbox', { name: 'Search tasks' }), '  REVIEW  ')
 
     expect(getVisibleTodoTitles()).toEqual(['Review the details panel'])
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('1 shown')
   })
 
   it('matches a query against task notes', async () => {
@@ -209,6 +218,8 @@ describe('App', () => {
 
     expect(screen.getByText('No matching tasks')).toBeInTheDocument()
     expect(screen.getByText('Select a task to edit it.')).toBeInTheDocument()
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('0 shown')
   })
 
   it('keeps the selected task when it remains in search results', async () => {
@@ -316,6 +327,8 @@ describe('App', () => {
     await user.type(searchInput, 'not present')
     await user.click(incompleteOnlyToggle)
     await user.click(sortToggle)
+    expect(screen.getByRole('status')).toHaveTextContent('0 shown')
+
     await user.click(resetViewButton)
 
     expect(searchInput).toHaveValue('')
@@ -323,6 +336,8 @@ describe('App', () => {
     expect(sortToggle).not.toBeChecked()
     expect(resetViewButton).toBeDisabled()
     expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByText('3 total')).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent('3 shown')
   })
 
   it('disables clearing when no todos are completed', async () => {

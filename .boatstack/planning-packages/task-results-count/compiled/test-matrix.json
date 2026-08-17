@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "case": "default",
+      "action": "Render the application",
+      "expected": "3 total and 3 shown"
+    },
+    {
+      "case": "filtered",
+      "action": "Enable incomplete-only",
+      "expected": "Shown count matches incomplete tasks; total is unchanged"
+    },
+    {
+      "case": "searched",
+      "action": "Enter a matching search query",
+      "expected": "Shown count matches search results; total is unchanged"
+    },
+    {
+      "case": "reset",
+      "action": "Apply view controls and activate Reset View",
+      "expected": "Shown count returns to the default count"
+    },
+    {
+      "case": "zero results",
+      "action": "Enter a query with no matches",
+      "expected": "0 shown and the existing empty state"
+    },
+    {
+      "case": "sorting invariant",
+      "action": "Change due-date sorting in a filtered view",
+      "expected": "Both counts remain unchanged"
+    },
+    {
+      "case": "assistive update",
+      "action": "Change the visible result set",
+      "expected": "The current shown count is exposed through polite live-region semantics"
+    }
+  ]
+}
