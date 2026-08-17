@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "version": "0.0.0-human-identity.6b93ffa",
-  "sha256": "0b1d9b0f27683be8811fe68d07eaaea3c26dd2386df17562f77cc8e034693570",
-  "source_revision": "6b93ffa6706f17f7d6f6b0383941403ad1a6a605",
-  "program_fingerprint": "a8adfb8bee7bf1fbde50a19e06a622519a383fe00b0ab0e388c93e1cbf624ea1",
+  "version": "v2.0.0-dev",
+  "sha256": "2ac624689ec979eeff70fc695150d2992092877c47b6bd5acd0b7d36ca4ee453",
+  "source_revision": "6e02180ebb1222b5e4b20e69c6010c0cdbd6eca0",
+  "program_fingerprint": "a1fcb397a408ff5f9df82f23dc340f6786ed6097fc22854ae616a758aacda688",
   "state_schema_version": 6
 }

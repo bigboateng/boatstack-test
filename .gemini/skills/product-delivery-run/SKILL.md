@@ -1,11 +1,11 @@
 ---
-name: product-delivery-abandon
-description: "Run repository Flow entry abandon to target safely-abandoned. Use only when the user explicitly selects this repository Flow entry."
+name: product-delivery-run
+description: "Run repository Flow entry run to target published-pr. Use only when the user explicitly selects this repository Flow entry."
 ---
 
-# Product Delivery Abandon
+# Product Delivery Run
 
-Run the repository-owned Flow "product-delivery" entry "abandon" until its marked target "safely-abandoned" is reached.
+Run the repository-owned Flow "product-delivery" entry "run" until its marked target "published-pr" is reached.
 Boatstack does not interpret the entry name.
 
 Before starting the Flow, verify that the `boatstack` command is
@@ -34,7 +34,7 @@ Flow run ID. Preserve any Boatstack bootstrap diagnostic verbatim, including
 stderr, and resume this same requested entry only after the user has installed
 the exact runtime.
 
-Start with `boatstack next --repo . --flow product-delivery --entry abandon --repository-authority --host claude --format json`.
+Start with `boatstack flow run --repo . --flow product-delivery --entry run --repository-authority --host gemini --format json`.
 Preserve the returned program fingerprint, entry, run ID, delivery, repository,
 worktree, host, actor, authority receipts, prescription, and receipts through
 every `next`, `apply`, recovery, question, and re-resolution.
@@ -80,6 +80,37 @@ external-provider authority, and provider authentication never satisfies human
 authority.
 
 
+Before product delegation, Boatstack may select `installation.initialize`
+for an installed repository whose controller state is fresh. Display that exact
+installation-authority question and obtain explicit human approval. Resume the
+same Flow command with `--human <actor>`; do not invoke an update operation
+or supply installation values with `--param`. Boatstack derives those values
+from the committed project configuration and the executing runtime.
+
+If Boatstack returns `CONTROL_BUNDLE_COMMIT_REQUIRED`, stay in the source
+repository and current run. Commit the exact installed Boatstack control bundle,
+including the generated runtime and host projection files named by the response,
+then resume the same Flow command. This is an installation boundary, not managed
+product-workspace work; do not switch worktrees or exclude generated bundle files.
+
+After internal preconditions are committed, Boatstack returns a typed
+`DELEGATION_REQUIRED` response bound to the resulting control bundle.
+Display its exact run ID, request fingerprint, requested authorities, and
+description. Obtain one explicit human approval for that exact request, then run:
+
+`boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human-identity-provider-fingerprint <provider-fingerprint> --human <actor> --host gemini`
+
+After authorization, use `boatstack flow run --repo . --flow product-delivery --entry run --run-id <run-id> --repository-authority --host gemini --format json`.
+Do not request approval again after a restart or typed suspension. Resume the
+same run and delegation unless Boatstack reports revocation, expiry, drift, or
+terminal completion. Never authorize on the user's behalf.
+
+
+If the user requests different work, never retarget this run. When no objective
+binding receipt exists, stop this unbound attempt and allow the inbox plan to be
+replaced. Once the objective is bound, require explicit use of $product-delivery-abandon for
+the same delivery and wait for its abandonment receipt before selecting a new
+plan and starting a new run.
 
 
 	
@@ -91,7 +122,7 @@ bound.
 
 If human input is required, record the typed suspension with:
 
-`boatstack flow work input-required --repo . --flow product-delivery --entry abandon --run-id <run-id> --work-id <work-id> --prompt <question> --host claude --format json`
+`boatstack flow work input-required --repo . --flow product-delivery --entry run --run-id <run-id> --work-id <work-id> --prompt <question> --host gemini --format json`
 
 Ask the user and wait. Store the answer as bounded JSON, then submit it with
 `boatstack flow work answer ... --question-id <question-id> --answer <json-path>`.
@@ -106,12 +137,12 @@ When Boatstack returns `TRANSITION_INPUT_REQUIRED`, preserve the exact run,
 program, entry, target, transition, state, context, control-bundle,
 authority-context, and request fingerprints. Inspect the runtime-owned request with:
 
-`boatstack flow input show --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --host claude --format json`
+`boatstack flow input show --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --host gemini --format json`
 
 Ask the user only for the bounded values in that request. Write a temporary
 JSON answer object outside repository-tracked paths and submit it only with:
 
-`boatstack flow input answer --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --answer <json-path> --human <actor> --host claude --format json`
+`boatstack flow input answer --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --answer <json-path> --human <actor> --host gemini --format json`
 
 Resume the same run after the receipt is recorded. Never guess a value, pass a
 Flow `--param`, reuse `flow work answer`, or edit runtime input receipts.
@@ -120,10 +151,43 @@ If transition preflight semantically rejects an already recorded free-form
 answer, preserve that request and receipt. Ask the user for the corrected value,
 then create a new immutable request generation with:
 
-`boatstack flow input supersede --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --reason <semantic-rejection> --human <actor> --host claude --format json`
+`boatstack flow input supersede --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --reason <semantic-rejection> --human <actor> --host gemini --format json`
 
 Answer only the new request fingerprint. Never overwrite or delete the rejected
 generation.
+
+If Boatstack returns `TRANSITION_INPUT_BLOCKED` because a canonical
+gate-evidence input is unavailable, treat it as a bounded product-work
+suspension before gate admission, not as terminal Flow failure and not as a
+request for human text. Stay in the exact managed worktree named by the current
+snapshot. Never continue product work in the parked source worktree.
+
+For the first gate, implement only the exact approved plan under the active
+delegation. Run the repository's real check for each named gate. Commit the
+intended product change on the managed branch before preparing gate evidence,
+so `source_revision` names the exact checked commit. Do not claim a
+passed outcome from model confidence or from an unexecuted check.
+
+After a successful check, prepare the exact ignored input
+`.boatstack/evidence/<delivery-id>/<gate>.input.json` as strict JSON:
+
+```json
+{
+  "schema_version": 1,
+  "gate": "<gate>",
+  "source_revision": "<exact committed HEAD>",
+  "outcome": "passed",
+  "producer": "<actual check or reviewer>",
+  "completed_at": "<UTC RFC3339 timestamp>"
+}
+```
+
+Resume this same entry and run. Boatstack binds the canonical path and bytes,
+reruns configured build or test commands at the admitted transition, and
+records its own evidence receipt. Never pass these values with `--param`,
+write a passed input after a failed check, edit controller state, or substitute
+one gate's evidence for another. If the check cannot pass within the approved
+plan, preserve the failure and report the blocker.
 
 	
 	
@@ -146,7 +210,7 @@ Continue only when the response names `installation.reconcile-update` and
 `--accept-program-change`, and the user accepts the displayed exact delta.
 Then run:
 
-`boatstack reconcile-update --repo . --flow product-delivery --entry abandon --run-id <run-id> --accept-program-change --human <actor> --host claude --format json`
+`boatstack reconcile-update --repo . --flow product-delivery --entry run --run-id <run-id> --accept-program-change --human <actor> --host gemini --format json`
 
 Require a committed `installation.reconcile-update` receipt whose prior,
 candidate, and delta fingerprints match the accepted suspension and whose
@@ -160,6 +224,14 @@ reconciliation does not commit, or unrelated files changed, stop without
 performing product effects.
 
 	
+If Boatstack reports `WORKSPACE_COMMIT_REQUIRED`, stay in the same
+managed worktree and run. Commit only the intended delivery changes on the
+current managed branch, excluding generated runtime and publication artifacts
+unless they are deliberately part of the delivery, then resume this entry.
+Never fabricate an external-provider receipt. Boatstack derives provider
+capability through its trusted GitHub boundary and reports a typed blocker when
+that capability is unavailable.
+
 
 Stop only when Boatstack reports the marked target, a typed blocker, refusal,
 unresolved recovery, or missing authority. This entry grants no merge or deploy

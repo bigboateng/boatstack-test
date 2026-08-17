@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "delivery_id": "search-tasks",
+  "work_request_fingerprint": "d24065c20b38733060f2d123fe07225bf9641362ad0c0a843f58cf0b31bbce9e",
+  "work_result_fingerprint": "e260284889aed7723216c52aa21ef88c6ac47738b9b0099d03ef887e546f85bf",
+  "plan_fingerprint": "bceb2503ab3cb494e91f7313e1b3c9d1ad44794a147c127b45efa99a0754471b",
+  "outputs": [
+    {
+      "id": "autonomy",
+      "path": "autonomy.md",
+      "media_type": "text/markdown",
+      "sha256": "3fe489d2d9a03e08f84db1dd8cb785805c7682633653afd6a233ff998ef9181a",
+      "size": 376
+    },
+    {
+      "id": "evidence",
+      "path": "compiled/evidence.md",
+      "media_type": "text/markdown",
+      "sha256": "fefb9ef2bc5fc9644a7865b77a04ba3e31d4fbfde9090a7c4df2b0059b8d691f",
+      "size": 360
+    },
+    {
+      "id": "feature-spec",
+      "path": "feature-spec.md",
+      "media_type": "text/markdown",
+      "sha256": "b712fd52475537a0c774b5befd8cdfd06bc74153edbff3491b309347e38ab724",
+      "size": 1095
+    },
+    {
+      "id": "gaps",
+      "path": "gaps.md",
+      "media_type": "text/markdown",
+      "sha256": "360be70599270d87d8eee647a065d46d38c97cecb18cf4ca317d39880e52b0f1",
+      "size": 199
+    },
+    {
+      "id": "journey-oracles",
+      "path": "compiled/journey-oracles.json",
+      "media_type": "application/json",
+      "sha256": "23c6161d9cf03196b8e406612009da4179ee4c0a3d54815442719182b6b81cc3",
+      "size": 535
+    },
+    {
+      "id": "plan",
+      "path": "plan.md",
+      "media_type": "text/markdown",
+      "sha256": "bceb2503ab3cb494e91f7313e1b3c9d1ad44794a147c127b45efa99a0754471b",
+      "size": 723
+    },
+    {
+      "id": "questions",
+      "path": "questions.md",
+      "media_type": "text/markdown",
+      "sha256": "c582535d2d719853abb622aca91623b3aa58881ce6ce42c46885e33f175a8dfa",
+      "size": 195
+    },
+    {
+      "id": "tasks",
+      "path": "compiled/tasks.json",
+      "media_type": "application/json",
+      "sha256": "c57427ca721f59c31e467e0a526f2faefa780b149de386060756c5bb6b5e4dbd",
+      "size": 457
+    },
+    {
+      "id": "test-matrix",
+      "path": "compiled/test-matrix.json",
+      "media_type": "application/json",
+      "sha256": "c3b029125f50cacca2248f136adb05384a6bc823c4ccdc0520cb1b74b261e630",
+      "size": 538
+    },
+    {
+      "id": "test-plan",
+      "path": "test-plan.md",
+      "media_type": "text/markdown",
+      "sha256": "d46661c81add7fd1e8ae0409c66f1f7ce1430f65ac088a3d31eaa6f1703b2075",
+      "size": 689
+    }
+  ],
+  "fingerprint": "ed74f2ed2c19f2b91c616162df71785172eaab42b2d30123c7db1ca772aefa25"
+}

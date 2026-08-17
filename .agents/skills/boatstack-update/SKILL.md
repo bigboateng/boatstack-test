@@ -7,6 +7,8 @@ description: Apply a checksum-verified Boatstack update. Use only when the user 
 
 Select `installation.update` or, after exact human acceptance of program drift, `installation.reconcile-update`. This trigger does not reclassify or advance a product delivery.
 
+For every Boatstack command in this driver that accepts a host, pass `--host codex`.
+
 Run `boatstack status --repo . --format json` once for observation. An authority-free
 `FRONTIER` from status is diagnostic only and cannot terminate this selected operation.
 

@@ -1,0 +1,21 @@
+{
+  "schema_version": 2,
+  "projections": [
+    "claude",
+    "codex",
+    "cursor",
+    "gemini"
+  ],
+  "projection_selection_fingerprint": "f4064523ad6f01bb81b9d27968ed74ef12f314e121081e2e2436e458e5d6e332",
+  "files": {
+    ".agents/skills/boatstack-update/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    ".agents/skills/boatstack-update/SKILL.md": "ee8a316e6bc55dca7cb9f69f5a89cdd2364ec5d334f209f8a9a8b57583bf5df1",
+    ".agents/skills/boatstack-update/agents/openai.yaml": "cd6b5c0ab6af7bf1bcb84eb80b6be35831d4d883b00c714bddf0ae71e92e1eb5",
+    ".claude/skills/boatstack-update/.gitattributes": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da",
+    ".claude/skills/boatstack-update/SKILL.md": "96d63b74d8bb837d8746c2af2b0c75e3bef585dff63021b54f26d33c75505b3f",
+    ".cursor/commands/.gitattributes": "cbf4175ddc2d62b296320ce3a070e4301de41f0431d2a1acfc04d9ab6c3a3e6f",
+    ".cursor/commands/boatstack-update.md": "1e6e06e50f66946026278e1eda648a0a3d6ab2953df60cae74bb00faa2f90c42",
+    ".gemini/skills/.gitattributes": "de77f05b82e66fa6354813e2901cbff6b94685479aafed997d0dc46a0e6023eb",
+    ".gemini/skills/boatstack-update/SKILL.md": "410017ffe128e5657b75c7c4f2cfa01323f0b072207f3bf050391603b6f8e242"
+  }
+}

@@ -34,7 +34,7 @@ Flow run ID. Preserve any Boatstack bootstrap diagnostic verbatim, including
 stderr, and resume this same requested entry only after the user has installed
 the exact runtime.
 
-Start with `boatstack next --repo . --flow product-delivery --entry abandon --repository-authority --host claude --format json`.
+Start with `boatstack next --repo . --flow product-delivery --entry abandon --repository-authority --host gemini --format json`.
 Preserve the returned program fingerprint, entry, run ID, delivery, repository,
 worktree, host, actor, authority receipts, prescription, and receipts through
 every `next`, `apply`, recovery, question, and re-resolution.
@@ -91,7 +91,7 @@ bound.
 
 If human input is required, record the typed suspension with:
 
-`boatstack flow work input-required --repo . --flow product-delivery --entry abandon --run-id <run-id> --work-id <work-id> --prompt <question> --host claude --format json`
+`boatstack flow work input-required --repo . --flow product-delivery --entry abandon --run-id <run-id> --work-id <work-id> --prompt <question> --host gemini --format json`
 
 Ask the user and wait. Store the answer as bounded JSON, then submit it with
 `boatstack flow work answer ... --question-id <question-id> --answer <json-path>`.
@@ -106,12 +106,12 @@ When Boatstack returns `TRANSITION_INPUT_REQUIRED`, preserve the exact run,
 program, entry, target, transition, state, context, control-bundle,
 authority-context, and request fingerprints. Inspect the runtime-owned request with:
 
-`boatstack flow input show --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --host claude --format json`
+`boatstack flow input show --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --host gemini --format json`
 
 Ask the user only for the bounded values in that request. Write a temporary
 JSON answer object outside repository-tracked paths and submit it only with:
 
-`boatstack flow input answer --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --answer <json-path> --human <actor> --host claude --format json`
+`boatstack flow input answer --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --answer <json-path> --human <actor> --host gemini --format json`
 
 Resume the same run after the receipt is recorded. Never guess a value, pass a
 Flow `--param`, reuse `flow work answer`, or edit runtime input receipts.
@@ -120,7 +120,7 @@ If transition preflight semantically rejects an already recorded free-form
 answer, preserve that request and receipt. Ask the user for the corrected value,
 then create a new immutable request generation with:
 
-`boatstack flow input supersede --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --reason <semantic-rejection> --human <actor> --host claude --format json`
+`boatstack flow input supersede --repo . --flow product-delivery --entry abandon --run-id <run-id> --request-fingerprint <fingerprint> --reason <semantic-rejection> --human <actor> --host gemini --format json`
 
 Answer only the new request fingerprint. Never overwrite or delete the rejected
 generation.
@@ -146,7 +146,7 @@ Continue only when the response names `installation.reconcile-update` and
 `--accept-program-change`, and the user accepts the displayed exact delta.
 Then run:
 
-`boatstack reconcile-update --repo . --flow product-delivery --entry abandon --run-id <run-id> --accept-program-change --human <actor> --host claude --format json`
+`boatstack reconcile-update --repo . --flow product-delivery --entry abandon --run-id <run-id> --accept-program-change --human <actor> --host gemini --format json`
 
 Require a committed `installation.reconcile-update` receipt whose prior,
 candidate, and delta fingerprints match the accepted suspension and whose

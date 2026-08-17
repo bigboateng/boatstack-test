@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "identity": {
     "human": {
       "kind": "command",
@@ -9,7 +9,7 @@
   },
   "project": {
     "name": "boatstack-test",
-    "default_branch": "main",
+    "default_branch": "test/software-delivery-flow-dx-search-20260817",
     "commands": {
       "build": "npm --prefix projects/basic-react run build",
       "test": "npm --prefix projects/basic-react run check"
@@ -20,5 +20,6 @@
     "visual_evidence": "optional",
     "external_effect_authority": "human-or-autonomy-plus-provider"
   },
-  "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"]
+  "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"],
+  "projections": ["codex", "claude", "cursor", "gemini"]
 }

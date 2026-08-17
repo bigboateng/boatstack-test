@@ -19,6 +19,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px
 .list-actions { display: flex; align-items: stretch; gap: .5rem; }
 .add-button { white-space: nowrap; }
 .list-controls { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem 1.25rem; margin: -.5rem 0 1.25rem; }
+.search-filter { flex: 1 1 100%; }
 .sort-toggle, .list-filter { display: flex; align-items: center; width: fit-content; gap: .6rem; }
 .sort-toggle input, .list-filter input { width: 1.1rem; height: 1.1rem; accent-color: #0f766e; }
 .reset-view-button { margin-left: auto; }
