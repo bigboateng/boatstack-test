@@ -165,10 +165,92 @@ describe('App', () => {
     expect(screen.queryByRole('button', { name: /ship the starting point/i })).not.toBeInTheDocument()
   })
 
+  it('matches a trimmed query against task titles case-insensitively', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.type(screen.getByRole('searchbox', { name: 'Search tasks' }), '  REVIEW  ')
+
+    expect(getVisibleTodoTitles()).toEqual(['Review the details panel'])
+  })
+
+  it('matches a query against task notes', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.type(screen.getByRole('searchbox', { name: 'Search tasks' }), 'mobile layout')
+
+    expect(getVisibleTodoTitles()).toEqual(['Review the details panel'])
+  })
+
+  it('composes search with incomplete filtering and due-date sorting', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.type(screen.getByRole('searchbox', { name: 'Search tasks' }), 'the')
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+    await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
+
+    expect(getVisibleTodoTitles()).toEqual([
+      'Sketch the todo flow',
+      'Review the details panel',
+    ])
+  })
+
+  it('shows the search empty state with no selection', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const searchInput = screen.getByRole('searchbox', { name: 'Search tasks' })
+
+    await user.type(searchInput, 'not present')
+    expect(searchInput).toHaveFocus()
+
+    await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
+
+    expect(screen.getByText('No matching tasks')).toBeInTheDocument()
+    expect(screen.getByText('Select a task to edit it.')).toBeInTheDocument()
+  })
+
+  it('keeps the selected task when it remains in search results', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const selectedTodo = screen.getByRole('button', { name: /review the details panel/i })
+    const searchInput = screen.getByRole('searchbox', { name: 'Search tasks' })
+    await user.click(selectedTodo)
+
+    await user.type(searchInput, 'review')
+
+    expect(selectedTodo).toHaveAttribute('aria-pressed', 'true')
+    expect(searchInput).toHaveFocus()
+  })
+
+  it('selects the first matching task while keeping search focus', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const searchInput = screen.getByRole('searchbox', { name: 'Search tasks' })
+
+    await user.type(searchInput, 'review')
+
+    expect(screen.getByRole('button', { name: /review the details panel/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(searchInput).toHaveFocus()
+  })
+
+  it('returns focus to search when an edit removes the selected match', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const searchInput = screen.getByRole('searchbox', { name: 'Search tasks' })
+    await user.type(searchInput, 'review')
+
+    await user.clear(screen.getByRole('textbox', { name: 'Title' }))
+
+    expect(screen.getByText('No matching tasks')).toBeInTheDocument()
+    expect(searchInput).toHaveFocus()
+  })
+
   it('disables resetting when the default view is active', () => {
     render(<App />)
 
-    expect(screen.getByRole('button', { name: 'Reset view' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Reset View' })).toBeDisabled()
   })
 
   it('enables resetting when either view control is active', async () => {
@@ -176,7 +258,7 @@ describe('App', () => {
     render(<App />)
     const incompleteOnlyToggle = screen.getByRole('checkbox', { name: 'Show incomplete only' })
     const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
-    const resetViewButton = screen.getByRole('button', { name: 'Reset view' })
+    const resetViewButton = screen.getByRole('button', { name: 'Reset View' })
 
     await user.click(incompleteOnlyToggle)
     expect(resetViewButton).toBeEnabled()
@@ -191,7 +273,7 @@ describe('App', () => {
     render(<App />)
     const incompleteOnlyToggle = screen.getByRole('checkbox', { name: 'Show incomplete only' })
     const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
-    const resetViewButton = screen.getByRole('button', { name: 'Reset view' })
+    const resetViewButton = screen.getByRole('button', { name: 'Reset View' })
 
     await user.click(incompleteOnlyToggle)
     await user.click(sortToggle)
@@ -217,10 +299,30 @@ describe('App', () => {
     await user.click(screen.getByRole('checkbox', { name: 'Show incomplete only' }))
     await user.click(screen.getByRole('checkbox', { name: 'Sort by due date' }))
 
-    await user.click(screen.getByRole('button', { name: 'Reset view' }))
+    await user.click(screen.getByRole('button', { name: 'Reset View' }))
 
     expect(selectedTodo).toHaveAttribute('aria-pressed', 'true')
     expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Review the details panel')
+  })
+
+  it('resets search and selects the first restored task after no results', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const searchInput = screen.getByRole('searchbox', { name: 'Search tasks' })
+    const incompleteOnlyToggle = screen.getByRole('checkbox', { name: 'Show incomplete only' })
+    const sortToggle = screen.getByRole('checkbox', { name: 'Sort by due date' })
+    const resetViewButton = screen.getByRole('button', { name: 'Reset View' })
+
+    await user.type(searchInput, 'not present')
+    await user.click(incompleteOnlyToggle)
+    await user.click(sortToggle)
+    await user.click(resetViewButton)
+
+    expect(searchInput).toHaveValue('')
+    expect(incompleteOnlyToggle).not.toBeChecked()
+    expect(sortToggle).not.toBeChecked()
+    expect(resetViewButton).toBeDisabled()
+    expect(screen.getByRole('button', { name: /sketch the todo flow/i })).toHaveAttribute('aria-pressed', 'true')
   })
 
   it('disables clearing when no todos are completed', async () => {

@@ -28,8 +28,35 @@ const initialTodos: Todo[] = [
   { id: 3, title: 'Ship the starting point', notes: 'A completed example keeps the state easy to read.', dueDate: '2026-08-12', completed: true },
 ]
 
-function visibleTodoOrder(todos: Todo[], showIncompleteOnly: boolean, isSortedByDueDate: boolean) {
-  const visibleTodos = showIncompleteOnly ? todos.filter((todo) => !todo.completed) : todos
+function normalizedSearchQuery(searchQuery: string) {
+  return searchQuery.trim().toLowerCase()
+}
+
+function todoMatchesSearch(todo: Todo, searchQuery: string) {
+  const normalizedQuery = normalizedSearchQuery(searchQuery)
+
+  if (normalizedQuery.length === 0) {
+    return true
+  }
+
+  return todo.title.toLowerCase().includes(normalizedQuery)
+    || todo.notes.toLowerCase().includes(normalizedQuery)
+}
+
+function visibleTodoOrder(
+  todos: Todo[],
+  searchQuery: string,
+  showIncompleteOnly: boolean,
+  isSortedByDueDate: boolean,
+) {
+  const matchingTodos = todos.filter((todo) => {
+    return todoMatchesSearch(todo, searchQuery)
+  })
+  const visibleTodos = showIncompleteOnly
+    ? matchingTodos.filter((todo) => {
+        return !todo.completed
+      })
+    : matchingTodos
 
   if (!isSortedByDueDate) {
     return visibleTodos
@@ -57,20 +84,24 @@ function App() {
   const [selectedID, setSelectedID] = useState(initialTodos[0].id)
   const [isSortedByDueDate, setIsSortedByDueDate] = useState(false)
   const [showIncompleteOnly, setShowIncompleteOnly] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [todoDraft, setTodoDraft] = useState<TodoDraft>(emptyTodoDraft)
   const [titleError, setTitleError] = useState('')
   const dialogTriggerRef = useRef<HTMLButtonElement | null>(null)
   const dialogRef = useRef<HTMLElement | null>(null)
   const titleInputRef = useRef<HTMLInputElement | null>(null)
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
   const pendingFocusIDRef = useRef<number | null>(null)
+  const pendingSearchFocusRef = useRef(false)
 
   const visibleTodos = useMemo(
-    () => visibleTodoOrder(todos, showIncompleteOnly, isSortedByDueDate),
-    [isSortedByDueDate, showIncompleteOnly, todos],
+    () => visibleTodoOrder(todos, searchQuery, showIncompleteOnly, isSortedByDueDate),
+    [isSortedByDueDate, searchQuery, showIncompleteOnly, todos],
   )
   const selectedTodo = visibleTodos.find((todo) => todo.id === selectedID) ?? null
   const completedCount = useMemo(() => todos.filter((todo) => todo.completed).length, [todos])
+  const isSearchActive = normalizedSearchQuery(searchQuery).length > 0
 
   useEffect(() => {
     if (selectedTodo) {
@@ -81,6 +112,12 @@ function App() {
   }, [selectedTodo, visibleTodos])
 
   useEffect(() => {
+    if (pendingSearchFocusRef.current) {
+      pendingSearchFocusRef.current = false
+      searchInputRef.current?.focus()
+      return
+    }
+
     const pendingFocusID = pendingFocusIDRef.current
 
     if (pendingFocusID === null) {
@@ -141,9 +178,14 @@ function App() {
       return
     }
 
+    const updatedTodos = todos.map((todo) => {
+      return todo.id === selectedTodo.id ? { ...todo, ...changes } : todo
+    })
+
     if (changes.completed === true && showIncompleteOnly) {
       const remainingVisible = visibleTodoOrder(
-        todos.filter((todo) => todo.id !== selectedTodo.id),
+        updatedTodos,
+        searchQuery,
         showIncompleteOnly,
         isSortedByDueDate,
       )
@@ -152,7 +194,26 @@ function App() {
       setSelectedID(nextSelectedID)
     }
 
-    setTodos((current) => current.map((todo) => todo.id === selectedTodo.id ? { ...todo, ...changes } : todo))
+    const changesSearchableContent = changes.title !== undefined || changes.notes !== undefined
+
+    if (changesSearchableContent && isSearchActive) {
+      const updatedVisibleTodos = visibleTodoOrder(
+        updatedTodos,
+        searchQuery,
+        showIncompleteOnly,
+        isSortedByDueDate,
+      )
+      const selectedTodoRemainsVisible = updatedVisibleTodos.some((todo) => {
+        return todo.id === selectedTodo.id
+      })
+
+      if (!selectedTodoRemainsVisible) {
+        pendingSearchFocusRef.current = true
+        setSelectedID(updatedVisibleTodos[0]?.id ?? 0)
+      }
+    }
+
+    setTodos(updatedTodos)
   }
 
   function openAddDialog(event: MouseEvent<HTMLButtonElement>) {
@@ -200,7 +261,7 @@ function App() {
     }
 
     const remaining = todos.filter((todo) => todo.id !== selectedTodo.id)
-    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
+    const remainingVisible = visibleTodoOrder(remaining, searchQuery, showIncompleteOnly, isSortedByDueDate)
     setTodos(remaining)
     setSelectedID(remainingVisible[0]?.id ?? 0)
   }
@@ -208,7 +269,7 @@ function App() {
   function clearCompleted() {
     const remaining = todos.filter((todo) => !todo.completed)
     const selectedTodoRemains = remaining.some((todo) => todo.id === selectedID)
-    const remainingVisible = visibleTodoOrder(remaining, showIncompleteOnly, isSortedByDueDate)
+    const remainingVisible = visibleTodoOrder(remaining, searchQuery, showIncompleteOnly, isSortedByDueDate)
 
     setTodos(remaining)
     if (!selectedTodoRemains) {
@@ -217,6 +278,7 @@ function App() {
   }
 
   function resetView() {
+    setSearchQuery('')
     setShowIncompleteOnly(false)
     setIsSortedByDueDate(false)
   }
@@ -248,6 +310,15 @@ function App() {
           </div>
 
           <div className="list-controls">
+            <label className="search-filter">
+              <span>Search tasks</span>
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+              />
+            </label>
             <label className="list-filter">
               <input
                 id="show-incomplete-only"
@@ -268,16 +339,16 @@ function App() {
             <button
               className="reset-view-button"
               type="button"
-              disabled={!showIncompleteOnly && !isSortedByDueDate}
+              disabled={!isSearchActive && !showIncompleteOnly && !isSortedByDueDate}
               onClick={resetView}
             >
-              Reset view
+              Reset View
             </button>
           </div>
 
           {visibleTodos.length === 0 ? (
             <div className="empty-state">
-              <p>{todos.length === 0 ? 'No tasks yet.' : 'No incomplete tasks.'}</p>
+              <p>{todos.length === 0 ? 'No tasks yet.' : isSearchActive ? 'No matching tasks' : 'No incomplete tasks.'}</p>
               {todos.length === 0 ? <button type="button" onClick={openAddDialog}>Create your first task</button> : null}
             </div>
           ) : (
