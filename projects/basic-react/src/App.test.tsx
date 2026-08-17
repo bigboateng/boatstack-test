@@ -487,6 +487,17 @@ describe('App', () => {
     expect(screen.getByLabelText('Due date')).toHaveValue('2026-08-30')
   })
 
+  it('keeps the visible selection when a created task does not match search', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.type(screen.getByRole('searchbox', { name: 'Search tasks' }), 'review')
+
+    await createTodo(user, 'Unrelated task')
+
+    expect(screen.getByRole('button', { name: /review the details panel/i })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveValue('Review the details panel')
+  })
+
   it('cancels without creating a task', async () => {
     const user = userEvent.setup()
     render(<App />)

@@ -251,7 +251,17 @@ function App() {
     }
 
     setTodos((current) => [todo, ...current])
-    setSelectedID(id)
+    const createdTodoIsVisible = visibleTodoOrder(
+      [todo],
+      searchQuery,
+      showIncompleteOnly,
+      isSortedByDueDate,
+    ).length > 0
+
+    if (createdTodoIsVisible) {
+      setSelectedID(id)
+    }
+
     closeAddDialog()
   }
 
