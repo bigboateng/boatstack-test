@@ -9,7 +9,7 @@
   },
   "project": {
     "name": "boatstack-test",
-    "default_branch": "main",
+    "default_branch": "test/software-delivery-flow-dx-search-20260817",
     "commands": {
       "build": "npm --prefix projects/basic-react run build",
       "test": "npm --prefix projects/basic-react run check"
