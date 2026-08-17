@@ -1,5 +1,5 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "identity": {
     "human": {
       "kind": "command",
@@ -20,5 +20,6 @@
     "visual_evidence": "optional",
     "external_effect_authority": "human-or-autonomy-plus-provider"
   },
-  "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"]
+  "hosts": ["cli", "cursor", "codex", "claude", "gemini", "mcp"],
+  "projections": ["codex", "claude", "cursor", "gemini"]
 }
