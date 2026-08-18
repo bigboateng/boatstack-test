@@ -1,31 +1,16 @@
 {
-  "schema_version": 2,
-  "delivery_id": "planning-snapshot-proof",
-  "program_id": "product-delivery",
-  "program_fingerprint": "df1496b19f7c8482364bf21fc917264ad269e892ec2bde8fa242ee4a24555a64",
-  "entry_id": "run",
-  "run_id": "run-1ba6678b4e69f8e4b9c39c5a02025667",
+  "schema_version": 1,
+  "request_id": "work-1d7edfbdcbb0d74f65a50ab0",
+  "request_fingerprint": "1d7edfbdcbb0d74f65a50ab05490d3f6ae0bc71ce016fb1c5a6a6ddf5f36ade3",
+  "result_fingerprint": "cae6934e72dd90d93ad7f0a8d743689a52d7dfafa36d5e8479e5d275a77bd793",
+  "contract_id": "planning-package",
+  "contract_fingerprint": "41e4941e0f2899ab25e03aac796d9b9b2a3fd9d3ab7bc60e3c1a9dbdf7b3c12e",
   "transition_id": "planning.package.admit",
-  "work_contract_id": "planning-package",
-  "work_contract_fingerprint": "41e4941e0f2899ab25e03aac796d9b9b2a3fd9d3ab7bc60e3c1a9dbdf7b3c12e",
-  "work_request_fingerprint": "799efd4b226f0172a42411b40e5651c9f0a7e163b6340a6023c51322bb2b3d8d",
-  "work_result_fingerprint": "9370997d2b1a48dec52ea1c104c1b1b1dbdace13f7be92ff9b3f5786c455be98",
-  "context_fingerprint": "fdea060c094d79f9d040e8bdca8526dcf9826ae5040dadb59111617e8efb4829",
+  "program_fingerprint": "df1496b19f7c8482364bf21fc917264ad269e892ec2bde8fa242ee4a24555a64",
+  "context_fingerprint": "a0f042b2b6a7cebe23268da47e01dad292239180d675038f7960cdbdaeade73a",
   "state_revision": 4,
-  "plan_output": {
-    "id": "implementation-plan",
-    "path": "implementation-plan.md",
-    "media_type": "text/markdown",
-    "sha256": "f8bc698aa6b052eb4ae089372fb3b419fa60ee30e8909d0b821c42682ea413c5"
-  },
-  "contract": {
-    "path": "contract.json",
-    "sha256": "e0d4a5842b1f54a42781a637b997c4612a796f9f5e336ef2c8868bfebe8916e5"
-  },
-  "work_receipt": {
-    "path": "work-receipt.json",
-    "sha256": "a4f08b191265046989f48ba9f7af5bc8e9ff14d82adb8321d405266d4584ceb2"
-  },
+  "repository_id": "045d8f6f1c9d840c",
+  "worktree_id": "cc91590c71b6",
   "outputs": [
     {
       "id": "autonomy",
@@ -42,7 +27,7 @@
       "media_type": "text/markdown",
       "required": true,
       "size": 212,
-      "sha256": "8e0854ecd73f8327334b6a69c0ecab8fb33657543a442c35f12f749a9ae0b176",
+      "sha256": "e9640cd151fdee891405a66e4323553257a7a2490ad995b17b640ee98b0b8ae4",
       "guidance_sha256": "da502cee1e43463b0fbdc6590ece9471560c60c28c23dfab1366b1ff6f4b4e86"
     },
     {
@@ -121,5 +106,5 @@
       "guidance_sha256": "985b91c57452193c90a131e492cd1fb69e272caeb5af799f1906350ffeb42668"
     }
   ],
-  "fingerprint": "e9419b9b77e09a2013a84d9d607be53b57e07aab79955d2ff6b0b9f30e215b31"
+  "fingerprint": "79aed86265b52a16ed538612ddb93687da878b724b256e2b660113c8f8e45dd2"
 }
