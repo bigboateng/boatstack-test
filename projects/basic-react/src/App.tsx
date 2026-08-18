@@ -311,6 +311,9 @@ function App() {
               <div className="panel-title">
                 <h2>Tasks</h2>
                 <span className="todo-count">{todos.length} total</span>
+                <span className="todo-count" role="status" aria-live="polite" aria-atomic="true">
+                  {visibleTodos.length} shown
+                </span>
               </div>
             </div>
             <div className="list-actions">

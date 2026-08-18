@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "journey": "Open the default task list",
+      "oracle": "The heading shows 3 total and 3 shown."
+    },
+    {
+      "journey": "Enable incomplete-only filtering",
+      "oracle": "The shown count matches the incomplete results while the total remains unchanged."
+    },
+    {
+      "journey": "Search for tasks",
+      "oracle": "The shown count matches the searched result set and updates with the current query."
+    },
+    {
+      "journey": "Reset the current view",
+      "oracle": "Search, filtering, and sorting reset and the shown count returns to the full task count."
+    },
+    {
+      "journey": "Search for a value with no matches",
+      "oracle": "The empty state appears and the heading shows 0 shown."
+    },
+    {
+      "journey": "Change due-date sort order",
+      "oracle": "Task order changes but total and shown counts do not."
+    }
+  ]
+}
