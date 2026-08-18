@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["verifiers"],
+  "properties": {
+    "verifiers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "subject", "oracle", "evidence"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": { "enum": ["repository-command", "inspection", "journey"] },
+          "subject": { "type": "string", "minLength": 1 },
+          "oracle": { "type": "string", "minLength": 1 },
+          "evidence": { "type": "string", "minLength": 1 },
+          "command": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1, "pattern": "^[^\\n\\r]+$" }
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "kind": { "const": "repository-command" } }, "required": ["kind"] },
+            "then": { "required": ["command"] },
+            "else": { "not": { "required": ["command"] } }
+          }
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

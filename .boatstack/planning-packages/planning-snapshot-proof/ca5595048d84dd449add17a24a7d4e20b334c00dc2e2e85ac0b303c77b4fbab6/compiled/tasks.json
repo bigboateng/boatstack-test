@@ -1,1 +1,0 @@
-{"items":[{"id":"task-b-1","owner":"developer","verifier":"README inspection plus project build and check","dependencies":[]},{"id":"task-b-2","owner":"developer","verifier":"portable verifier requires approval and current program","dependencies":["task-b-1"]}]}
