@@ -1,15 +1,18 @@
 {
-  "schema_version": 4,
+  "schema_version": 5,
   "identity": {
-    "human": {
-      "kind": "command",
-      "command": "gh",
-      "args": ["api", "user", "--jq", ".login"]
+    "default": "developer",
+    "roles": {
+      "developer": {
+        "kind": "command",
+        "command": "gh",
+        "args": ["api", "user", "--jq", ".login"]
+      }
     }
   },
   "project": {
     "name": "boatstack-test",
-    "default_branch": "test/software-delivery-flow-dx-search-20260817",
+    "default_branch": "main",
     "commands": {
       "build": "npm --prefix projects/basic-react run build",
       "test": "npm --prefix projects/basic-react run check"

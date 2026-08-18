@@ -1,12 +1,12 @@
 {
   "schema": "control-program-artifact",
-  "schema_revision": 4,
-  "compiler_version": "control-program.compiler.6",
+  "schema_revision": 7,
+  "compiler_version": "control-program.compiler.9",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "98e1ad042af4a7260bdbbd09b995878e48327a8cf7de03ea3cb6596ea7c72ad2",
+  "source_sha256": "358f74b96ae5a13466810f79ef7364f056c1a0a4f7f9597650ba5942f16ca374",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "674ad2e7c685eda0779b455ac370227bbeca971307a691c6e3a67e9cc6b6e123",
-  "program_fingerprint": "57b7bd7b6e0f3c048ea989dc36a411246c9d4aea2bd277ebbf4254a8d3980d15",
+  "dependency_lock_sha256": "439a57ef0a57037ef19496c99525d9c39d4e8dc41bde05aff093bc1148209d82",
+  "program_fingerprint": "122c187eaae3435b7f256ded8e27e7bca3b91555d5684139fb41ab8d48caf55b",
   "projections": [
     "claude",
     "codex",
@@ -16,32 +16,45 @@
   "projection_selection_fingerprint": "f4064523ad6f01bb81b9d27968ed74ef12f314e121081e2e2436e458e5d6e332",
   "generated_projections": {
     ".agents/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-abandon/SKILL.md": "256f8cc8125df3d5b1156018a1c2654336a972122e0f0b3ebb80426aac6a4bd2",
+    ".agents/skills/product-delivery-abandon/SKILL.md": "ab2d72193e58c73ea1780c9b9f7f39b10de8e8530abaeae309c7ba1e648c5474",
     ".agents/skills/product-delivery-abandon/agents/openai.yaml": "f5ad9bd932609197fd33e65749ad5cecd4fbf9082e8c077b32c753aac8f57090",
     ".agents/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-run/SKILL.md": "fdd3438e9650affa5eb00c6e30ac7c5fc3537b6fce68cbe45df61823510fe347",
+    ".agents/skills/product-delivery-run/SKILL.md": "c5ad381371864d82da6d1d27ccd2d9b1801028e7880a8b4604773fe18e6b6fb4",
     ".agents/skills/product-delivery-run/agents/openai.yaml": "2e4dbc392680269605d4ed692471bcde4b8c3ce358d374fd012e12e2c27d8764",
     ".claude/skills/product-delivery-abandon/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-abandon/SKILL.md": "989b89d981b758d6440791cd46a4febbced462c38953432485e966e580af1e61",
+    ".claude/skills/product-delivery-abandon/SKILL.md": "fba8403e6da2436c0eb0feeddbc5411e8671e0717e6f7d6cc1ecbf7133cce119",
     ".claude/skills/product-delivery-run/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-run/SKILL.md": "24dcbacfb01337b567f3a26c7de9a9de30b97960a199e269f0c6e1b1cdffb0f7",
+    ".claude/skills/product-delivery-run/SKILL.md": "b4c246f7ad0bc0251816c7b753bc7f559ada7a2f496afd0e129616b463cafb2f",
     ".cursor/commands/.gitattributes": "cbf4175ddc2d62b296320ce3a070e4301de41f0431d2a1acfc04d9ab6c3a3e6f",
-    ".cursor/commands/product-delivery-abandon.md": "7bb12adedabf54854531afa2614796b15936a6971898e8121b98a6c093cb9133",
-    ".cursor/commands/product-delivery-run.md": "d3802a80e775ef7562771ee2a3f27c001750d715e57716e62c365564ab18c5ad",
+    ".cursor/commands/product-delivery-abandon.md": "9a442eaa5641c894746a665199d38faf70ec3f886abfcfabbe5fb09c6d12a069",
+    ".cursor/commands/product-delivery-run.md": "809816a26927b4a327978999a3d70475144b5176605bfa6cb4b470d2eef72f32",
     ".gemini/skills/.gitattributes": "de77f05b82e66fa6354813e2901cbff6b94685479aafed997d0dc46a0e6023eb",
-    ".gemini/skills/product-delivery-abandon/SKILL.md": "031b77072aed63b1fb88d0b43e2802ff826e129a2f552e7e3971a808fe61767a",
-    ".gemini/skills/product-delivery-run/SKILL.md": "fe6f39d9d6ff2b84aff59e2b29b6c2b6712f98018901a49691fee1bc83d9defc"
+    ".gemini/skills/product-delivery-abandon/SKILL.md": "b664a55eff6a09e60f3a2ad3e9fe513dc2973df1ee0ee0ccda9268bec73bcc5c",
+    ".gemini/skills/product-delivery-run/SKILL.md": "8a26e8340044ebbe544ce485c41c9112884cf37b9dc5cc1f0f1cd6e295458c48"
   },
   "assets": {
-    ".boatstack/flows/assets/planning-list.schema.json": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
-    ".boatstack/flows/assets/planning-package.md": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f"
+    ".boatstack/flows/assets/autonomy.md": "ef2aeee3d4658ceb3b1e6738f224b381d1960966812de463e37427fa736851a1",
+    ".boatstack/flows/assets/evidence.md": "da502cee1e43463b0fbdc6590ece9471560c60c28c23dfab1366b1ff6f4b4e86",
+    ".boatstack/flows/assets/feature-spec.md": "0653f57fe38da81ee59e076bc9db1a8fb8557fe33208348b5cc99bc68800c900",
+    ".boatstack/flows/assets/gaps.md": "2daae0917abef3a04a6b85732912a78bc8a75b767768e9eab5d8933c807d9f8e",
+    ".boatstack/flows/assets/implementation-plan.md": "dcee245bc7ccc59f0426b4094e4773463c89df2c38aac9a253142878cb7f2173",
+    ".boatstack/flows/assets/journey-oracles.md": "33301a17faa40366a831a29299f7938f12e69c08cd1535338a85a06933c80d2c",
+    ".boatstack/flows/assets/journey-oracles.schema.json": "d977003a28274550b7ab9d4e0d26f5e4b17feeb5d28cbb22f1a354f48b4c9113",
+    ".boatstack/flows/assets/planning-package.md": "20311d38209960a31239e1034b990446e492fd3985b4eb43f63fd2a1c8d5140f",
+    ".boatstack/flows/assets/questions.md": "dc8d24ee07a08900963623ff6d1ab3ee9f6587e5c6d7704eb639fe52ca86612d",
+    ".boatstack/flows/assets/tasks.md": "ed8851407814a954fdc44a565e1f058558afd987f8022715d57c926b25830f91",
+    ".boatstack/flows/assets/tasks.schema.json": "9014935717da25deaf9e67ac809e0cde333f84817cd30fbb039407bd240d62f0",
+    ".boatstack/flows/assets/test-matrix.md": "a096b988bd40ba8db6e4a05c1a25fbe97c50fdbcf7ff883a7050f80002d26546",
+    ".boatstack/flows/assets/test-matrix.schema.json": "3070f0ba5b9b934032befd38c1c29f748084e87f9de38e23e859ab024e218c08",
+    ".boatstack/flows/assets/test-plan.md": "985b91c57452193c90a131e492cd1fb69e272caeb5af799f1906350ffeb42668"
   },
   "program": {
     "schema": "control-program",
-    "schema_revision": 4,
+    "schema_revision": 7,
     "program": {
       "id": "product-delivery",
-      "version": "1"
+      "version": "2",
+      "human_identity": "developer"
     },
     "declarations": {
       "capabilities": [
@@ -275,28 +288,60 @@
             "path": "autonomy.md",
             "media_type": "text/markdown",
             "required": true,
-            "max_bytes": 131072
+            "max_bytes": 131072,
+            "guidance": {
+              "path": ".boatstack/flows/assets/autonomy.md",
+              "sha256": "ef2aeee3d4658ceb3b1e6738f224b381d1960966812de463e37427fa736851a1",
+              "content": "# Autonomy\nDescribe permitted implementation discretion and explicit exclusions. Markdown never grants authority; actual authority comes only from Boatstack delegation and transition receipts.\n"
+            }
           },
           {
             "id": "evidence",
             "path": "compiled/evidence.md",
             "media_type": "text/markdown",
             "required": true,
-            "max_bytes": 131072
+            "max_bytes": 131072,
+            "guidance": {
+              "path": ".boatstack/flows/assets/evidence.md",
+              "sha256": "da502cee1e43463b0fbdc6590ece9471560c60c28c23dfab1366b1ff6f4b4e86",
+              "content": "# Evidence\nList repository observations, commands, hashes, receipts, and CI results that can independently verify the plan. Distinguish proposed evidence from evidence already collected.\n"
+            }
           },
           {
             "id": "feature-spec",
             "path": "feature-spec.md",
             "media_type": "text/markdown",
             "required": true,
-            "max_bytes": 262144
+            "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/feature-spec.md",
+              "sha256": "0653f57fe38da81ee59e076bc9db1a8fb8557fe33208348b5cc99bc68800c900",
+              "content": "# Feature specification\nState accepted behavior, public contracts, boundary rules, failure behavior, compatibility decisions, and explicit non-goals. Cite repository evidence for current behavior and distinguish requirements from observations.\n"
+            }
           },
           {
             "id": "gaps",
             "path": "gaps.md",
             "media_type": "text/markdown",
-            "required": false,
-            "max_bytes": 131072
+            "required": true,
+            "max_bytes": 131072,
+            "guidance": {
+              "path": ".boatstack/flows/assets/gaps.md",
+              "sha256": "2daae0917abef3a04a6b85732912a78bc8a75b767768e9eab5d8933c807d9f8e",
+              "content": "# Gaps\nSeparate blocking unknowns, accepted limitations, out-of-scope work, and missing repository evidence. Do not claim there are no gaps without showing the evidence used to reach that conclusion.\n"
+            }
+          },
+          {
+            "id": "implementation-plan",
+            "path": "implementation-plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/implementation-plan.md",
+              "sha256": "dcee245bc7ccc59f0426b4094e4773463c89df2c38aac9a253142878cb7f2173",
+              "content": "# Implementation plan\nDefine ordered, decision-complete implementation slices with owning boundaries, exact files or interfaces, dependencies, verification, and completion criteria. Keep the plan consistent with the feature specification and do not implement during planning.\n"
+            }
           },
           {
             "id": "journey-oracles",
@@ -304,25 +349,28 @@
             "media_type": "application/json",
             "required": true,
             "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/journey-oracles.md",
+              "sha256": "33301a17faa40366a831a29299f7938f12e69c08cd1535338a85a06933c80d2c",
+              "content": "# Journey oracles\nEmit observable end-to-end journeys with setup, action sequence, boundary crossed, and deterministic oracle. Do not use model confidence as an oracle.\n"
+            },
             "schema": {
-              "path": ".boatstack/flows/assets/planning-list.schema.json",
-              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
-              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+              "path": ".boatstack/flows/assets/journey-oracles.schema.json",
+              "sha256": "d977003a28274550b7ab9d4e0d26f5e4b17feeb5d28cbb22f1a354f48b4c9113",
+              "content": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"journeys\"],\"properties\":{\"journeys\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"id\",\"steps\",\"oracle\"],\"properties\":{\"id\":{\"type\":\"string\"},\"steps\":{\"type\":\"array\",\"items\":{\"type\":\"string\"},\"minItems\":1},\"oracle\":{\"type\":\"string\"}},\"additionalProperties\":false}}},\"additionalProperties\":false}\n"
             }
-          },
-          {
-            "id": "plan",
-            "path": "plan.md",
-            "media_type": "text/markdown",
-            "required": true,
-            "max_bytes": 262144
           },
           {
             "id": "questions",
             "path": "questions.md",
             "media_type": "text/markdown",
             "required": true,
-            "max_bytes": 131072
+            "max_bytes": 131072,
+            "guidance": {
+              "path": ".boatstack/flows/assets/questions.md",
+              "sha256": "dc8d24ee07a08900963623ff6d1ab3ee9f6587e5c6d7704eb639fe52ca86612d",
+              "content": "# Questions\nRecord only consequential unresolved or answered questions. Identify whether each answer came from the human or repository evidence. Do not present this artifact as Boatstack's authoritative interaction log.\n"
+            }
           },
           {
             "id": "tasks",
@@ -330,10 +378,15 @@
             "media_type": "application/json",
             "required": true,
             "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/tasks.md",
+              "sha256": "ed8851407814a954fdc44a565e1f058558afd987f8022715d57c926b25830f91",
+              "content": "# Tasks\nEmit deterministic task objects in dependency order. Each task must name its owner, inputs, outputs, verifier, dependencies, and termination condition and must implement an accepted specification requirement.\n"
+            },
             "schema": {
-              "path": ".boatstack/flows/assets/planning-list.schema.json",
-              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
-              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+              "path": ".boatstack/flows/assets/tasks.schema.json",
+              "sha256": "9014935717da25deaf9e67ac809e0cde333f84817cd30fbb039407bd240d62f0",
+              "content": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"items\"],\"properties\":{\"items\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"id\",\"owner\",\"verifier\"],\"properties\":{\"id\":{\"type\":\"string\"},\"owner\":{\"type\":\"string\"},\"verifier\":{\"type\":\"string\"},\"dependencies\":{\"type\":\"array\",\"items\":{\"type\":\"string\"}}},\"additionalProperties\":false}}},\"additionalProperties\":false}\n"
             }
           },
           {
@@ -342,10 +395,15 @@
             "media_type": "application/json",
             "required": true,
             "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/test-matrix.md",
+              "sha256": "a096b988bd40ba8db6e4a05c1a25fbe97c50fdbcf7ff883a7050f80002d26546",
+              "content": "# Test matrix\nEmit deterministic test cases mapped to requirements and control laws. Include positive, negative, tamper, replay, and failure-state scenarios with an exact expected outcome.\n"
+            },
             "schema": {
-              "path": ".boatstack/flows/assets/planning-list.schema.json",
-              "sha256": "d8cb256b7769724a809a967fc5d594465ee045bcae18958eae913a01169231c6",
-              "content": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"items\": {\n      \"type\": \"array\",\n      \"items\": { \"type\": \"object\" }\n    }\n  },\n  \"required\": [\"items\"],\n  \"additionalProperties\": false\n}\n"
+              "path": ".boatstack/flows/assets/test-matrix.schema.json",
+              "sha256": "3070f0ba5b9b934032befd38c1c29f748084e87f9de38e23e859ab024e218c08",
+              "content": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"type\":\"object\",\"required\":[\"cases\"],\"properties\":{\"cases\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"required\":[\"id\",\"requirement\",\"expected\"],\"properties\":{\"id\":{\"type\":\"string\"},\"requirement\":{\"type\":\"string\"},\"expected\":{\"type\":\"string\"},\"kind\":{\"enum\":[\"positive\",\"negative\",\"tamper\",\"replay\",\"failure-state\"]}},\"additionalProperties\":false}}},\"additionalProperties\":false}\n"
             }
           },
           {
@@ -353,7 +411,12 @@
             "path": "test-plan.md",
             "media_type": "text/markdown",
             "required": true,
-            "max_bytes": 262144
+            "max_bytes": 262144,
+            "guidance": {
+              "path": ".boatstack/flows/assets/test-plan.md",
+              "sha256": "985b91c57452193c90a131e492cd1fb69e272caeb5af799f1906350ffeb42668",
+              "content": "# Test plan\nMap every accepted behavior and boundary control law to positive, negative, replay, failure-state, and end-to-end evidence. Name the exact repository checks and distinguish local evidence from CI evidence.\n"
+            }
           }
         ]
       }
@@ -901,7 +964,7 @@
         "binding": {
           "reference": "software-delivery/planning.package.admit",
           "version": "1",
-          "fingerprint": "d21be50f8aac6528412831b792e305a2fe3c3c0b244a978953f79475ba11c27c"
+          "fingerprint": "099ea736903910c65b08b9c11962093ce13dfe686e4bfcaeea64037864bcafbc"
         },
         "capabilities": [
           "product.mutate",
@@ -922,7 +985,21 @@
           "kind": "native",
           "native_handler": "planning-package-admit"
         },
-        "execution_context": "preserve"
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "plan_output",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
       },
       {
         "id": "planning.package.approve",
@@ -2113,7 +2190,20 @@
         },
         "priority": 43,
         "requires": {},
-        "work": "planning-package"
+        "work": "planning-package",
+        "parameters": [
+          {
+            "parameter": "plan_output",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/planning-package-plan-output/implementation-plan",
+                "version": "1",
+                "fingerprint": "b0ee2d73049c4998211f841fec62b3d10b9ebfdd7e76eac4958dbc6f797d80ba"
+              }
+            }
+          }
+        ]
       },
       {
         "id": "planning.package.approve",
@@ -2134,7 +2224,7 @@
               "binding": {
                 "reference": "software-delivery/admitted-planning-package-fingerprint",
                 "version": "1",
-                "fingerprint": "101ce45e44453b97da162b6fec87b3cd38eaf93ece67da640ff7ec96b4cd9b3d"
+                "fingerprint": "811347f4e068b7dfae33f415577d4b91961cbaadd8b1ffe18714ef6ae9793b31"
               }
             }
           }
@@ -2594,6 +2684,11 @@
       {
         "id": "abandon",
         "target": "safely-abandoned",
+        "requires": {
+          "authorities": [
+            "human"
+          ]
+        },
         "inputs": [
           {
             "id": "plan",
@@ -2610,6 +2705,11 @@
       {
         "id": "run",
         "target": "published-pr",
+        "requires": {
+          "authorities": [
+            "human"
+          ]
+        },
         "inputs": [
           {
             "id": "plan",
