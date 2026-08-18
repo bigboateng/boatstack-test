@@ -1,0 +1,125 @@
+{
+  "schema_version": 2,
+  "delivery_id": "planning-snapshot-proof",
+  "program_id": "product-delivery",
+  "program_fingerprint": "df1496b19f7c8482364bf21fc917264ad269e892ec2bde8fa242ee4a24555a64",
+  "entry_id": "run",
+  "run_id": "run-1ba6678b4e69f8e4b9c39c5a02025667",
+  "transition_id": "planning.package.admit",
+  "work_contract_id": "planning-package",
+  "work_contract_fingerprint": "41e4941e0f2899ab25e03aac796d9b9b2a3fd9d3ab7bc60e3c1a9dbdf7b3c12e",
+  "work_request_fingerprint": "7f7d04e8ba938bd70aafcffafc3f65315dee95ad6863df2bf9621faea86cbfc3",
+  "work_result_fingerprint": "8ae3939227408c5e29f4029fc14aa6e9fd4f9467270ae69a3bb51b49d50cbb22",
+  "context_fingerprint": "b6386efe46e6383cf69869091422619b20f93018562faa0e8713c80ec215d878",
+  "state_revision": 4,
+  "plan_output": {
+    "id": "implementation-plan",
+    "path": "implementation-plan.md",
+    "media_type": "text/markdown",
+    "sha256": "f8bc698aa6b052eb4ae089372fb3b419fa60ee30e8909d0b821c42682ea413c5"
+  },
+  "contract": {
+    "path": "contract.json",
+    "sha256": "e0d4a5842b1f54a42781a637b997c4612a796f9f5e336ef2c8868bfebe8916e5"
+  },
+  "work_receipt": {
+    "path": "work-receipt.json",
+    "sha256": "0b5f1ed2e842b819f9d59b26b2f4d26486aec451ed5f38368738e2daa42bb038"
+  },
+  "outputs": [
+    {
+      "id": "autonomy",
+      "path": "autonomy.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 146,
+      "sha256": "b8d4f3be36dfd05f76244f5e3e250299631ea97dc572d115179fb0d1e265c613",
+      "guidance_sha256": "ef2aeee3d4658ceb3b1e6738f224b381d1960966812de463e37427fa736851a1"
+    },
+    {
+      "id": "evidence",
+      "path": "compiled/evidence.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 212,
+      "sha256": "f73cf4e20d0a5ca26a610a21e5da157a7aa71bd036582a7e7a4563e5a32e1083",
+      "guidance_sha256": "da502cee1e43463b0fbdc6590ece9471560c60c28c23dfab1366b1ff6f4b4e86"
+    },
+    {
+      "id": "feature-spec",
+      "path": "feature-spec.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 166,
+      "sha256": "284e39ee5ba9423e9ce9a7ffbef164d26d825f741bd6f2a0e27fefb94c1203b1",
+      "guidance_sha256": "0653f57fe38da81ee59e076bc9db1a8fb8557fe33208348b5cc99bc68800c900"
+    },
+    {
+      "id": "gaps",
+      "path": "gaps.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 167,
+      "sha256": "1886a93aa72218f50b50a3351e39a3c55492b980a015ea97bef4c5c1dc87fca9",
+      "guidance_sha256": "2daae0917abef3a04a6b85732912a78bc8a75b767768e9eab5d8933c807d9f8e"
+    },
+    {
+      "id": "implementation-plan",
+      "path": "implementation-plan.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 304,
+      "sha256": "f8bc698aa6b052eb4ae089372fb3b419fa60ee30e8909d0b821c42682ea413c5",
+      "guidance_sha256": "dcee245bc7ccc59f0426b4094e4773463c89df2c38aac9a253142878cb7f2173"
+    },
+    {
+      "id": "journey-oracles",
+      "path": "compiled/journey-oracles.json",
+      "media_type": "application/json",
+      "required": true,
+      "size": 212,
+      "sha256": "5a9e565853bd4dedee0f073bd77cc1a11124e475c4640cdaaa8d78347d712ada",
+      "guidance_sha256": "33301a17faa40366a831a29299f7938f12e69c08cd1535338a85a06933c80d2c",
+      "schema_sha256": "d977003a28274550b7ab9d4e0d26f5e4b17feeb5d28cbb22f1a354f48b4c9113"
+    },
+    {
+      "id": "questions",
+      "path": "questions.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 113,
+      "sha256": "e51e454ac7b624c99b067640ea90c0c0507d9adc51e0bcf8f78225abce06f76f",
+      "guidance_sha256": "dc8d24ee07a08900963623ff6d1ab3ee9f6587e5c6d7704eb639fe52ca86612d"
+    },
+    {
+      "id": "tasks",
+      "path": "compiled/tasks.json",
+      "media_type": "application/json",
+      "required": true,
+      "size": 263,
+      "sha256": "5430a9460a18271fd4537e3589013e5f2b733b0938f65005931a6d2ee19f0320",
+      "guidance_sha256": "ed8851407814a954fdc44a565e1f058558afd987f8022715d57c926b25830f91",
+      "schema_sha256": "9014935717da25deaf9e67ac809e0cde333f84817cd30fbb039407bd240d62f0"
+    },
+    {
+      "id": "test-matrix",
+      "path": "compiled/test-matrix.json",
+      "media_type": "application/json",
+      "required": true,
+      "size": 417,
+      "sha256": "4169d96bdf8f3c112c653916969fdf39ad78f321601cb60a4b2c58027a295350",
+      "guidance_sha256": "a096b988bd40ba8db6e4a05c1a25fbe97c50fdbcf7ff883a7050f80002d26546",
+      "schema_sha256": "3070f0ba5b9b934032befd38c1c29f748084e87f9de38e23e859ab024e218c08"
+    },
+    {
+      "id": "test-plan",
+      "path": "test-plan.md",
+      "media_type": "text/markdown",
+      "required": true,
+      "size": 196,
+      "sha256": "9340809183d0cd2234d29e5819ba76e522d08cb6336f4994545a740cdeb6844e",
+      "guidance_sha256": "985b91c57452193c90a131e492cd1fb69e272caeb5af799f1906350ffeb42668"
+    }
+  ],
+  "fingerprint": "ca5595048d84dd449add17a24a7d4e20b334c00dc2e2e85ac0b303c77b4fbab6"
+}

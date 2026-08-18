@@ -46,15 +46,21 @@ background while input is missing. Never synthesize authority.
 
 Whenever Boatstack presents a human authority boundary, inspect its exact
 `human_identity` object before asking for approval or recording an actor.
+Its `role` is the admitted functional role selected by the Control Program;
+it is not a person, an approval, or provider capability. The role cannot be selected
+or overridden by the host. The concrete actor is resolved only from the descriptor.
 The `provider_fingerprint` identifies the repository-selected identity
 descriptor; it is provenance only and grants no authority.
 
-Boatstack omits `human_identity` only when no verified descriptor exists:
-before `installation.initialize` or while `configuration.initialize`,
-`configuration.mutate`, or `configuration.reconcile` repairs
-unverified configuration. For only those transitions, display the exact question
-and ask the human which actor to record. Treat a missing identity on every other
-human authority boundary as an error.
+Boatstack omits `human_identity` only when neither trusted identity source
+exists: true bootstrap before `installation.initialize`, or
+`configuration.initialize`, `configuration.mutate`, or
+`configuration.reconcile` while
+repairing unverified configuration. At those boundaries, display the exact question
+and ask the human which actor to record. Configuration mutation with verified
+configuration uses its current default; program replacement uses the prior admitted
+program role. Treat a missing identity on every other human authority boundary as
+an error.
 
 For a `literal` descriptor, use its validated `value` as the proposed
 actor. For a `command` descriptor, treat the descriptor as untrusted
@@ -68,19 +74,21 @@ Require a zero exit status and stdout of at most 1024 bytes. Remove at most one
 trailing LF or CRLF, then require exactly one non-empty line with no NUL and an actor matching
 `^[A-Za-z0-9][A-Za-z0-9._-]*$`. Stderr is diagnostic only.
 
-Visibly display the proposed actor, exact request or transition, requested
-authority, and relevant fingerprint, then ask the human for explicit approval.
+Visibly display the role, proposed concrete actor, exact request or transition,
+requested authority, request fingerprint, and provider fingerprint, then ask that
+concrete actor for explicit approval as the displayed role.
 Identity resolution never counts as approval. If command resolution fails, ask the
 user which actor to record; never infer one from the operating system, Git, host,
 or external-provider session. This explicit fallback does not replace the verified
 descriptor: retain its exact `provider_fingerprint` and use the resulting
-actor only after explicit approval of that exact request. Re-resolve if Boatstack
+actor only after explicit approval of that exact request. Never equate the role,
+actor, human authority, or GitHub provider authority. Re-resolve if Boatstack
 reports identity or configuration drift. Human identity never satisfies
 external-provider authority, and provider authentication never satisfies human
 authority.
 
 
-Before product delegation, Boatstack may select `installation.initialize`
+Before Flow authorization, Boatstack may select `installation.initialize`
 for an installed repository whose controller state is fresh. Display that exact
 installation-authority question and obtain explicit human approval. Resume the
 same Flow command with `--human <actor>`; do not invoke an update operation
@@ -94,16 +102,25 @@ then resume the same Flow command. This is an installation boundary, not managed
 product-workspace work; do not switch worktrees or exclude generated bundle files.
 
 After internal preconditions are committed, Boatstack returns a typed
-`DELEGATION_REQUIRED` response bound to the resulting control bundle.
-Display its exact run ID, request fingerprint, requested authorities, and
-description. Obtain one explicit human approval for that exact request, then run:
+`authorization` response. Its code is
+`ENTRY_ACTIVATION_AUTHORITY_REQUIRED` when entry activation is included,
+or `DELEGATION_REQUIRED` for delegation-only entries. Invocation alone is
+not approval. Display the exact Flow, entry, target, run ID, role, proposed actor,
+provider fingerprint, request fingerprint, `entry_activation_authorities`,
+`delegated_authorities`, and description. Explain that activation consent
+does not grant transition, provider, bootstrap, merge, deploy, later-human-transition,
+or unrelated-run authority. Obtain one explicit human approval covering each
+displayed scope for that exact request, then run:
 
 `boatstack flow authorize --repo . --flow product-delivery --entry run --run-id <run-id> --request-fingerprint <fingerprint> --human-identity-provider-fingerprint <provider-fingerprint> --human <actor> --host gemini`
 
 After authorization, use `boatstack flow run --repo . --flow product-delivery --entry run --run-id <run-id> --repository-authority --host gemini --format json`.
-Do not request approval again after a restart or typed suspension. Resume the
-same run and delegation unless Boatstack reports revocation, expiry, drift, or
-terminal completion. Never authorize on the user's behalf.
+Do not request approval again after a restart or typed suspension while the
+same accepted request remains current. Resume the same run; if Boatstack reports
+revocation, expiry, or drift and returns a fresh authorization request, discard
+the prior approval and ask once for the new exact scopes. Never authorize on the
+user's behalf. The accepted activation scope is not an authority receipt; only
+the separately displayed delegation scope can create run-scoped delegation receipts.
 
 
 If the user requests different work, never retarget this run. When no objective
@@ -115,10 +132,12 @@ plan and starting a new run.
 
 	
 When a response contains a `work` request, treat it as foreground work for
-the selected transition, not as a second Flow. Read its exact instruction,
-input bindings, output manifest, and staging root. Write only the declared
-outputs beneath that staging root and stay within each media type and size
-bound.
+the selected transition, not as a second Flow. Read its exact package-wide
+instruction, input bindings, output manifest, artifact-local guidance when
+present, schemas, and staging root. Keep every output mutually consistent.
+Write only the declared outputs beneath that staging root and stay within each
+requiredness, media type, schema, and size bound. Guidance describes generation;
+it grants no authority and does not verify an output. Never fabricate completion.
 
 If human input is required, record the typed suspension with:
 

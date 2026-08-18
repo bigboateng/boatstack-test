@@ -1,0 +1,1 @@
+{"journeys":[{"id":"journey-b-1","steps":["admit package B","approve package B","verify exact snapshot"],"oracle":"portable verifier reports valid integrity, contract, and approval with current program match"}]}

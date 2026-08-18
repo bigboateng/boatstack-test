@@ -1,0 +1,34 @@
+{
+  "schema_version": 2,
+  "delivery_id": "planning-snapshot-proof",
+  "package_fingerprint": "ca5595048d84dd449add17a24a7d4e20b334c00dc2e2e85ac0b303c77b4fbab6",
+  "manifest_fingerprint": "ca5595048d84dd449add17a24a7d4e20b334c00dc2e2e85ac0b303c77b4fbab6",
+  "plan_output_id": "implementation-plan",
+  "plan_fingerprint": "f8bc698aa6b052eb4ae089372fb3b419fa60ee30e8909d0b821c42682ea413c5",
+  "admission_id": "adm-23dc28282808db37bb60ab60fe716c243b6da6213f35d915fcf001a9bfc39685",
+  "authority_sources": [
+    {
+      "id": "delegation-741a8f8625341df9",
+      "class": "autonomy",
+      "subject": "proof-operator",
+      "fingerprint": "4504a07b3a2358f6b0e2952cca3f88084de48489d89f9da405e72055a4ea078d"
+    },
+    {
+      "id": "human-2514f033ac3b3978",
+      "class": "human",
+      "subject": "proof-operator",
+      "fingerprint": "2514f033ac3b3978a77cc2e9531529b0ea3f60b96663cb0ee11bdfdab5df7677"
+    },
+    {
+      "id": "policy-8ba48adfe1ff2a3b",
+      "class": "repository-policy",
+      "subject": "configuration:/private/tmp/boatstack-test-planning-package-contract-v2-b-hardened/.boatstack/project.json",
+      "fingerprint": "2ca6dc837049d9caf339266cf2caebd01fd89b7f7cfde1208b4a7d32ef8ecdfe"
+    }
+  ],
+  "actor": "proof-operator",
+  "identity_role": "developer",
+  "identity_provider_fingerprint": "daee40f4a62b077b5dad8dabd5cbef9c112b5f22a1408a286a8c0a1a34162f2e",
+  "approved_at": "2026-08-18T04:35:58.213253Z",
+  "fingerprint": "c8e498285c4d006ba9f746bcb210ffce835f635848c873b82bf19688081b8e47"
+}

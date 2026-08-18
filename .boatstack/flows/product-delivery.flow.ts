@@ -24,16 +24,16 @@ const planning = foregroundWork({
   instructions: instructionAsset(".boatstack/flows/assets/planning-package.md"),
   inputs: [entryInput("plan")],
   outputs: [
-    workArtifact({ id: "plan", path: "plan.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
-    workArtifact({ id: "feature-spec", path: "feature-spec.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
-    workArtifact({ id: "questions", path: "questions.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
-    workArtifact({ id: "test-plan", path: "test-plan.md", media_type: "text/markdown", required: true, max_bytes: 262144 }),
-    workArtifact({ id: "gaps", path: "gaps.md", media_type: "text/markdown", required: false, max_bytes: 131072 }),
-    workArtifact({ id: "autonomy", path: "autonomy.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
-    workArtifact({ id: "tasks", path: "compiled/tasks.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
-    workArtifact({ id: "test-matrix", path: "compiled/test-matrix.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
-    workArtifact({ id: "journey-oracles", path: "compiled/journey-oracles.json", media_type: "application/json", required: true, max_bytes: 262144, schema: schemaAsset(".boatstack/flows/assets/planning-list.schema.json") }),
-    workArtifact({ id: "evidence", path: "compiled/evidence.md", media_type: "text/markdown", required: true, max_bytes: 131072 }),
+    workArtifact({ id: "implementation-plan", path: "implementation-plan.md", media_type: "text/markdown", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/implementation-plan.md") }),
+    workArtifact({ id: "feature-spec", path: "feature-spec.md", media_type: "text/markdown", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/feature-spec.md") }),
+    workArtifact({ id: "questions", path: "questions.md", media_type: "text/markdown", required: true, max_bytes: 131072, guidance: instructionAsset(".boatstack/flows/assets/questions.md") }),
+    workArtifact({ id: "test-plan", path: "test-plan.md", media_type: "text/markdown", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/test-plan.md") }),
+    workArtifact({ id: "gaps", path: "gaps.md", media_type: "text/markdown", required: true, max_bytes: 131072, guidance: instructionAsset(".boatstack/flows/assets/gaps.md") }),
+    workArtifact({ id: "autonomy", path: "autonomy.md", media_type: "text/markdown", required: true, max_bytes: 131072, guidance: instructionAsset(".boatstack/flows/assets/autonomy.md") }),
+    workArtifact({ id: "tasks", path: "compiled/tasks.json", media_type: "application/json", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/tasks.md"), schema: schemaAsset(".boatstack/flows/assets/tasks.schema.json") }),
+    workArtifact({ id: "test-matrix", path: "compiled/test-matrix.json", media_type: "application/json", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/test-matrix.md"), schema: schemaAsset(".boatstack/flows/assets/test-matrix.schema.json") }),
+    workArtifact({ id: "journey-oracles", path: "compiled/journey-oracles.json", media_type: "application/json", required: true, max_bytes: 262144, guidance: instructionAsset(".boatstack/flows/assets/journey-oracles.md"), schema: schemaAsset(".boatstack/flows/assets/journey-oracles.schema.json") }),
+    workArtifact({ id: "evidence", path: "compiled/evidence.md", media_type: "text/markdown", required: true, max_bytes: 131072, guidance: instructionAsset(".boatstack/flows/assets/evidence.md") }),
   ],
 });
 
@@ -64,9 +64,13 @@ const lifecycle = [
 
 export default defineFlow(softwareDelivery({
   id: "product-delivery",
-  version: "1",
+  version: "2",
+  humanIdentity: "developer",
   lifecycle: lifecycle,
-  planningPackageWork: planning,
+  planningPackage: {
+    work: planning,
+    planOutput: "implementation-plan",
+  },
   targets: [
     marked("published-pr", all(
       fact("verification", ["current"]),
@@ -83,12 +87,14 @@ export default defineFlow(softwareDelivery({
     entry({
       id: "run",
       target: "published-pr",
+      requires: { authorities: ["human"] },
       inputs: [inbox(".boatstack/plans/inbox")],
       delegation: trustedDelegation("autonomy"),
     }),
     entry({
       id: "abandon",
       target: "safely-abandoned",
+      requires: { authorities: ["human"] },
       inputs: [inbox(".boatstack/plans/inbox")],
     }),
   ],
