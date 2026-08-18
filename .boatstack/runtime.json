@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "v2.0.0-dev",
-  "sha256": "ee400548d26bae3bc57b5817c6860705141a9e1783121be2ed3e3ccc32db236c",
+  "sha256": "fcd7895064ffa0fd0718ae8157a527df232b0cfd847bb0d1d07c129b6946022f",
   "source_revision": "v2.0.0-dev",
   "program_fingerprint": "df1496b19f7c8482364bf21fc917264ad269e892ec2bde8fa242ee4a24555a64",
   "state_schema_version": 7

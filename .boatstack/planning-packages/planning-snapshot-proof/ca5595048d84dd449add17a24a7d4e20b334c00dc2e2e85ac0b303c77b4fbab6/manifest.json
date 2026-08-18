@@ -8,9 +8,9 @@
   "transition_id": "planning.package.admit",
   "work_contract_id": "planning-package",
   "work_contract_fingerprint": "41e4941e0f2899ab25e03aac796d9b9b2a3fd9d3ab7bc60e3c1a9dbdf7b3c12e",
-  "work_request_fingerprint": "1d7edfbdcbb0d74f65a50ab05490d3f6ae0bc71ce016fb1c5a6a6ddf5f36ade3",
-  "work_result_fingerprint": "cae6934e72dd90d93ad7f0a8d743689a52d7dfafa36d5e8479e5d275a77bd793",
-  "context_fingerprint": "a0f042b2b6a7cebe23268da47e01dad292239180d675038f7960cdbdaeade73a",
+  "work_request_fingerprint": "7f7d04e8ba938bd70aafcffafc3f65315dee95ad6863df2bf9621faea86cbfc3",
+  "work_result_fingerprint": "8ae3939227408c5e29f4029fc14aa6e9fd4f9467270ae69a3bb51b49d50cbb22",
+  "context_fingerprint": "b6386efe46e6383cf69869091422619b20f93018562faa0e8713c80ec215d878",
   "state_revision": 4,
   "plan_output": {
     "id": "implementation-plan",
@@ -24,7 +24,7 @@
   },
   "work_receipt": {
     "path": "work-receipt.json",
-    "sha256": "0e1aefedea8d7b467d0354ca75e58b869551b706380ace4b92ffaf0df1d53133"
+    "sha256": "0b5f1ed2e842b819f9d59b26b2f4d26486aec451ed5f38368738e2daa42bb038"
   },
   "outputs": [
     {
@@ -42,7 +42,7 @@
       "media_type": "text/markdown",
       "required": true,
       "size": 212,
-      "sha256": "e9640cd151fdee891405a66e4323553257a7a2490ad995b17b640ee98b0b8ae4",
+      "sha256": "f73cf4e20d0a5ca26a610a21e5da157a7aa71bd036582a7e7a4563e5a32e1083",
       "guidance_sha256": "da502cee1e43463b0fbdc6590ece9471560c60c28c23dfab1366b1ff6f4b4e86"
     },
     {
@@ -121,5 +121,5 @@
       "guidance_sha256": "985b91c57452193c90a131e492cd1fb69e272caeb5af799f1906350ffeb42668"
     }
   ],
-  "fingerprint": "47dca24ddf8186870906d97bd128d4d15ebed53367d3b0a6ceca552a7c0fb1e4"
+  "fingerprint": "ca5595048d84dd449add17a24a7d4e20b334c00dc2e2e85ac0b303c77b4fbab6"
 }
