@@ -1,12 +1,12 @@
 {
   "schema": "control-program-artifact",
-  "schema_revision": 7,
+  "schema_revision": 8,
   "compiler_version": "control-program.compiler.9",
   "source_path": ".boatstack/flows/work-package-proof.flow.ts",
   "source_sha256": "8aee6d1836e264983546ac1a82fdc531c1955874bc7e1d34fb239b5f704da78b",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "c8daa1ae4a16ee6732a6dae6a98d472fc7b6d2f0b2b7b72f150517195d0a1bf6",
+  "dependency_lock_sha256": "f924081224f4144259ab0a544a2697893f80ac7ed4095dbf7e6626dc1e093d13",
+  "program_fingerprint": "2e41645032e5514afb37fd6b27a4788fdbe002a44345ec5afe5ef7244704022f",
   "projections": [
     "claude",
     "codex",
@@ -46,7 +46,7 @@
   },
   "program": {
     "schema": "control-program",
-    "schema_revision": 7,
+    "schema_revision": 8,
     "program": {
       "id": "work-package-proof",
       "version": "1",
@@ -234,7 +234,10 @@
         "inputs": [
           {
             "id": "plan",
-            "entry_input": "plan"
+            "producer": {
+              "kind": "entry-input",
+              "input": "plan"
+            }
           }
         ],
         "outputs": [

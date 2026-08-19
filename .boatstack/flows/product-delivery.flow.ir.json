@@ -1,12 +1,12 @@
 {
   "schema": "control-program-artifact",
-  "schema_revision": 7,
+  "schema_revision": 8,
   "compiler_version": "control-program.compiler.9",
   "source_path": ".boatstack/flows/product-delivery.flow.ts",
   "source_sha256": "6566f4814179fb9cf711d8c2b40eea78399ae55110965ed51b5e5ba9bc1bc1ae",
   "dependency_lock_path": "package-lock.json",
-  "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "828967286e041061b6c6ec00f5e6c64cb77485ac9c1573853fbf06668937fca3",
+  "dependency_lock_sha256": "f924081224f4144259ab0a544a2697893f80ac7ed4095dbf7e6626dc1e093d13",
+  "program_fingerprint": "0e2a548c9f00ee39d92c4dfd723fa7745419735efdda9e38f5ae80b0c1b1f70b",
   "projections": [
     "claude",
     "codex",
@@ -46,7 +46,7 @@
   },
   "program": {
     "schema": "control-program",
-    "schema_revision": 7,
+    "schema_revision": 8,
     "program": {
       "id": "product-delivery",
       "version": "2",
@@ -236,7 +236,10 @@
         "inputs": [
           {
             "id": "plan",
-            "entry_input": "plan"
+            "producer": {
+              "kind": "entry-input",
+              "input": "plan"
+            }
           }
         ],
         "outputs": [
