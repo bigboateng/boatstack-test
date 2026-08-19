@@ -6,7 +6,7 @@
   "source_sha256": "6566f4814179fb9cf711d8c2b40eea78399ae55110965ed51b5e5ba9bc1bc1ae",
   "dependency_lock_path": "package-lock.json",
   "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "fa5aa0e9900576d474d30bc1b7bb4b6543c791986fd51e675e4a350f861a4ca4",
+  "program_fingerprint": "c021b4033abd2cac87b3a9a2cee9ada3c48c09fe245b66d9f8d43b55314dd2e2",
   "projections": [
     "claude",
     "codex",
@@ -413,7 +413,7 @@
         "binding": {
           "reference": "software-delivery/planning.package.promote",
           "version": "1",
-          "fingerprint": "5309a100812819feb8e6830e0ca1a2619dc283f160bc01784f0208072e87a98d"
+          "fingerprint": "c18a55e508e91f5b8ab6d9b3e41c0b59e2a411ad5fd80ccc658f96c3e5f9b3c4"
         },
         "capabilities": [
           "product.mutate",
