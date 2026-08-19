@@ -6,7 +6,7 @@
   "source_sha256": "8aee6d1836e264983546ac1a82fdc531c1955874bc7e1d34fb239b5f704da78b",
   "dependency_lock_path": "package-lock.json",
   "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "2377d1a81aaa42c6eb8095ef9db9f66d08832b86205547e9959a6a59130a7377",
+  "program_fingerprint": "2a71e569e126b2d2244dabef9e994df96633ea81d529d220ed41564867cf4662",
   "projections": [
     "claude",
     "codex",
@@ -411,7 +411,7 @@
         "binding": {
           "reference": "software-delivery/work.package.admit",
           "version": "1",
-          "fingerprint": "d4b786e8f9d91c91b5e78403e0137ceac3b6e0b18d825ae530e9dd84404cfb41"
+          "fingerprint": "f8edf280784da15f951fb4dc3314c2355f21900c7b0b072e7c258b028ee22adb"
         },
         "capabilities": [
           "product.mutate",
