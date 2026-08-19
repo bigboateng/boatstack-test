@@ -11,15 +11,14 @@ import {
 } from "@operatorstack/boatstack";
 import {
   inbox,
-  planningPackage,
-  planningPackagePromote,
   softwareDelivery,
   trustedDelegation,
+  workPackage,
   workPackageAdmit,
   workPackageApprove,
 } from "@operatorstack/boatstack-software-delivery";
 
-const planning = foregroundWork({
+const acceptedWork = foregroundWork({
   id: "accepted-work-package",
   instructions: instructionAsset(".boatstack/flows/assets/accepted-work-package.md"),
   inputs: [entryInput("plan")],
@@ -39,30 +38,21 @@ const planning = foregroundWork({
   ],
 });
 
-const lifecycle = [
-  workPackageAdmit,
-  workPackageApprove,
-  planningPackagePromote,
-];
-
 export default defineFlow(softwareDelivery({
-  id: "product-delivery",
-  version: "2",
+  id: "work-package-proof",
+  version: "1",
   humanIdentity: "developer",
-  lifecycle: lifecycle,
-  planningPackage: planningPackage({
-    work: planning,
-    planOutput: "implementation-plan",
-  }),
+  lifecycle: [workPackageAdmit, workPackageApprove],
+  workPackage: workPackage({ work: acceptedWork }),
   targets: [
-    marked("approved-plan", fact("plan", ["approved"])),
+    marked("approved-package", fact("work-package", ["approved"])),
   ],
   entries: [
     entry({
-      id: "plan",
-      target: "approved-plan",
+      id: "accept",
+      target: "approved-package",
       requires: { authorities: ["human"] },
-      inputs: [inbox(".boatstack/plans/product-delivery")],
+      inputs: [inbox(".boatstack/plans/work-package-proof")],
       delegation: trustedDelegation("autonomy"),
     }),
   ],

@@ -2,11 +2,11 @@
   "schema": "control-program-artifact",
   "schema_revision": 7,
   "compiler_version": "control-program.compiler.9",
-  "source_path": ".boatstack/flows/product-delivery.flow.ts",
-  "source_sha256": "6566f4814179fb9cf711d8c2b40eea78399ae55110965ed51b5e5ba9bc1bc1ae",
+  "source_path": ".boatstack/flows/work-package-proof.flow.ts",
+  "source_sha256": "8aee6d1836e264983546ac1a82fdc531c1955874bc7e1d34fb239b5f704da78b",
   "dependency_lock_path": "package-lock.json",
   "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "828967286e041061b6c6ec00f5e6c64cb77485ac9c1573853fbf06668937fca3",
+  "program_fingerprint": "c8daa1ae4a16ee6732a6dae6a98d472fc7b6d2f0b2b7b72f150517195d0a1bf6",
   "projections": [
     "claude",
     "codex",
@@ -15,15 +15,15 @@
   ],
   "projection_selection_fingerprint": "f4064523ad6f01bb81b9d27968ed74ef12f314e121081e2e2436e458e5d6e332",
   "generated_projections": {
-    ".agents/skills/product-delivery-plan/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".agents/skills/product-delivery-plan/SKILL.md": "b7929ad78c2cc0a11a44e1b0a66a458f2ebd31da01a52185c3310f588d754b3f",
-    ".agents/skills/product-delivery-plan/agents/openai.yaml": "7f148af077556c3208f4dc7f74abc2a037cf48f5b03c388de37267cb331aeb52",
-    ".claude/skills/product-delivery-plan/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
-    ".claude/skills/product-delivery-plan/SKILL.md": "675d9f302bf389ff03a7209431a5a23cfef9c1ee161b34f5bca36a5c6b10be1e",
+    ".agents/skills/work-package-proof-accept/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".agents/skills/work-package-proof-accept/SKILL.md": "9e0918f6f5d92bc34905372ad0f147e42fc3d02531cd8eca41e8954b664c81e7",
+    ".agents/skills/work-package-proof-accept/agents/openai.yaml": "59af9d15e0c0d0d0c828f65a84a607418e893310447fa71a8840ae6f1bffcb0a",
+    ".claude/skills/work-package-proof-accept/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".claude/skills/work-package-proof-accept/SKILL.md": "6fcdbeea28b70480f2cc795f2d62b7b33adb638ba328a3f119a91ba0ee0be23f",
     ".cursor/commands/.gitattributes": "cbf4175ddc2d62b296320ce3a070e4301de41f0431d2a1acfc04d9ab6c3a3e6f",
-    ".cursor/commands/product-delivery-plan.md": "0342781d5acd88010c22adb96ecfb8b98db2981a14f2a7a8be190495653ae048",
+    ".cursor/commands/work-package-proof-accept.md": "8228daeedeed987ff94cbb0ef8ad9415400a372a11aaf14caaf3dfa47e44367c",
     ".gemini/skills/.gitattributes": "de77f05b82e66fa6354813e2901cbff6b94685479aafed997d0dc46a0e6023eb",
-    ".gemini/skills/product-delivery-plan/SKILL.md": "975a783d68c3e092f19a62a93d265f1ea68fb64ae3811a63d256a94ded2a4472"
+    ".gemini/skills/work-package-proof-accept/SKILL.md": "412d004a11d1f16c0a52c7645071dec46c8f5e25d52bf49d2700d84ed47227e7"
   },
   "assets": {
     ".boatstack/flows/assets/accepted-work-package.md": "5759a958136197e3119029e8526b082fe61050a87dbb8db1b30e1805711d1296",
@@ -48,8 +48,8 @@
     "schema": "control-program",
     "schema_revision": 7,
     "program": {
-      "id": "product-delivery",
-      "version": "2",
+      "id": "work-package-proof",
+      "version": "1",
       "human_identity": "developer"
     },
     "declarations": {
@@ -62,12 +62,10 @@
         "human"
       ],
       "effects": [
-        "planning.package.promote",
         "work.package.admit",
         "work.package.approve"
       ],
       "verifiers": [
-        "verifier:fresh-observation:planning.package.promote",
         "verifier:fresh-observation:work.package.admit",
         "verifier:fresh-observation:work.package.approve"
       ],
@@ -409,48 +407,6 @@
     ],
     "operators": [
       {
-        "id": "planning.package.promote",
-        "binding": {
-          "reference": "software-delivery/planning.package.promote",
-          "version": "1",
-          "fingerprint": "6613b51615a4017690c448947e0ea3773c4f48bb1ca085a6852e88fb883c867e"
-        },
-        "capabilities": [
-          "product.mutate",
-          "repository.write"
-        ],
-        "authority": {
-          "any_of": [
-            "autonomy",
-            "human"
-          ]
-        },
-        "effects": [
-          "planning.package.promote"
-        ],
-        "verifier": "verifier:fresh-observation:planning.package.promote",
-        "recovery": "recovery.resume",
-        "state_effect": {
-          "kind": "native",
-          "native_handler": "planning-package-promote"
-        },
-        "execution_context": "preserve",
-        "parameters": [
-          {
-            "id": "plan_output",
-            "type": {
-              "kind": "string"
-            },
-            "required": true,
-            "secret": false,
-            "allowed_sources": [
-              "trusted-resolver"
-            ],
-            "authority": {}
-          }
-        ]
-      },
-      {
         "id": "work.package.admit",
         "binding": {
           "reference": "software-delivery/work.package.admit",
@@ -523,31 +479,6 @@
     ],
     "transitions": [
       {
-        "id": "planning.package.promote",
-        "operator": "planning.package.promote",
-        "guard": {
-          "true": true
-        },
-        "target": {
-          "true": true
-        },
-        "priority": 45,
-        "requires": {},
-        "parameters": [
-          {
-            "parameter": "plan_output",
-            "producer": {
-              "kind": "trusted-resolver",
-              "binding": {
-                "reference": "software-delivery/planning-package-plan-output/implementation-plan",
-                "version": "1",
-                "fingerprint": "b0ee2d73049c4998211f841fec62b3d10b9ebfdd7e76eac4958dbc6f797d80ba"
-              }
-            }
-          }
-        ]
-      },
-      {
         "id": "work.package.admit",
         "operator": "work.package.admit",
         "guard": {
@@ -588,10 +519,10 @@
     ],
     "targets": [
       {
-        "id": "approved-plan",
+        "id": "approved-package",
         "predicate": {
           "fact": {
-            "facet": "plan",
+            "facet": "work-package",
             "statuses": [
               "known"
             ],
@@ -604,8 +535,8 @@
     ],
     "entries": [
       {
-        "id": "plan",
-        "target": "approved-plan",
+        "id": "accept",
+        "target": "approved-package",
         "requires": {
           "authorities": [
             "human"
@@ -619,7 +550,7 @@
             "resolver": "software-delivery.plan-inbox",
             "config": {
               "cardinality": "exactly-one",
-              "path": ".boatstack/plans/product-delivery"
+              "path": ".boatstack/plans/work-package-proof"
             }
           }
         ],

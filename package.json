@@ -2,8 +2,8 @@
   "name": "todo-test-flow-pilot",
   "private": true,
   "scripts": {
-    "boatstack:flow:compile": "boatstack flow compile --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\"",
-    "boatstack:flow:check": "boatstack flow check --repo ."
+    "boatstack:flow:compile": "boatstack flow compile --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\" --source .boatstack/flows/work-package-proof.flow.ts && boatstack flow compile --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\" --source .boatstack/flows/product-delivery.flow.ts",
+    "boatstack:flow:check": "boatstack flow check --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\" --source .boatstack/flows/work-package-proof.flow.ts --artifact .boatstack/flows/work-package-proof.flow.ir.json && boatstack flow check --repo . --frontend \"$PWD/node_modules/.bin/boatstack-flow-frontend\" --source .boatstack/flows/product-delivery.flow.ts --artifact .boatstack/flows/product-delivery.flow.ir.json"
   },
   "devDependencies": {
     "@operatorstack/boatstack": "file:.boatstack/pilot-packages/operatorstack-boatstack-0.0.0-development.tgz",
