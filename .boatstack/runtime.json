@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "version": "v2.0.0-dev",
-  "sha256": "150e231499e770de2fc243e82e8d0cf7ea2f73c1d00a21eb86d462ebadecc0b1",
-  "source_revision": "bafd8e4bcee3c7ceb01acd374c7c06a7f1377669",
-  "program_fingerprint": "3cc01214bec168ae71d86790a1f4a0f34d458e2c2a4ef97443b9c49ed86779fe",
+  "sha256": "4571754eada16c6f1c33836e728f413d03221801df63fe5bd18e3bcd43592d18",
+  "source_revision": "6accf11ff00d564485a57cf4d250368e3c55966d",
+  "program_fingerprint": "6aaf5de6ad93a7d429b666aec3a09be03fbc844ace5252102eacd7f6bfb8af46",
   "state_schema_version": 8
 }

@@ -1,0 +1,531 @@
+{
+  "schema": "control-program-artifact",
+  "schema_revision": 8,
+  "compiler_version": "control-program.compiler.9",
+  "source_path": ".boatstack/flows/foreground-work-input-proof.flow.ts",
+  "source_sha256": "2c93494f3b1b2432bab2a9910276090f6f745958f9537b364c2c8d4059236df7",
+  "dependency_lock_path": "package-lock.json",
+  "dependency_lock_sha256": "f924081224f4144259ab0a544a2697893f80ac7ed4095dbf7e6626dc1e093d13",
+  "program_fingerprint": "244ff27044fcdbcc55233a3edc7a7b6581a73b2473357cae1bd22005d5c7aa8a",
+  "projections": [
+    "claude",
+    "codex",
+    "cursor",
+    "gemini"
+  ],
+  "projection_selection_fingerprint": "f4064523ad6f01bb81b9d27968ed74ef12f314e121081e2e2436e458e5d6e332",
+  "generated_projections": {
+    ".agents/skills/foreground-work-input-proof-prove/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".agents/skills/foreground-work-input-proof-prove/SKILL.md": "1d4fe0441b5cccd7e20f45c6cafd46af7d70ca5d0b8976ab13e47e6962991b98",
+    ".agents/skills/foreground-work-input-proof-prove/agents/openai.yaml": "e458cd091447bb6e6e833347e8db92513bc9af066a0b64c0c1959a15b030ae45",
+    ".claude/skills/foreground-work-input-proof-prove/.gitattributes": "5adb973ddcfcedbd9857ce2d05d8813c6de34837295f1234a2188dc07b762a7c",
+    ".claude/skills/foreground-work-input-proof-prove/SKILL.md": "14dffc80f717391a35cc902087b929cf8566217405ae73872cb1926f5a3ddd47",
+    ".cursor/commands/.gitattributes": "cbf4175ddc2d62b296320ce3a070e4301de41f0431d2a1acfc04d9ab6c3a3e6f",
+    ".cursor/commands/foreground-work-input-proof-prove.md": "54ad22bf41f49a604e33270b018fdbb7f6b8c6eb24e166a8b55fbfe7e0a9fd5a",
+    ".gemini/skills/.gitattributes": "de77f05b82e66fa6354813e2901cbff6b94685479aafed997d0dc46a0e6023eb",
+    ".gemini/skills/foreground-work-input-proof-prove/SKILL.md": "fe32c883210b6802e19b7a284bc89ba2eafccfb72ecdecf9dbb51e20de0b32b5"
+  },
+  "assets": {
+    ".boatstack/flows/assets/foreground-work-input-consumer.md": "a68f5eb4a4f4887da242f90bb88f26610a45f78ee956e759fe248d3c60a090a3",
+    ".boatstack/flows/assets/foreground-work-input-producer.md": "5ff8e9b315fd1136da8e7f123b39a16d7897c3404328339ff93ea19e48c586e4"
+  },
+  "program": {
+    "schema": "control-program",
+    "schema_revision": 8,
+    "program": {
+      "id": "foreground-work-input-proof",
+      "version": "1",
+      "human_identity": "developer"
+    },
+    "declarations": {
+      "capabilities": [
+        "product.mutate",
+        "repository.write"
+      ],
+      "authorities": [
+        "autonomy",
+        "human"
+      ],
+      "effects": [
+        "planning.package.promote",
+        "work.package.admit",
+        "work.package.approve"
+      ],
+      "verifiers": [
+        "verifier:fresh-observation:planning.package.promote",
+        "verifier:fresh-observation:work.package.admit",
+        "verifier:fresh-observation:work.package.approve"
+      ],
+      "input_resolvers": [
+        "software-delivery.plan-inbox"
+      ]
+    },
+    "facets": [
+      {
+        "id": "configuration",
+        "kind": "string"
+      },
+      {
+        "id": "configuration-policy",
+        "kind": "string"
+      },
+      {
+        "id": "delivery",
+        "kind": "string"
+      },
+      {
+        "id": "engagement",
+        "kind": "string"
+      },
+      {
+        "id": "objective",
+        "kind": "string"
+      },
+      {
+        "id": "phase",
+        "kind": "string"
+      },
+      {
+        "id": "plan",
+        "kind": "string"
+      },
+      {
+        "id": "preview_fingerprint",
+        "kind": "string"
+      },
+      {
+        "id": "program",
+        "kind": "string"
+      },
+      {
+        "id": "publication",
+        "kind": "string"
+      },
+      {
+        "id": "publication_id",
+        "kind": "string"
+      },
+      {
+        "id": "recovery",
+        "kind": "string"
+      },
+      {
+        "id": "recovery-info",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_budget",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_cause",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_resumption",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_source_phase",
+        "kind": "string"
+      },
+      {
+        "id": "recovery_transaction_id",
+        "kind": "string"
+      },
+      {
+        "id": "runtime",
+        "kind": "string"
+      },
+      {
+        "id": "source_revision",
+        "kind": "string"
+      },
+      {
+        "id": "terminal",
+        "kind": "string"
+      },
+      {
+        "id": "transaction",
+        "kind": "string"
+      },
+      {
+        "id": "transaction_id",
+        "kind": "string"
+      },
+      {
+        "id": "transaction_transition",
+        "kind": "string"
+      },
+      {
+        "id": "verification",
+        "kind": "string"
+      },
+      {
+        "id": "work-package",
+        "kind": "string"
+      },
+      {
+        "id": "workspace",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_base_ref",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_branch",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_path",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_id",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_path",
+        "kind": "string"
+      },
+      {
+        "id": "workspace_source_ref",
+        "kind": "string"
+      },
+      {
+        "id": "worktree_fingerprint",
+        "kind": "string"
+      }
+    ],
+    "evidence": [
+      {
+        "id": "plan-evidence",
+        "subject": "plan",
+        "kind": "artifact"
+      },
+      {
+        "id": "publication-evidence",
+        "subject": "publication",
+        "kind": "provider-observation"
+      }
+    ],
+    "work": [
+      {
+        "id": "work-a",
+        "instructions": {
+          "path": ".boatstack/flows/assets/foreground-work-input-producer.md",
+          "sha256": "5ff8e9b315fd1136da8e7f123b39a16d7897c3404328339ff93ea19e48c586e4",
+          "content": "# Producer work\n\nRead the entry plan and create both required Markdown outputs. Keep the implementation plan documentation-only. Describe a small architecture in `architecture.md` that both later consumers can quote exactly.\n"
+        },
+        "inputs": [
+          {
+            "id": "plan",
+            "producer": {
+              "kind": "entry-input",
+              "input": "plan"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "id": "architecture",
+            "path": "architecture.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          },
+          {
+            "id": "implementation-plan",
+            "path": "implementation-plan.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          }
+        ]
+      },
+      {
+        "id": "work-b",
+        "instructions": {
+          "path": ".boatstack/flows/assets/foreground-work-input-consumer.md",
+          "sha256": "a68f5eb4a4f4887da242f90bb88f26610a45f78ee956e759fe248d3c60a090a3",
+          "content": "# Consumer work\n\nRead the bound `architecture` input. Create the one required Markdown result. State that the architecture was received, summarize it, and include its exact SHA-256 input fingerprint from the request metadata. Do not edit product files.\n"
+        },
+        "inputs": [
+          {
+            "id": "architecture",
+            "producer": {
+              "kind": "work-output",
+              "work": "work-a",
+              "output": "architecture"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "id": "consumer-b-result",
+            "path": "consumer-b-result.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          }
+        ]
+      },
+      {
+        "id": "work-c",
+        "instructions": {
+          "path": ".boatstack/flows/assets/foreground-work-input-consumer.md",
+          "sha256": "a68f5eb4a4f4887da242f90bb88f26610a45f78ee956e759fe248d3c60a090a3",
+          "content": "# Consumer work\n\nRead the bound `architecture` input. Create the one required Markdown result. State that the architecture was received, summarize it, and include its exact SHA-256 input fingerprint from the request metadata. Do not edit product files.\n"
+        },
+        "inputs": [
+          {
+            "id": "architecture",
+            "producer": {
+              "kind": "work-output",
+              "work": "work-a",
+              "output": "architecture"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "id": "consumer-c-result",
+            "path": "consumer-c-result.md",
+            "media_type": "text/markdown",
+            "required": true,
+            "max_bytes": 131072
+          }
+        ]
+      }
+    ],
+    "operators": [
+      {
+        "id": "planning.package.promote",
+        "binding": {
+          "reference": "software-delivery/planning.package.promote",
+          "version": "1",
+          "fingerprint": "6613b51615a4017690c448947e0ea3773c4f48bb1ca085a6852e88fb883c867e"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": {
+          "any_of": [
+            "autonomy",
+            "human"
+          ]
+        },
+        "effects": [
+          "planning.package.promote"
+        ],
+        "verifier": "verifier:fresh-observation:planning.package.promote",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "planning-package-promote"
+        },
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "plan_output",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
+      },
+      {
+        "id": "work.package.admit",
+        "binding": {
+          "reference": "software-delivery/work.package.admit",
+          "version": "1",
+          "fingerprint": "f79469815e10f1e3f59f749fb361a4034f0364ea26831d2158f0b01c3b68c7ef"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": {
+          "any_of": [
+            "autonomy",
+            "human"
+          ]
+        },
+        "effects": [
+          "work.package.admit"
+        ],
+        "verifier": "verifier:fresh-observation:work.package.admit",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "work-package-admit"
+        },
+        "execution_context": "preserve"
+      },
+      {
+        "id": "work.package.approve",
+        "binding": {
+          "reference": "software-delivery/work.package.approve",
+          "version": "1",
+          "fingerprint": "ac4022ad8ceec20fb5e916efb4067d5895ee3fcd43e2958c2104ebdc64405849"
+        },
+        "capabilities": [
+          "product.mutate",
+          "repository.write"
+        ],
+        "authority": {
+          "any_of": [
+            "autonomy",
+            "human"
+          ]
+        },
+        "effects": [
+          "work.package.approve"
+        ],
+        "verifier": "verifier:fresh-observation:work.package.approve",
+        "recovery": "recovery.resume",
+        "state_effect": {
+          "kind": "native",
+          "native_handler": "work-package-approve"
+        },
+        "execution_context": "preserve",
+        "parameters": [
+          {
+            "id": "package_fingerprint",
+            "type": {
+              "kind": "string"
+            },
+            "required": true,
+            "secret": false,
+            "allowed_sources": [
+              "trusted-resolver"
+            ],
+            "authority": {}
+          }
+        ]
+      }
+    ],
+    "transitions": [
+      {
+        "id": "planning.package.promote",
+        "operator": "planning.package.promote",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 45,
+        "requires": {},
+        "work": "work-c",
+        "parameters": [
+          {
+            "parameter": "plan_output",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/planning-package-plan-output/implementation-plan",
+                "version": "1",
+                "fingerprint": "b0ee2d73049c4998211f841fec62b3d10b9ebfdd7e76eac4958dbc6f797d80ba"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "work.package.admit",
+        "operator": "work.package.admit",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 43,
+        "requires": {},
+        "work": "work-a"
+      },
+      {
+        "id": "work.package.approve",
+        "operator": "work.package.approve",
+        "guard": {
+          "true": true
+        },
+        "target": {
+          "true": true
+        },
+        "priority": 44,
+        "requires": {},
+        "work": "work-b",
+        "parameters": [
+          {
+            "parameter": "package_fingerprint",
+            "producer": {
+              "kind": "trusted-resolver",
+              "binding": {
+                "reference": "software-delivery/admitted-work-package-fingerprint",
+                "version": "1",
+                "fingerprint": "8777e034f90ac4aec68bf82d109f3c2cea8bd45086ba3290d51b040368a83fe2"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "targets": [
+      {
+        "id": "approved-plan",
+        "predicate": {
+          "fact": {
+            "facet": "plan",
+            "statuses": [
+              "known"
+            ],
+            "values": [
+              "approved"
+            ]
+          }
+        }
+      }
+    ],
+    "entries": [
+      {
+        "id": "prove",
+        "target": "approved-plan",
+        "requires": {
+          "authorities": [
+            "human"
+          ]
+        },
+        "inputs": [
+          {
+            "id": "plan",
+            "type": "markdown-file",
+            "required": true,
+            "resolver": "software-delivery.plan-inbox",
+            "config": {
+              "cardinality": "exactly-one",
+              "path": ".boatstack/plans/foreground-work-input-proof"
+            }
+          }
+        ],
+        "delegation": {
+          "reference": "software-delivery/delegation/autonomy",
+          "version": "1",
+          "fingerprint": "b3b97e175b89e0026a24972ecc31e25437d9053b162345d6c424a8119173f826",
+          "authorities": [
+            "autonomy"
+          ]
+        }
+      }
+    ]
+  }
+}
