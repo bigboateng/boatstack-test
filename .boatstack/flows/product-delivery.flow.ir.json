@@ -6,7 +6,7 @@
   "source_sha256": "6566f4814179fb9cf711d8c2b40eea78399ae55110965ed51b5e5ba9bc1bc1ae",
   "dependency_lock_path": "package-lock.json",
   "dependency_lock_sha256": "b997be9d16c12db74ff8132538f2dc37cf99c27d55f016c49469e7dbf7d4f84f",
-  "program_fingerprint": "9cc62e069ea09cf3a43ece526dcb268d223b07d822cba3448e95503a1113912c",
+  "program_fingerprint": "828967286e041061b6c6ec00f5e6c64cb77485ac9c1573853fbf06668937fca3",
   "projections": [
     "claude",
     "codex",
@@ -413,7 +413,7 @@
         "binding": {
           "reference": "software-delivery/planning.package.promote",
           "version": "1",
-          "fingerprint": "af5070a25e4659181feff10a881ad1456a9da9e0e46656845cb5986da4344fef"
+          "fingerprint": "6613b51615a4017690c448947e0ea3773c4f48bb1ca085a6852e88fb883c867e"
         },
         "capabilities": [
           "product.mutate",
@@ -455,7 +455,7 @@
         "binding": {
           "reference": "software-delivery/work.package.admit",
           "version": "1",
-          "fingerprint": "f8edf280784da15f951fb4dc3314c2355f21900c7b0b072e7c258b028ee22adb"
+          "fingerprint": "f79469815e10f1e3f59f749fb361a4034f0364ea26831d2158f0b01c3b68c7ef"
         },
         "capabilities": [
           "product.mutate",
